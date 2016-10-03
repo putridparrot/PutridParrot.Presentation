@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 
 namespace Presentation.Core
 {
@@ -46,20 +45,14 @@ namespace Presentation.Core
         protected virtual bool OnPropertyChanging(string propertyName = null)
         {
             var handler = propertyChanging;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangingEventArgs(propertyName));
-            }
+            handler?.Invoke(this, new PropertyChangingEventArgs(propertyName));
             return true;
         }
 
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
             var handler = propertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 #endif
 

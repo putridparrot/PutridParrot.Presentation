@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Presentation.Core
 {
@@ -11,7 +10,7 @@ namespace Presentation.Core
     /// The base class for view model's implemented in the MVVM pattern. 
     /// </summary>
     public abstract class ViewModel : NotifyPropertyChanged,
-       ISupportInitializeNotification, ISupportUpdate, IDataErrorInfo
+        ISupportInitializeNotification, ISupportUpdate, IDataErrorInfo
 #if !NET4
         , INotifyDataErrorInfo
 #endif
@@ -21,9 +20,10 @@ namespace Presentation.Core
 #endif
         private event EventHandler initialized;
 
+        private readonly ReferenceCounter _busyCount = new ReferenceCounter();
+
         private bool _initializing;
         private int _updateCount;
-        private int _busyCount;
         private bool _isDirty;
 
         protected readonly IBackingStore BackingStore;
@@ -77,20 +77,13 @@ namespace Presentation.Core
             return OnPropertyChanging(propertyName);
         }
 
-        protected override bool OnPropertyChanging(string propertyName)
+        protected override bool OnPropertyChanging(string propertyName = null)
         {
             bool result = true;
-            if (!_initializing)
+            if (!_initializing && _updateCount <= 0)
             {
                 result = base.OnPropertyChanging(propertyName);
-
-                var rules = Rules;
-                if (rules != null)
-                {
-                    rules.PreInvoke(this, propertyName);
-                }
             }
-
             return result;
         }
 
@@ -99,16 +92,16 @@ namespace Presentation.Core
         /// functionality, such as validation to take place
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <param name="previousValue"></param>
         /// <param name="currentValue"></param>
-        /// <param name="newValue"></param>
         /// <param name="propertyName"></param>
 #if !NET4
-        protected virtual void OnPropertyChanged<T>(T currentValue, T newValue, [CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged<T>(T previousValue, T currentValue, [CallerMemberName] string propertyName = null)
 #else
-        protected virtual void OnPropertyChanged<T>(T currentValue, T newValue, string propertyName)
+        protected virtual async void OnPropertyChanged<T>(T previousValue, T currentValue, string propertyName)
 #endif
         {
-            OnValidate(propertyName, newValue);
+            await OnValidate(propertyName, currentValue);
             OnPropertyChanged(propertyName);
         }
 
@@ -118,39 +111,62 @@ namespace Presentation.Core
         protected override void OnPropertyChanged(string propertyName = null)
 #endif
         {
-            if (!_initializing)
+            if (!_initializing && _updateCount <= 0)
             {
                 base.OnPropertyChanged(propertyName);
+            }
+        }
 
+        private void Changing(string propertyName = null)
+        {
+            if (!_initializing && _updateCount <= 0)
+            {
+                var rules = Rules;
+                rules?.PreInvoke(this, propertyName);
+            }
+        }
+
+        private void Changed(string propertyName = null)
+        {
+            if (!_initializing && _updateCount <= 0)
+            {
                 // this is a little too simplistic as it assumes
                 // any property change call with a propertyName is 
                 // a change, but we could explicitly call this 
-                // without a change taking place - also we don't want a change
-                // to isDirty to flip the flag to True
-                if (!String.IsNullOrEmpty(propertyName) && propertyName != "IsDirty")
+                // without a change taking place such as an internal property
+                // also we don't want a change to isDirty itself 
+                // to flip the flag to True
+                if (!String.IsNullOrEmpty(propertyName) && !IsInternalProperty(propertyName))
                 {
                     IsDirty = true;
                 }
 
                 var rules = Rules;
-                if (rules != null)
+                rules?.PostInvoke(this, propertyName);
+            }
+        }
+
+        private static bool IsInternalProperty(string propertyName)
+        {
+            return propertyName == "IsDirty" || propertyName == "IsBusy";
+        }
+
+        protected virtual async Task OnValidate<T>(string propertyName, T newValue)
+        {
+            // no need to validation against internal properties
+            if (!IsInternalProperty(propertyName))
+            {
+                var validation = Validation;
+                if (validation != null)
                 {
-                    rules.PostInvoke(this, propertyName);
+                    var errors = await validation.Validate(propertyName, newValue);
+                    SetErrors(propertyName,
+                        errors != null ? String.Join("\n", errors.Select(v => v.ErrorMessage)) : null, false);
                 }
             }
         }
 
-        protected virtual void OnValidate<T>(string propertyName, T newValue)
-        {
-            var validation = Validation;
-            if (validation != null)
-            {
-                var errors = validation.Validate(propertyName, newValue);
-                SetErrors(propertyName, errors != null ? String.Join("\n", errors.Select(v => v.ErrorMessage)) : null, false);
-            }
-        }
-
-        public virtual bool Validate()
+        public virtual async Task<bool> Validate()
         {
             var validation = Validation;
             if (validation != null)
@@ -168,7 +184,7 @@ namespace Presentation.Core
                     }
                 }
 
-                var errors = validation.Validate();
+                var errors = await validation.Validate();
                 if (errors != null)
                 {
                     foreach (var validationResult in errors)
@@ -178,6 +194,7 @@ namespace Presentation.Core
                             SetErrors(v, validationResult.ErrorMessage, true);
                         }
                     }
+                    return errors.Length == 0;
                 }
             }
             return true;
@@ -199,7 +216,11 @@ namespace Presentation.Core
             if (!OnPropertyChanging(backingField, newValue, propertyName))
                 return false;
 
+            Changing(propertyName);
+
             backingField = newValue;
+
+            Changed(propertyName);
 
             OnPropertyChanged(backingField, newValue, propertyName);
             return true;
@@ -228,7 +249,11 @@ namespace Presentation.Core
             if (!OnPropertyChanging(currentValue, newValue, propertyName))
                 return false;
 
+            Changing(propertyName);
+
             setter(newValue);
+
+            Changed(propertyName);
 
             OnPropertyChanged(currentValue, newValue, propertyName);
             return true;
@@ -247,8 +272,17 @@ namespace Presentation.Core
                 return false;
 
             return BackingStore.Set(propertyName, newValue,
-                OnPropertyChanging,
-                OnPropertyChanged);
+                (cv, nv, pn) =>
+                {
+                    var result = OnPropertyChanging(cv, nv, pn);
+                    Changing(pn);
+                    return result;
+                },                                
+                (cv, nv, pn) =>
+                {
+                    OnPropertyChanged(cv, nv, pn);
+                    Changed(pn);
+                });
         }
 
 #if !NET4
@@ -299,7 +333,7 @@ namespace Presentation.Core
         /// <summary>
         /// Gets whether the view model is in initialization mode
         /// </summary>
-        bool ISupportInitializeNotification.IsInitialized { get { return !_initializing; } }
+        bool ISupportInitializeNotification.IsInitialized => !_initializing;
 
         /// <summary>
         /// Raised when the view model completes initialization mode, called via EndInit.
@@ -331,7 +365,7 @@ namespace Presentation.Core
                 if (_updateCount == 0)
                 {
                     // try to refresh all properties
-                    OnPropertyChanged(null);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -341,12 +375,12 @@ namespace Presentation.Core
         /// </summary>
         public bool IsBusy
         {
-            get { return _busyCount > 0; }
+            get { return _busyCount.Count > 0; }
             set
             {
-                _busyCount = value
-                    ? _busyCount + 1
-                    : Math.Max(0, _busyCount - 1);
+                var current = _busyCount.Count;
+                if ((value ? _busyCount.AddRef() : _busyCount.Release()) != current)
+                    OnPropertyChanged("IsBusy");
             }
         }
 

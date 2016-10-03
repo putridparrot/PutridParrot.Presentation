@@ -10,17 +10,30 @@ namespace Presentation.Core
         where TV : ViewModel
     {
         private readonly Func<TV, bool> _validationFunc;
-        private readonly string _erroMessage;
+        private readonly string _validationPropertyName;
+        private readonly string _errorMessage;
 
-        public ValidationRule(Func<TV, bool> validationFunc, string errorMessage)
+        /// <summary>
+        /// Constructs a validation rule
+        /// </summary>
+        /// <param name="validationFunc">The validation function</param>
+        /// <param name="errorMessage">The error message if validation fails</param>
+        /// <param name="validationPropertyName">The property to be used for validation, null indicates the calling property</param>
+        public ValidationRule(Func<TV, bool> validationFunc, string errorMessage, string validationPropertyName = null)
         {
-            this._validationFunc = validationFunc;
-            this._erroMessage = errorMessage;
+            _validationFunc = validationFunc;
+            _errorMessage = errorMessage;
+            _validationPropertyName = validationPropertyName;
+        }
+
+        private string GetPropertyName(string propertyName)
+        {
+            return String.IsNullOrEmpty(_validationPropertyName) ? propertyName : _validationPropertyName;
         }
 
         public override bool PreInvoke<T>(T viewModel, string propertyName)
         {
-            viewModel.DataErrorInfo.Remove(propertyName);
+            viewModel.DataErrorInfo.Remove(GetPropertyName(propertyName));
             return true;
         }
 
@@ -31,7 +44,9 @@ namespace Presentation.Core
             {
                 if (!_validationFunc((TV)vm))
                 {
-                    vm.DataErrorInfo.Add(propertyName, _erroMessage);
+                    var pn = GetPropertyName(propertyName);
+                    vm.DataErrorInfo.Add(pn, _errorMessage);
+                    ((IViewModel)vm).RaisePropertyChanged(pn);
                     return false;
                 }
             }

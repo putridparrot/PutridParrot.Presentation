@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace Presentation.Core
 {
@@ -14,11 +15,11 @@ namespace Presentation.Core
         /// <param name="propertyName">The property name as a string</param>
         /// <param name="newValue">The value to be validated</param>
         /// <returns>An array of validation results returned, or null if no results</returns>
-        ValidationResult[] Validate(string propertyName, object newValue);
+        Task<ValidationResult[]> Validate(string propertyName, object newValue);
         /// <summary>
         /// Validaties all properties
         /// </summary>
         /// <returns>An array of validation results returned, or null if no results</returns>
-        ValidationResult[] Validate();
+        Task<ValidationResult[]> Validate();
     }
 }

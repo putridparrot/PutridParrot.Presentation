@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Sample.Wpf.Presentation.Core"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
+    <Grid IsEnabled="{Binding ValidateCommand.IsBusy, Converter={local:NotBooleanConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -14,9 +14,9 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="0" Text="{Binding FirstName, ValidatesOnDataErrors=True}" Margin="5"/>
-        <TextBox Grid.Row="1" Text="{Binding LastName, ValidatesOnDataErrors=True}" Margin="5"/>
-        <TextBox Grid.Row="2" Text="{Binding FullName, Mode=OneWay, ValidatesOnDataErrors=True}" IsReadOnly="true" Margin="5"/>
-        <Button Grid.Row="3"  Content="Validate" Command="{Binding ValidateCommand}"/>
+        <TextBox Grid.Row="0" Text="{Binding FirstName, ValidatesOnDataErrors=True}" Margin="5" />
+        <TextBox Grid.Row="1" Text="{Binding LastName, ValidatesOnDataErrors=True}" Margin="5" />
+        <TextBox Grid.Row="2" Text="{Binding FullName, Mode=OneWay, ValidatesOnDataErrors=True}" IsReadOnly="true" Margin="5" />
+        <Button Grid.Row="3"  Content="Validate" Command="{Binding ValidateCommand}" />
     </Grid>
 </Window>

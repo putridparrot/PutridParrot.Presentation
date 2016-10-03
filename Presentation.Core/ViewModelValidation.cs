@@ -35,7 +35,7 @@ namespace Presentation.Core
             }
         }
 
-        ValidationResult[] IValidateViewModel.Validate(string propertyName, object newValue)
+        Task<ValidationResult[]> IValidateViewModel.Validate(string propertyName, object newValue)
         {
             if (_validationRules.ContainsKey(propertyName))
             {
@@ -50,21 +50,21 @@ namespace Presentation.Core
                 var errors = new List<ValidationResult>();
                 if (!Validator.TryValidateProperty(newValue, validationContext, errors))
                 {
-                    return errors.ToArray();
+                    return Task.FromResult(errors.ToArray());
                 }
             }
 
-            return null;
+            return Task.FromResult<ValidationResult[]>(null);
         }
 
-        ValidationResult[] IValidateViewModel.Validate()
+        Task<ValidationResult[]> IValidateViewModel.Validate()
         {
             var errors = new List<ValidationResult>();
             if (!Validator.TryValidateObject(_viewModel, new ValidationContext(_viewModel, null, null), errors, true))
             {
-                return errors.ToArray();
+                return Task.FromResult(errors.ToArray());
             }
-            return null;
+            return Task.FromResult<ValidationResult[]>(null);
         }
 
         private void Initialize()

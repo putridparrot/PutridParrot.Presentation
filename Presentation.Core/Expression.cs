@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -17,6 +18,7 @@ namespace Presentation.Core
         /// <param name="o">The view model</param>
         /// <param name="propertyExpression">A property expression of the property</param>
         /// <returns>The string representing the property name</returns>
+        [DebuggerStepThrough]
         public static string NameOf<TObj, T>(this TObj o, Expression<Func<TObj, T>> propertyExpression) where
             TObj : IViewModel
         {
@@ -55,6 +57,7 @@ namespace Presentation.Core
         /// <param name="o">The view model</param>
         /// <param name="propertyExpressions">One or more property expressions</param>
         /// <returns>The string array representing the property names</returns>
+        [DebuggerStepThrough]
         public static string[] NameOf<TObj, T>(this TObj o, params Expression<Func<TObj, T>>[] propertyExpressions) where
             TObj : IViewModel
         {

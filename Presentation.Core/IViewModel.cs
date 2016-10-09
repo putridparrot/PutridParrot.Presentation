@@ -5,7 +5,7 @@
     /// as extensions classes to be written to work seemlessly with
     /// a view model.
     /// </summary>
-    public interface IViewModel
+    public interface INotifyViewModel
     {
         /// <summary>
         /// Raises a property changing event against the supplied property name
@@ -23,6 +23,13 @@
         /// Raises multiple property changed events against the supplied property names
         /// </summary>
         /// <param name="propertyNames">An array of property names as params</param>
-        void RaisePropertyChanged(params string[] propertyNames);
+        void RaiseMultiplePropertyChanged(params string[] propertyNames);
     }
+
+    public interface IViewModel : INotifyViewModel
+    {
+        IValidateViewModel Validation { get; set; }
+        IExtendedDataErrorInfo DataErrorInfo { get; set; }
+    }
+
 }

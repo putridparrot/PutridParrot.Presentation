@@ -22,7 +22,14 @@
         public override bool PostInvoke<T>(T viewModel, string propertyName)
         {
             var vm = viewModel as IViewModel;
+#if !NET4
             vm?.RaisePropertyChanged(_chainedProperties);
+#else
+            if (vm != null)
+            {
+                vm.RaiseMultiplePropertyChanged(_chainedProperties);
+            }
+#endif
             return true;
         }
     }

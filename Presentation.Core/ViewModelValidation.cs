@@ -74,7 +74,11 @@ namespace Presentation.Core
             var metadataType = _viewModel.GetType().GetCustomAttributes(typeof(MetadataTypeAttribute), true)
                 .OfType<MetadataTypeAttribute>().FirstOrDefault();
 
+#if !NET4
             var type = metadataType?.MetadataClassType ?? _viewModel.GetType();
+#else
+            var type = metadataType != null && metadataType.MetadataClassType != null ? _viewModel.GetType() : null;
+#endif
 
             var setterProperties = type.GetProperties(BindingFlags.Public
                                                       | BindingFlags.Instance

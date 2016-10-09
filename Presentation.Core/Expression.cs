@@ -20,10 +20,15 @@ namespace Presentation.Core
         /// <returns>The string representing the property name</returns>
         [DebuggerStepThrough]
         public static string NameOf<TObj, T>(this TObj o, Expression<Func<TObj, T>> propertyExpression) where
-            TObj : IViewModel
+            TObj : INotifyViewModel
         {
+#if !NET4
             if (propertyExpression == null)
                 throw new ArgumentNullException(nameof(propertyExpression));
+#else
+            if (propertyExpression == null)
+                throw new ArgumentNullException("propertyExpression");
+#endif
 
             MemberExpression property = null;
 
@@ -59,7 +64,7 @@ namespace Presentation.Core
         /// <returns>The string array representing the property names</returns>
         [DebuggerStepThrough]
         public static string[] NameOf<TObj, T>(this TObj o, params Expression<Func<TObj, T>>[] propertyExpressions) where
-            TObj : IViewModel
+            TObj : INotifyViewModel
         {
             return propertyExpressions.Select(p => NameOf(o, p)).ToArray();
         }

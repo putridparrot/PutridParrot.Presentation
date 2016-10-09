@@ -7,7 +7,7 @@ namespace Presentation.Core
     /// </summary>
     /// <typeparam name="TV"></typeparam>
     public class ValidationRule<TV> : Rule
-        where TV : ViewModel
+        where TV : IViewModel
     {
         private readonly Func<TV, bool> _validationFunc;
         private readonly string _validationPropertyName;
@@ -39,14 +39,14 @@ namespace Presentation.Core
 
         public override bool PostInvoke<T>(T viewModel, string propertyName)
         {
-            var vm = viewModel as ViewModel;
+            var vm = viewModel as IViewModel;
             if (vm != null)
             {
                 if (!_validationFunc((TV)vm))
                 {
                     var pn = GetPropertyName(propertyName);
                     vm.DataErrorInfo.Add(pn, _errorMessage);
-                    ((IViewModel)vm).RaisePropertyChanged(pn);
+                    vm.RaisePropertyChanged(pn);
                     return false;
                 }
             }

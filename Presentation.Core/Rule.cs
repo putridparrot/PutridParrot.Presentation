@@ -15,7 +15,7 @@ namespace Presentation.Core
         /// <param name="propertyName">The property name changing</param>
         /// <returns>True for success, false for failure</returns>
         public abstract bool PreInvoke<T>(T viewModel, string propertyName)
-            where T : ViewModel;
+            where T : IViewModel;
 
         /// <summary>
         /// Called when a property has changed
@@ -25,6 +25,6 @@ namespace Presentation.Core
         /// <param name="propertyName">The property name changed</param>
         /// <returns>True for success, false for failure</returns>
         public abstract bool PostInvoke<T>(T viewModel, string propertyName)
-            where T : ViewModel;
+            where T : IViewModel;
     }
 }

@@ -51,7 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncCommand.cs" />
+    <Compile Include="ComparerImpl.cs" />
     <Compile Include="DispatcherExtensions.cs" />
+    <Compile Include="ExtendedObservableCollection.cs" />
+    <Compile Include="IItemChanged.cs" />
+    <Compile Include="ListExtensions.cs" />
+    <Compile Include="PropertyChangeRule.cs" />
     <Compile Include="ReferenceCounter.cs" />
     <Compile Include="ViewModelValidation.cs" />
     <Compile Include="DataErrorInfo.cs" />

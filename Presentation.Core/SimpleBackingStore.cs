@@ -31,7 +31,14 @@ namespace Presentation.Core
 
                 _backingStore[propertyName] = newValue;
 
+#if !NET4
                 changed?.Invoke((T)value, newValue, propertyName);
+#else
+                if (changed != null)
+                {
+                    changed((T) value, newValue, propertyName);
+                }
+#endif
 
                 return true;
             }

@@ -15,8 +15,8 @@ namespace Presentation.Core
         /// Rethrows an exception onto the current dispatcher. Useful for
         /// putting exceptions onto the UI thread.
         /// </summary>
-        /// <param name="dispatcher"></param>
-        /// <param name="ex"></param>
+        /// <param name="dispatcher">The dispatcher to apply this extension to</param>
+        /// <param name="ex">The exception to be thrown on the dispatcher thread</param>
         public static void Throw(this Dispatcher dispatcher, Exception ex)
         {
             dispatcher.BeginInvoke(new Action(() =>

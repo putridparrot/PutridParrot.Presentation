@@ -86,6 +86,7 @@
     <Compile Include="MyViewModel3.cs" />
     <Compile Include="MyViewModel4.cs" />
     <Compile Include="MyViewModel5.cs" />
+    <Compile Include="MyViewModel6.cs" />
     <Compile Include="MyViewModelMeta.cs" />
     <Compile Include="NotBooleanConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

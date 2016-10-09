@@ -6,7 +6,8 @@ using System.Windows.Threading;
 namespace Presentation.Core
 {
     /// <summary>
-    /// A Task/async aware command
+    /// A Task/async aware command object. Automatically handles changes
+    /// to the IsBusy flag
     /// </summary>
     public class AsyncCommand : NotifyPropertyChanged, ICommand
     {
@@ -47,7 +48,15 @@ namespace Presentation.Core
 
         public void RaiseCanExecuteChanged()
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            var canExecuteChanged = CanExecuteChanged;
+#if !NET4
+            canExecuteChanged?.Invoke(this, EventArgs.Empty);
+#else
+            if (canExecuteChanged != null)
+            {
+                canExecuteChanged(this, EventArgs.Empty);
+            }
+#endif
         }
 
         public bool CanExecute(object parameter)

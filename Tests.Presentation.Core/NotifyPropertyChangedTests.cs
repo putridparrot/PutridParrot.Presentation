@@ -115,7 +115,7 @@ namespace Tests.Presentation.Core
             var viewModel = new MyNotifyPropertyChanged();
             var listener = new NotifyPropertyChangedListener(viewModel);
 
-            ((IViewModel)viewModel).RaisePropertyChanged("Name", "Name");
+            viewModel.RaiseMultiplePropertyChanged("Name", "Name");
 
             Assert.AreEqual(2, listener.Changed.Count);
             Assert.AreEqual("Name", listener.Changed[0]);

@@ -35,7 +35,7 @@ namespace Sample.Wpf.Presentation.Core
             set
             {
                 if (SetProperty(ref firstName, value, this.NameOf(x => x.FirstName)))
-                    OnPropertyChanged(this.NameOf(x => x.FullName));
+                    RaisePropertyChanged(this.NameOf(x => x.FullName));
             }
 #endif
         }
@@ -49,7 +49,7 @@ namespace Sample.Wpf.Presentation.Core
             set
             {
                 if (SetProperty(ref lastName, value, this.NameOf(x => x.LastName)))
-                    OnPropertyChanged(this.NameOf(x => x.FullName));
+                    RaisePropertyChanged(this.NameOf(x => x.FullName));
             }
 #endif
         }

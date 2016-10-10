@@ -80,18 +80,20 @@ namespace Presentation.Core
             var type = metadataType != null && metadataType.MetadataClassType != null ? _viewModel.GetType() : null;
 #endif
 
-            var setterProperties = type.GetProperties(BindingFlags.Public
-                                                      | BindingFlags.Instance
-                                                      | BindingFlags.DeclaredOnly);
-
-            foreach (var property in setterProperties.Where(p => p.CanWrite))
+            if (type != null)
             {
-                var displayName = property.GetCustomAttributes(typeof(DisplayNameAttribute), true).Cast<DisplayNameAttribute>().FirstOrDefault();
-                _validationRules.Add(property.Name, displayName != null ? displayName.DisplayName : property.Name);
+                var setterProperties = type.GetProperties(BindingFlags.Public
+                                                          | BindingFlags.Instance
+                                                          | BindingFlags.DeclaredOnly);
+
+                foreach (var property in setterProperties.Where(p => p.CanWrite))
+                {
+                    var displayName = property.GetCustomAttributes(typeof(DisplayNameAttribute), true).Cast<DisplayNameAttribute>().FirstOrDefault();
+                    _validationRules.Add(property.Name, displayName != null ? displayName.DisplayName : property.Name);
+                }
             }
         }
     }
-
 }
 
 

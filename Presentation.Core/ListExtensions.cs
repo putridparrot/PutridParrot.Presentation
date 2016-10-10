@@ -5,12 +5,18 @@ using System.Linq;
 
 namespace Presentation.Core
 {
+    /// <summary>
+    /// List filter enum
+    /// </summary>
     public enum ListFilter
     {
         Include,
         Exclude
     }
 
+    /// <summary>
+    /// Extension methods for lists
+    /// </summary>
     public static class ListExtensions
     {
         /// <summary>
@@ -76,6 +82,12 @@ namespace Presentation.Core
             }
         }
 
+        /// <summary>
+        /// Sort for all list implementations, using a quick sort along with a supplied comparison function
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="comparer"></param>
         public static void Sort<T>(this IList<T> list, IComparer comparer)
         {
             if (list != null && list.Count > 0 && comparer != null)
@@ -86,11 +98,35 @@ namespace Presentation.Core
 
         public delegate int CompareValues<TSearchItem, TListItem>(TSearchItem searchItem, TListItem listItem);
 
+        /// <summary>
+        /// Uses a binary search to location an item, using a supplied
+        /// comparison method - the list is expected to be in a valid,
+        /// sorted state.
+        /// </summary>
+        /// <typeparam name="TSearchItem"></typeparam>
+        /// <typeparam name="TListItem"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="searchItem"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
         public static int BinarySearch<TSearchItem, TListItem>(this IList<TListItem> list, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
             return BinarySearch(list, 0, list.Count - 1, searchItem, matcher);
         }
 
+        /// <summary>
+        /// Uses a binary search to location an item, using a supplied
+        /// comparison method and both lower and upper bounds - the list 
+        /// is expected to be in a valid, sorted state.
+        /// </summary>
+        /// <typeparam name="TSearchItem"></typeparam>
+        /// <typeparam name="TListItem"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="lowerBound"></param>
+        /// <param name="upperBound"></param>
+        /// <param name="searchItem"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
         public static int BinarySearch<TSearchItem, TListItem>(this IList<TListItem> list, int lowerBound, int upperBound, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
             if (lowerBound > upperBound)
@@ -98,13 +134,13 @@ namespace Presentation.Core
             if (upperBound >= list.Count)
                 throw new ArgumentOutOfRangeException("upperBound must be less than the size of the collection");
 
-            int start = lowerBound;
-            int end = upperBound;
+            var start = lowerBound;
+            var end = upperBound;
             while (start <= end)
             {
-                int mid = start + (end - start) / 2;
+                var mid = start + (end - start) / 2;
 
-                int match = matcher(searchItem, list[mid]);
+                var match = matcher(searchItem, list[mid]);
                 if (match == 0)
                     return mid;
 
@@ -120,11 +156,35 @@ namespace Presentation.Core
             return -1;
         }
 
+        /// <summary>
+        /// Binary search which returns an "insertion point" which can be used to find
+        /// where an item should be inserted into a list. It is expected that the
+        /// list is in sorted order.
+        /// </summary>
+        /// <typeparam name="TSearchItem"></typeparam>
+        /// <typeparam name="TListItem"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="searchItem"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
         public static int BinarySearchInsertionPoint<TSearchItem, TListItem>(this IList<TListItem> list, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
             return BinarySearchInsertionPoint(list, 0, list.Count - 1, searchItem, matcher);
         }
 
+        /// <summary>
+        /// Binary search which returns an "insertion point" which can be used to find
+        /// where an item should be inserted into a list. It is expected that the
+        /// list is in sorted order.
+        /// </summary>
+        /// <typeparam name="TSearchItem"></typeparam>
+        /// <typeparam name="TListItem"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="lowerBound"></param>
+        /// <param name="upperBound"></param>
+        /// <param name="searchItem"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
         public static int BinarySearchInsertionPoint<TSearchItem, TListItem>(this IList<TListItem> list, int lowerBound,
             int upperBound, TSearchItem searchItem, CompareValues<TSearchItem, TListItem> matcher)
         {
@@ -147,7 +207,7 @@ namespace Presentation.Core
                 else
                 {
                     // found a match, now find first value greater than match
-                    for (int i = mid; i < highIndex; i++)
+                    for (var i = mid; i < highIndex; i++)
                     {
                         if (matcher(searchItem, list[i]) < 0)
                             return i;
@@ -160,11 +220,33 @@ namespace Presentation.Core
             return highIndex < 0 ? 0 : lowIndex;
         }
 
+        /// <summary>
+        /// Uses a binary search to location an item, using a supplied
+        /// comparison method and both lower and upper bounds - the list 
+        /// is expected to be in a valid, sorted state.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="item"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
         public static int BinarySearch<T>(this IList<T> list, T item, Comparison<T> matcher)
         {
             return BinarySearch(list, 0, list.Count - 1, item, matcher);
         }
 
+        /// <summary>
+        /// Uses a binary search to location an item, using a supplied
+        /// comparison method and both lower and upper bounds - the list 
+        /// is expected to be in a valid, sorted state.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="lowerBound"></param>
+        /// <param name="upperBound"></param>
+        /// <param name="item"></param>
+        /// <param name="matcher"></param>
+        /// <returns></returns>
         public static int BinarySearch<T>(this IList<T> list, int lowerBound, int upperBound, T item, Comparison<T> matcher)
         {
             if (lowerBound > upperBound)
@@ -172,13 +254,13 @@ namespace Presentation.Core
             if (upperBound >= list.Count)
                 throw new ArgumentOutOfRangeException("upperBound must be less than the size of the collection");
 
-            int start = lowerBound;
-            int end = upperBound;
+            var start = lowerBound;
+            var end = upperBound;
             while (start <= end)
             {
-                int mid = start + (end - start) / 2;
+                var mid = start + (end - start) / 2;
 
-                int match = matcher(item, list[mid]);
+                var match = matcher(item, list[mid]);
                 if (match == 0)
                     return mid;
 
@@ -204,7 +286,7 @@ namespace Presentation.Core
         /// <returns></returns>
         public static int FindIndex<T>(this IList<T> list, Predicate<T> matcher)
         {
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
                 if (matcher(list[i]))
                 {
@@ -214,9 +296,15 @@ namespace Presentation.Core
             return -1;
         }
 
+        /// <summary>
+        /// Removes duplicates from a list
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="comparer"></param>
         public static void RemoveDuplicates<T>(this IList<T> list, Func<T, T, int> comparer)
         {
-            IList<T> newList = list.Distinct(new ComparerImpl<T>(comparer)).ToList();
+            var newList = list.Distinct(new ComparerImpl<T>(comparer)).ToList();
             list.Clear();
             list.AddRange(newList);
         }
@@ -230,7 +318,7 @@ namespace Presentation.Core
         /// <returns></returns>
         public static T Find<T>(this IList<T> list, Predicate<T> matcher)
         {
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
                 if (matcher(list[i]))
                 {
@@ -250,7 +338,7 @@ namespace Presentation.Core
         /// <param name="comparison"></param>
         public static void Add<T>(this IList<T> list, T item, Comparison<T> comparison)
         {
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
                 if (comparison(item, list[i]) < 0)
                 {
@@ -265,8 +353,8 @@ namespace Presentation.Core
         // standard quick sort implementation
         private static void Sort<T>(IList<T> list, int left, int right, Comparison<T> comparison)
         {
-            int i = left;
-            int j = right;
+            var i = left;
+            var j = right;
             T x = list[(left + right) / 2];
             while (i <= j)
             {

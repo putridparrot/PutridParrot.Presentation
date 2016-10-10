@@ -1,46 +1,52 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Windows.Input;
-//using Microsoft.Expression.Interactivity.Core;
-//using Presentation.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Microsoft.Expression.Interactivity.Core;
+using Presentation.Core;
 
-//namespace Sample.Wpf.Presentation.Core
-//{
-//    public class Property<T> : ViewModel
-//    {
-//        public T Value
-//        {
-//            get { return GetProperty<T>(this.NameOf(x => x.Value)); }
-//            set { SetProperty(value, this.NameOf(x => x.Value)); }
-//        }
-//    }
+namespace Sample.Wpf.Presentation.Core
+{
+    /// <summary>
+    /// Sample uses the simple backing store to store 
+    /// fields/state. Explicitly raises property changes
+    /// for readonly FullName property
+    /// </summary>
+    public class MyViewModel5 : ViewModel
+    {
+        public MyViewModel5() :
+            base(new SimpleBackingStore())
+        {
+            ValidateCommand = new ActionCommand(() =>
+            {
+                /* no validation in this implementation */
+            });
+        }
 
-//    public class MyViewModel5 : ViewModel
-//    {
-//        public MyViewModel5()
-//        {
-//            ValidateCommand = new ActionCommand(() => { /* no validation in this implementation */});
-//        }
+        public string FirstName
+        {
+            get { return GetProperty<string>(this.NameOf(x => x.FirstName)); }
+            set
+            {
+                if (SetProperty(value, this.NameOf(x => x.FirstName)))
+                    RaisePropertyChanged(this.NameOf(x => x.FullName));
+            }
+        }
 
-//        public Property<string> FirstName
-//        {
-//            get { return GetProperty<Property<string>>(this.NameOf(x => x.FirstName)); }
-//            set { SetProperty(value, this.NameOf(x => x.FirstName)); }
-//        }
+        public string LastName
+        {
+            get { return GetProperty<string>(this.NameOf(x => x.LastName)); }
+            set
+            {
+                if (SetProperty(value, this.NameOf(x => x.LastName)))
+                    RaisePropertyChanged(this.NameOf(x => x.FullName));
+            }
+        }
 
-//        public Property<string> LastName
-//        {
-//            get { return GetProperty<Property<string>>(this.NameOf(x => x.LastName)); }
-//            set { SetProperty(value, this.NameOf(x => x.LastName)); }
-//        }
+        public string FullName => $"{FirstName} {LastName}";
 
-
-//        public string FullName => $"{FirstName.Value} {LastName.Value}";
-
-//        public ICommand ValidateCommand { get; private set; }
-//    }
-
-//}
+        public ICommand ValidateCommand { get; private set; }
+    }
+}

@@ -26,6 +26,5 @@ namespace Presentation.Core
             var vm = viewModel as IViewModel;
             return vm == null || _func((TV)vm);
         }
-
     }
 }

@@ -14,8 +14,8 @@ namespace Sample.Wpf.Presentation.Core
     /// Demonstrates the minimalist view model with backing fields and using
     /// the bare bones NotifyPropertyChanged class
     /// 
-    /// No validation included and FullName change event called to refresh 
-    /// after changes to FirstName and LastName
+    /// No validation included and FullName change event explicitly called to 
+    /// refresh after changes to FirstName and LastName
     /// </summary>
     public class MyViewModel1 : NotifyPropertyChanged
     {

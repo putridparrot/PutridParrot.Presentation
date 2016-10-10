@@ -6,17 +6,32 @@
         xmlns:local="clr-namespace:Sample.Wpf.Presentation.Core"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type TextBox}" BasedOn="{x:Null}">
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="True">
+                        <Setter Property="BorderBrush" Value="Red" />
+                        <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid IsEnabled="{Binding ValidateCommand.IsBusy, Converter={local:NotBooleanConverter}}">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0" Text="{Binding FirstName, ValidatesOnDataErrors=True}" Margin="5" />
         <TextBox Grid.Row="1" Text="{Binding LastName, ValidatesOnDataErrors=True}" Margin="5" />
-        <TextBox Grid.Row="2" Text="{Binding FullName, Mode=OneWay, ValidatesOnDataErrors=True}" IsReadOnly="true" Margin="5" />
+        <TextBox Grid.Row="2" Text="{Binding FullName, Mode=OneWay, ValidatesOnDataErrors=True}" IsReadOnly="true" Margin="5" x:Name="FullName"/>
         <Button Grid.Row="3"  Content="Validate" Command="{Binding ValidateCommand}" />
     </Grid>
 </Window>
+

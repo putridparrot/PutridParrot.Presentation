@@ -5,6 +5,9 @@ using Presentation.Core;
 
 namespace Presentation.Core
 {
+    /// <summary>
+    /// NotifyViewModel extension methods
+    /// </summary>
     public static class ViewModelExtensions
     {
         public static void RaisePropertyChanged<TObj>(this TObj o) where

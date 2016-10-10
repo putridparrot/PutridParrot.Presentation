@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -8,6 +9,12 @@ using Presentation.Core;
 
 namespace Sample.Wpf.Presentation.Core
 {
+    /// <summary>
+    /// A fairly full features view model which uses the backing store
+    /// to reduce backing fields cluttering the class, includes
+    /// error info. an validation using the MetadataType. Also uses
+    /// property chaining rules and validation rules.
+    /// </summary>
     [MetadataType(typeof(MyViewModelMeta))]
     public class MyViewModel : ViewModel
     {

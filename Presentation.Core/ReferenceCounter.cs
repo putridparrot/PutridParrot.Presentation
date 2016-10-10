@@ -10,24 +10,38 @@
         private int refCount;
         private readonly object syncObject = new object();
 
+        /// <summary>
+        /// Increments the reference counter
+        /// </summary>
+        /// <returns>The new reference count</returns>
         public int AddRef()
         {
             lock (syncObject)
                 return ++refCount;
         }
 
+        /// <summary>
+        /// Decrements the reference counter
+        /// </summary>
+        /// <returns>The new reference count</returns>
         public int Release()
         {
             lock (syncObject)
                 return refCount = refCount > 0 ? refCount - 1 : 0;
         }
 
+        /// <summary>
+        /// Resets the reference count to zero
+        /// </summary>
         public void Reset()
         {
             lock (syncObject)
                 refCount = 0;
         }
 
+        /// <summary>
+        /// Gets the current reference count
+        /// </summary>
         public int Count
         {
             get
@@ -56,6 +70,10 @@
             this.value = value;
         }
 
+        /// <summary>
+        /// Gets/sets an item which is associated with 
+        /// a reference counter
+        /// </summary>
         public T Value
         {
             get

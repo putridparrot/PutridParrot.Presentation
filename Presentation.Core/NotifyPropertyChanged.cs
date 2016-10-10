@@ -48,16 +48,32 @@ namespace Presentation.Core
         }
 #endif
 
+        /// <summary>
+        /// Raises a property changing event using
+        /// the OnPropertyChanging method.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         public bool RaisePropertyChanging(string propertyName)
         {
             return OnPropertyChanging(propertyName);
         }
 
+        /// <summary>
+        /// Raises a property changed event using the 
+        /// OnPropertyChanged method. 
+        /// </summary>
+        /// <param name="propertyName"></param>
         public void RaisePropertyChanged(string propertyName)
         {
             OnPropertyChanged(propertyName);
         }
 
+        /// <summary>
+        /// Raises multiple property changed events 
+        /// against the OnPropertyChanged method.
+        /// </summary>
+        /// <param name="propertyNames"></param>
         public void RaiseMultiplePropertyChanged(params string[] propertyNames)
         {
             if (propertyNames != null)

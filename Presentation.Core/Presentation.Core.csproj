@@ -55,6 +55,7 @@
     <Compile Include="DispatcherExtensions.cs" />
     <Compile Include="ExtendedObservableCollection.cs" />
     <Compile Include="IItemChanged.cs" />
+    <Compile Include="INotifyViewModel.cs" />
     <Compile Include="ListExtensions.cs" />
     <Compile Include="PropertyChangeRule.cs" />
     <Compile Include="ReferenceCounter.cs" />

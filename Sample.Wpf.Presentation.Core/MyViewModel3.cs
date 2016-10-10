@@ -10,7 +10,9 @@ using Presentation.Core;
 namespace Sample.Wpf.Presentation.Core
 {
     /// <summary>
-    /// Extends MyViewModel to demonstrate the use of property chaining
+    /// Extends MyViewModel to demonstrate the use of property 
+    /// chaining instead of explicitly called RaisePropertyChanged
+    /// or OnPropertyChanged.
     /// </summary>
     public class MyViewModel3 : ViewModel
     {

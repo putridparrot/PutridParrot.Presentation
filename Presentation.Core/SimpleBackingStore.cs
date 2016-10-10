@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Presentation.Core
 {
+    /// <summary>
+    /// A simple backing store mechanism to store fields
+    /// in a dictionary.
+    /// </summary>
     public class SimpleBackingStore : IBackingStore
     {
         private readonly Dictionary<string, object> _backingStore;

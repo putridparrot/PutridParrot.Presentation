@@ -24,11 +24,12 @@ namespace Sample.Wpf.Presentation.Core
         {
             InitializeComponent();
 
+            DataContext = new MyViewModel();
             //DataContext = new MyViewModel1();
             //DataContext = new MyViewModel2();
             //DataContext = new MyViewModel3();
             //DataContext = new MyViewModel4();
-            DataContext = new MyViewModel();
+            //DataContext = new MyViewModel5();
         }
     }
 }

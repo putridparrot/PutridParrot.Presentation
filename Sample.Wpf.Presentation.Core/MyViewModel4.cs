@@ -11,7 +11,8 @@ namespace Sample.Wpf.Presentation.Core
 {
     /// <summary>
     /// Demonstrates using a model for the underlying data, so all setters/getter
-    /// delegate to the underlying model 
+    /// delegate to the underlying model - chained property change events
+    /// are explicitly called in this example
     /// </summary>
     public class MyViewModel4 : ViewModel
     {
@@ -31,7 +32,7 @@ namespace Sample.Wpf.Presentation.Core
             set
             {
                 if(SetProperty(() => domainObject.FirstName, v => domainObject.FirstName = v, value, this.NameOf(x => x.FirstName)))
-                    OnPropertyChanged(this.NameOf(x => x.FullName));
+                    RaisePropertyChanged(this.NameOf(x => x.FullName));
             }
 #endif
         }
@@ -45,7 +46,7 @@ namespace Sample.Wpf.Presentation.Core
             set
             {
                 if(SetProperty(() => domainObject.LastName, v => domainObject.LastName = v, value, this.NameOf(x => x.LastName)))
-                    OnPropertyChanged(this.NameOf(x => x.FullName));
+                    RaisePropertyChanged(this.NameOf(x => x.FullName));
             }
 #endif
         }

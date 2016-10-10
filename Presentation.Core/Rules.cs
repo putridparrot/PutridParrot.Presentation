@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace Presentation.Core
 {
+    /// <summary>
+    /// A collection of rule objects associated with a property 
+    /// name. Rules are themselves a rule so can be assigned 
+    /// to other rules.
+    /// </summary>
     public class Rules : Rule
     {
         private readonly Dictionary<string, IList<Rule>> _rules;
@@ -12,6 +17,12 @@ namespace Presentation.Core
             _rules = new Dictionary<string, IList<Rule>>();
         }
 
+        /// <summary>
+        /// Add/associate a rule with a property. Multiple
+        /// rules may be associated with each property
+        /// </summary>
+        /// <param name="rule"></param>
+        /// <param name="propertyName"></param>
         public void Add(Rule rule, string propertyName)
         {
             if (!_rules.ContainsKey(propertyName))
@@ -28,7 +39,7 @@ namespace Presentation.Core
 
         private bool InvokeRules<T>(T viewModel, string propertyName, Func<Rule, T, string, bool> invokeFunc)
         {
-            bool allSucceeded = true;
+            var allSucceeded = true;
             var list = _rules.ContainsKey(propertyName) ? _rules[propertyName] : null;
             if (list != null)
             {

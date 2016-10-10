@@ -21,11 +21,21 @@ namespace Presentation.Core
 
         private readonly ReferenceCounter updating = new ReferenceCounter();
 
+        /// <summary>
+        /// Adds multiple items to the collection, without calling
+        /// the collection changed event until all items have been 
+        /// added
+        /// </summary>
+        /// <param name="e">The items as an IEnumerable</param>
         public void AddRange(IEnumerable<T> e)
         {
             if (e == null)
             {
+#if !NET4
+                throw new ArgumentNullException(nameof(e));
+#else
                 throw new ArgumentNullException("e");
+#endif
             }
 
             try
@@ -43,11 +53,18 @@ namespace Presentation.Core
             }
         }
 
+        /// <summary>
+        /// Switch the collection into update mode
+        /// </summary>
         public void BeginUpdate()
         {
             updating.AddRef();
         }
 
+        /// <summary>
+        /// End update mode on the collection, this will 
+        /// cause collection changed events
+        /// </summary>
         public void EndUpdate()
         {
             if (updating.Release() == 0)
@@ -56,6 +73,10 @@ namespace Presentation.Core
             }
         }
 
+        /// <summary>
+        /// Sort the collection using the supplied comparison delegate
+        /// </summary>
+        /// <param name="comparison">Delegate used to compare items</param>
         public void Sort(Comparison<T> comparison)
         {
             try

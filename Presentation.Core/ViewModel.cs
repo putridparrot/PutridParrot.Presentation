@@ -74,10 +74,18 @@ namespace Presentation.Core
             }
             disposed = true;
         }
+
         public IValidateViewModel Validation { get; set; }
         public IExtendedDataErrorInfo DataErrorInfo { get; set; }
+
+        /// <summary>
+        /// Gets/sets the rules to be associated with the view model
+        /// </summary>
         public Rules Rules { get; set; }
 
+        /// <summary>
+        /// Gets/sets the isDirty flag
+        /// </summary>
         public virtual bool IsDirty
         {
             get { return _isDirty; }
@@ -127,10 +135,15 @@ namespace Presentation.Core
         protected virtual async void OnPropertyChanged<T>(T previousValue, T currentValue, string propertyName)
 #endif
         {
-            await OnValidate(propertyName, currentValue);
+            await OnValidate(currentValue, propertyName);
             OnPropertyChanged(propertyName);
         }
 
+        /// <summary>
+        /// When a property has changed this method is called. Can be
+        /// overridden to supply more/alternate capabilities
+        /// </summary>
+        /// <param name="propertyName"></param>
 #if !NET4
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
 #else
@@ -197,7 +210,14 @@ namespace Presentation.Core
             return propertyName == "IsDirty" || propertyName == "IsBusy";
         }
 
-        protected virtual async Task OnValidate<T>(string propertyName, T newValue)
+        /// <summary>
+        /// Called when a new value is to be validated on a property.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="newValue"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        protected virtual async Task OnValidate<T>(T newValue, string propertyName)
         {
             // no need to validation against internal properties
             if (IsInternalProperty(propertyName))
@@ -220,6 +240,11 @@ namespace Presentation.Core
             }
         }
 
+        /// <summary>
+        /// Validates the whole view model object using the supplied
+        /// validation object. Data error info. is updated accordingly.
+        /// </summary>
+        /// <returns>True for validation success else false for failure</returns>
         public virtual async Task<bool> Validate()
         {
             var validation = Validation;
@@ -254,7 +279,15 @@ namespace Presentation.Core
             return true;
         }
 
-
+        /// <summary>
+        /// Sets the value to the property using supplied 
+        /// backing fields.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="backingField"></param>
+        /// <param name="newValue"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
 #if !NET4
         protected bool SetProperty<T>(ref T backingField,
             T newValue, [CallerMemberName] string propertyName = null)
@@ -280,6 +313,16 @@ namespace Presentation.Core
             return true;
         }
 
+        /// <summary>
+        /// Sets the value for the property using supplied getter
+        /// and setter functions.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="getter"></param>
+        /// <param name="setter"></param>
+        /// <param name="newValue"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
 #if !NET4
         protected bool SetProperty<T>(Func<T> getter, Func<T, T> setter, T newValue,
         [CallerMemberName] string propertyName = null)
@@ -313,6 +356,15 @@ namespace Presentation.Core
             return true;
         }
 
+        /// <summary>
+        /// Sets the new value to the backing store if one is used.
+        /// Do not use this overload unless a backing store is supplied
+        /// otherwise and Exception will be raised.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="newValue"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
 #if !NET4
         protected bool SetProperty<T>(T newValue, [CallerMemberName] string propertyName = null)
 #else
@@ -339,6 +391,14 @@ namespace Presentation.Core
                 });
         }
 
+        /// <summary>
+        /// Get's the property from the supplied backing store. If 
+        /// no backing store is used then this method should not 
+        /// be used and an exceptio will be raised.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyName"></param>
+        /// <returns>The item for the property from the backing store</returns>
 #if !NET4
         protected T GetProperty<T>([CallerMemberName] string propertyName = null)
 #else

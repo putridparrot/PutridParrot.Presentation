@@ -100,23 +100,6 @@ namespace Presentation.Core
             }
         }
 
-        bool ISupportRevertibleChangeTracking.IsChanged
-        {
-            get
-            {
-                lock (_sync)
-                {
-                    // change all current values back to original values
-                    foreach (var kv in _backingStore)
-                    {
-                        if (kv.Value.current != kv.Value.original)
-                            return true;
-                    }
-                }
-                return false;
-            }
-        }
-
         void ISupportRevertibleChangeTracking.RejectChanges(Action<string> changing, Action<string> changed)
         {
             lock (_sync)

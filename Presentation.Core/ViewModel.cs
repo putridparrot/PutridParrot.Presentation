@@ -587,20 +587,22 @@ namespace Presentation.Core
         }
 #endif
 
+        /// <summary>
+        /// Gets/sets whether the view model is in a changed state, equivalent to
+        /// an IsDirty flag. 
+        /// </summary>
         public bool IsChanged
         {
-            get
-            {
-                var revertible = BackingStore as ISupportRevertibleChangeTracking;
-                if (revertible != null)
-                {
-                    return revertible.IsChanged || _isChanged;
-                }
-                return _isChanged;
-            }
+            get { return _isChanged; }
             set { SetProperty(ref _isChanged, value, this.NameOf(x => x.IsChanged)); }
         }
 
+        /// <summary>
+        /// Accept any property changes and reset IsChanging. This is only
+        /// implemented for a BackingStore implementing the 
+        /// ISupportRevertibleChangeTracking interface, should be overidden 
+        /// and implemented if required by non backing store impl.
+        /// </summary>
         public virtual void AcceptChanges()
         {
             var revertible = BackingStore as ISupportRevertibleChangeTracking;
@@ -616,10 +618,21 @@ namespace Presentation.Core
                     {
                         OnPropertyChanged(pn);
                         Changed(pn);
+                        // this isn't great as it must assume
+                        // there are no properties outside the
+                        // backing store, i.e. fields or the likes
+                        // which have caused changes
+                        IsChanged = false;
                     });
             }
         }
 
+        /// <summary>
+        /// Reject any property changes and reset IsChanging. This is only
+        /// implemented for a BackingStore implementing the 
+        /// ISupportRevertibleChangeTracking interface, should be overidden 
+        /// and implemented if required by non backing store impl.
+        /// </summary>
         public virtual void RejectChanges()
         {
             var revertible = BackingStore as ISupportRevertibleChangeTracking;
@@ -635,6 +648,11 @@ namespace Presentation.Core
                     {
                         OnPropertyChanged(pn);
                         Changed(pn);
+                        // this isn't great as it must assume
+                        // there are no properties outside the
+                        // backing store, i.e. fields or the likes
+                        // which have caused changes
+                        IsChanged = false;
                     });
             }
         }

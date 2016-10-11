@@ -18,5 +18,4 @@
         /// </summary>
         IExtendedDataErrorInfo DataErrorInfo { get; set; }
     }
-
 }

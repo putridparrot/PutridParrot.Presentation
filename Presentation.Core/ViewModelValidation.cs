@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -37,6 +38,11 @@ namespace Presentation.Core
 
         Task<ValidationResult[]> IValidateViewModel.Validate(string propertyName, object newValue)
         {
+            if (String.IsNullOrEmpty(propertyName))
+            {
+                return ((IValidateViewModel)this).Validate();
+            }
+
             if (_validationRules.ContainsKey(propertyName))
             {
                 var displayName = _validationRules[propertyName];
@@ -95,5 +101,3 @@ namespace Presentation.Core
         }
     }
 }
-
-

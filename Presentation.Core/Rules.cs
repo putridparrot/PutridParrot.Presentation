@@ -40,6 +40,17 @@ namespace Presentation.Core
         private bool InvokeRules<T>(T viewModel, string propertyName, Func<Rule, T, string, bool> invokeFunc)
         {
             var allSucceeded = true;
+
+            // if propertyName is null or empty we need to run all rules
+            if (String.IsNullOrEmpty(propertyName))
+            {
+                foreach (var kv in _rules)
+                {
+                    allSucceeded &= InvokeRules(viewModel, kv.Key, invokeFunc);
+                }
+                return allSucceeded;
+            }
+
             var list = _rules.ContainsKey(propertyName) ? _rules[propertyName] : null;
             if (list != null)
             {

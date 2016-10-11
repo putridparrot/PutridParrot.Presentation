@@ -10,7 +10,7 @@ using Presentation.Core;
 namespace Sample.Wpf.Presentation.Core
 {
     /// <summary>
-    /// A fairly full features view model which uses the backing store
+    /// A fairly full featured view model which uses the backing store
     /// to reduce backing fields cluttering the class, includes
     /// error info. an validation using the MetadataType. Also uses
     /// property chaining rules and validation rules.
@@ -19,7 +19,7 @@ namespace Sample.Wpf.Presentation.Core
     public class MyViewModel : ViewModel
     {
         public MyViewModel() :
-            base(new SimpleBackingStore(), new DataErrorInfo())
+            base(new BackingStore(), new DataErrorInfo())
         {
             // we can assign a view model validator to the whole view model
             // and/or we can add validation rules to the Rules object
@@ -31,16 +31,14 @@ namespace Sample.Wpf.Presentation.Core
             Rules.Add(new PropertyChainRule(new[] { this.NameOf(x => x.FullName) }),
                 this.NameOf(x => x.LastName));
 
-            var validateFullName = new ValidationRule<MyViewModel>(vm => vm.FullName.Length > 3, "Full name must be > 3", this.NameOf(x => x.FullName));
+            var validateFullName = new ValidationRule<MyViewModel>(vm => String.IsNullOrEmpty(vm.FullName.Trim()) || vm.FullName.Length > 3, "Full name must be > 3", this.NameOf(x => x.FullName));
             Rules.Add(validateFullName, this.NameOf(x => x.FirstName));
             Rules.Add(validateFullName, this.NameOf(x => x.LastName));
 
-            ValidateCommand = new AsyncCommand(() => Task.Run(() =>
-            {
-                // simulate a delay if validating
-                Validate().Wait();
-                Thread.Sleep(5000);
-            }));
+            ValidateCommand = new AsyncCommand(Validate);
+
+            AcceptCommand = new ActionCommand(AcceptChanges);
+            RevertCommand = new ActionCommand(RejectChanges);
         }
 
         public string FirstName
@@ -68,5 +66,7 @@ namespace Sample.Wpf.Presentation.Core
         public string FullName => $"{FirstName} {LastName}";
 
         public ICommand ValidateCommand { get; private set; }
+        public ICommand RevertCommand { get; private set; }
+        public ICommand AcceptCommand { get; private set; }
     }
 }

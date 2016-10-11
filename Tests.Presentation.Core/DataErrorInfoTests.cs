@@ -206,7 +206,7 @@ namespace Tests.Presentation.Core
             dataErrorInfo.Add(PROP1, ERR1);
             dataErrorInfo.Add(PROP2, ERR2);
 
-            dataErrorInfo.Error = "Errors!";
+            dataErrorInfo.SetError("Errors!");
 
             Assert.AreEqual("Errors!", dataErrorInfo.Error);
         }

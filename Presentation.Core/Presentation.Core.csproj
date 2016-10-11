@@ -51,9 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncCommand.cs" />
+    <Compile Include="BackingStore.cs" />
     <Compile Include="ComparerImpl.cs" />
     <Compile Include="DispatcherExtensions.cs" />
     <Compile Include="ExtendedObservableCollection.cs" />
+    <Compile Include="IExtendedRevertibleChangeTracking.cs" />
     <Compile Include="IItemChanged.cs" />
     <Compile Include="INotifyViewModel.cs" />
     <Compile Include="ListExtensions.cs" />

@@ -19,7 +19,7 @@ namespace Tests.Presentation.Core
 
             vm.Name = "Scooby Doo";
 
-            Assert.IsTrue(vm.IsDirty);
+            Assert.IsTrue(vm.IsChanged);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Tests.Presentation.Core
 
             vm.Name = "Scooby Doo";
 
-            Assert.IsFalse(vm.IsDirty);
+            Assert.IsFalse(vm.IsChanged);
             Assert.AreEqual(0, nl.Changing.Count);
             Assert.AreEqual(0, nl.Changed.Count);
         }
@@ -78,7 +78,7 @@ namespace Tests.Presentation.Core
             vm.Address = "Mystery Machine";
             vm.EndInit();
 
-            Assert.IsFalse(vm.IsDirty);
+            Assert.IsFalse(vm.IsChanged);
         }
 
         [Test]

@@ -26,12 +26,16 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0" Text="{Binding FirstName, ValidatesOnDataErrors=True}" Margin="5" />
         <TextBox Grid.Row="1" Text="{Binding LastName, ValidatesOnDataErrors=True}" Margin="5" />
         <TextBox Grid.Row="2" Text="{Binding FullName, Mode=OneWay, ValidatesOnDataErrors=True}" IsReadOnly="true" Margin="5" x:Name="FullName"/>
-        <Button Grid.Row="3"  Content="Validate" Command="{Binding ValidateCommand}" />
+        <Button Grid.Row="3"  Content="Revert Changes" Command="{Binding RevertCommand}" IsEnabled="{Binding IsChanged}"/>
+        <Button Grid.Row="4"  Content="Accept Changes" Command="{Binding AcceptCommand}" IsEnabled="{Binding IsChanged}"/>
+        <Button Grid.Row="5"  Content="Validate" Command="{Binding ValidateCommand}" />
     </Grid>
 </Window>
 

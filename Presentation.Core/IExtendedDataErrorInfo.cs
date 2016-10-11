@@ -17,6 +17,8 @@ namespace Presentation.Core
         /// </summary>
         string[] Errors { get; }
 
+        void SetError(string errorMessage);
+
         /// <summary>
         /// Add an error string against a given property name
         /// </summary>

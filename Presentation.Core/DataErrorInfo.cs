@@ -37,7 +37,11 @@ namespace Presentation.Core
                 }
                 return _error;
             }
-            set { _error = value; }
+        }
+
+        public void SetError(string errorMessage)
+        {
+            _error = errorMessage;
         }
 
         /// <summary>

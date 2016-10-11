@@ -64,7 +64,7 @@ namespace Presentation.Core
         /// OnPropertyChanged method. 
         /// </summary>
         /// <param name="propertyName"></param>
-        public void RaisePropertyChanged(string propertyName)
+        public void RaisePropertyChanged(string propertyName = null)
         {
             OnPropertyChanged(propertyName);
         }

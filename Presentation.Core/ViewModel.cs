@@ -11,7 +11,7 @@ namespace Presentation.Core
     /// </summary>
     public abstract class ViewModel : NotifyPropertyChanged,
         IViewModel, ISupportInitializeNotification, ISupportUpdate,
-        IDataErrorInfo, IDisposable
+        IDataErrorInfo, IRevertibleChangeTracking, IDisposable
 #if !NET4
         , INotifyDataErrorInfo
 #endif
@@ -19,13 +19,13 @@ namespace Presentation.Core
 #if !NET4
         private event EventHandler<DataErrorsChangedEventArgs> errorsChanged;
 #endif
-        private event EventHandler initialized;
+        private event EventHandler _initialized;
 
         private readonly ReferenceCounter _busyCount = new ReferenceCounter();
         private readonly ReferenceCounter _updateCount = new ReferenceCounter();
 
         private bool _initializing;
-        private bool _isDirty;
+        private bool _isChanged;
 
         protected bool disposed;
 
@@ -56,7 +56,7 @@ namespace Presentation.Core
             Dispose(false);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -82,15 +82,6 @@ namespace Presentation.Core
         /// Gets/sets the rules to be associated with the view model
         /// </summary>
         public Rules Rules { get; set; }
-
-        /// <summary>
-        /// Gets/sets the isDirty flag
-        /// </summary>
-        public virtual bool IsDirty
-        {
-            get { return _isDirty; }
-            set { SetProperty(ref _isDirty, value, this.NameOf(x => x.IsDirty)); }
-        }
 
         /// <summary>
         /// Called prior to a property changing, return false in a subclass 
@@ -180,11 +171,11 @@ namespace Presentation.Core
                 // any property change call with a propertyName is 
                 // a change, but we could explicitly call this 
                 // without a change taking place such as an internal property
-                // also we don't want a change to isDirty itself 
+                // also we don't want a change to _isChanged itself 
                 // to flip the flag to True
                 if (!String.IsNullOrEmpty(propertyName) && !IsInternalProperty(propertyName))
                 {
-                    IsDirty = true;
+                    IsChanged = true;
                 }
 
                 var rules = Rules;
@@ -207,7 +198,7 @@ namespace Presentation.Core
         /// <returns></returns>
         protected virtual bool IsInternalProperty(string propertyName)
         {
-            return propertyName == "IsDirty" || propertyName == "IsBusy";
+            return propertyName == "IsChanged" || propertyName == "IsBusy";
         }
 
         /// <summary>
@@ -220,7 +211,7 @@ namespace Presentation.Core
         protected virtual async Task OnValidate<T>(T newValue, string propertyName)
         {
             // no need to validation against internal properties
-            if (IsInternalProperty(propertyName))
+            if (!IsInternalProperty(propertyName))
             {
                 var validation = Validation;
                 if (validation != null)
@@ -453,7 +444,7 @@ namespace Presentation.Core
                 }
 #endif
 
-                var initializedHandler = initialized;
+                var initializedHandler = _initialized;
 #if !NET4
                 initializedHandler?.Invoke(this, EventArgs.Empty);
 #else
@@ -478,8 +469,8 @@ namespace Presentation.Core
         /// </summary>
         event EventHandler ISupportInitializeNotification.Initialized
         {
-            add { initialized += value; }
-            remove { initialized -= value; }
+            add { _initialized += value; }
+            remove { _initialized -= value; }
         }
 
         /// <summary>
@@ -595,5 +586,57 @@ namespace Presentation.Core
             remove { errorsChanged -= value; }
         }
 #endif
+
+        public bool IsChanged
+        {
+            get
+            {
+                var revertible = BackingStore as ISupportRevertibleChangeTracking;
+                if (revertible != null)
+                {
+                    return revertible.IsChanged || _isChanged;
+                }
+                return _isChanged;
+            }
+            set { SetProperty(ref _isChanged, value, this.NameOf(x => x.IsChanged)); }
+        }
+
+        public virtual void AcceptChanges()
+        {
+            var revertible = BackingStore as ISupportRevertibleChangeTracking;
+            if (revertible != null)
+            {
+                revertible.AcceptChanges(
+                    pn =>
+                    {
+                        OnPropertyChanging(pn);
+                        Changing(pn);
+                    },
+                    pn =>
+                    {
+                        OnPropertyChanged(pn);
+                        Changed(pn);
+                    });
+            }
+        }
+
+        public virtual void RejectChanges()
+        {
+            var revertible = BackingStore as ISupportRevertibleChangeTracking;
+            if (revertible != null)
+            {
+                revertible.RejectChanges(
+                    pn =>
+                    {
+                        OnPropertyChanging(pn);
+                        Changing(pn);
+                    },
+                    pn =>
+                    {
+                        OnPropertyChanged(pn);
+                        Changed(pn);
+                    });
+            }
+        }
     }
 }

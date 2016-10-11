@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Presentation.Core
 {
@@ -7,7 +8,8 @@ namespace Presentation.Core
     /// A simple backing store mechanism to store fields
     /// in a dictionary.
     /// </summary>
-    public class SimpleBackingStore : IBackingStore
+    public class SimpleBackingStore : 
+        IBackingStore, ISupportInitialize
     {
         private readonly Dictionary<string, object> _backingStore;
         private readonly object _sync = new object();
@@ -59,6 +61,14 @@ namespace Presentation.Core
                 }
             }
             return default(T);
+        }
+
+        void ISupportInitialize.BeginInit()
+        {
+        }
+
+        void ISupportInitialize.EndInit()
+        {
         }
     }
 }

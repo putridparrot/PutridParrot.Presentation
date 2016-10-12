@@ -44,7 +44,7 @@ namespace Presentation.Core
                 if (EqualityComparer<T>.Default.Equals((T)value, newValue))
                     return false;
 
-                if (changing != null && !changing((T)value, newValue, propertyName))
+                if (!_initializing && changing != null && !changing((T)value, newValue, propertyName))
                     return false;
 
                 if (currentValue == null)
@@ -60,15 +60,17 @@ namespace Presentation.Core
                     currentValue.current = newValue;
                 }
 
+                if (!_initializing)
+                {
 #if !NET4
                 changed?.Invoke((T)value, newValue, propertyName);
 #else
-                if (changed != null)
-                {
-                    changed((T)value, newValue, propertyName);
-                }
+                    if (changed != null)
+                    {
+                        changed((T) value, newValue, propertyName);
+                    }
 #endif
-
+                }
                 return true;
             }
         }
@@ -93,9 +95,15 @@ namespace Presentation.Core
                 // change all original values to current values
                 foreach (var kv in _backingStore)
                 {
-                    changing(kv.Key);
+                    if (changing != null)
+                    {
+                        changing(kv.Key);
+                    }
                     kv.Value.original = kv.Value.current;
-                    changed(kv.Key);
+                    if (changed != null)
+                    {
+                        changed(kv.Key);
+                    }
                 }
             }
         }
@@ -107,9 +115,15 @@ namespace Presentation.Core
                 // change all current values back to original values
                 foreach (var kv in _backingStore)
                 {
-                    changing(kv.Key);
+                    if (changing != null)
+                    {
+                        changing(kv.Key);
+                    }
                     kv.Value.current = kv.Value.original;
-                    changed(kv.Key);
+                    if (changed != null)
+                    {
+                        changed(kv.Key);
+                    }
                 }
             }
         }

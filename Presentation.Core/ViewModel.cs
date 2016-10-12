@@ -104,7 +104,7 @@ namespace Presentation.Core
 
         protected override bool OnPropertyChanging(string propertyName = null)
         {
-            bool result = true;
+            var result = true;
             if (!_initializing && _updateCount.Count <= 0)
             {
                 result = base.OnPropertyChanging(propertyName);
@@ -591,7 +591,7 @@ namespace Presentation.Core
         /// Gets/sets whether the view model is in a changed state, equivalent to
         /// an IsDirty flag. 
         /// </summary>
-        public bool IsChanged
+        public virtual bool IsChanged
         {
             get { return _isChanged; }
             set { SetProperty(ref _isChanged, value, this.NameOf(x => x.IsChanged)); }

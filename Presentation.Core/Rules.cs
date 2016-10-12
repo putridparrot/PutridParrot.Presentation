@@ -10,7 +10,7 @@ namespace Presentation.Core
     /// </summary>
     public class Rules : Rule
     {
-        private readonly Dictionary<string, IList<Rule>> _rules;
+        protected readonly Dictionary<string, IList<Rule>> _rules;
 
         public Rules()
         {

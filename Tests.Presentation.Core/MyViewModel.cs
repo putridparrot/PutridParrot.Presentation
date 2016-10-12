@@ -15,6 +15,7 @@ namespace Tests.Presentation.Core
     {
         private string name;
         private string address;
+        private int age;
 
         public MyViewModel()
         {
@@ -33,6 +34,12 @@ namespace Tests.Presentation.Core
         {
             get { return address; }
             set { SetProperty(ref address, value, this.NameOf(x => x.Address)); }
+        }
+
+        public int Age
+        {
+            get { return age; }
+            set { SetProperty(ref age, value, this.NameOf(x => x.Age)); }
         }
     }
 }

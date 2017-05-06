@@ -255,7 +255,9 @@ view model will be stuck in initialization mode.*
 
 Alternatively you can also use the DefaultValue attribute. For example, applying
 
+```
 [DefaultValue(16)]
+```
 
 to the Age property would set the age to 16 and like BeginInit/EndInit, this will not cause property
 change events to occur as it happens when the view model initializes. 
@@ -263,12 +265,14 @@ change events to occur as it happens when the view model initializes.
 We can take this concept further, let's say you have a property which takes an array of strings, so maybe a set of options
 for a combobox. Now we can define the property like this 
 
+```
 [DefaultValue(new[] {"A", "B", "C"})]
 public string[] Array
 {
     get { return GetProperty<string[]>(); }
     set { SetProperty(value); }
 }
+```
 
 Whilst the DefaultValue can be assigned to primitive types and arrays, what if we have another type, such as a view model
 or ObservableCollection. In such a case we can use the DefaultValue in combination with the CreateInstance (or CreateInstanceUsing)
@@ -276,12 +280,14 @@ so that when the type is created, as long as it has a constructor which can take
 such, more complex, types. For example, this property will create an ExtendedObservableCollection, passing the DefaultValue
 into the ctor.
 
+```
 [DefaultValue(new[] { "X", "Y", "Z"})]
 [CreateInstance]
 public ExtendedObservableCollection<string> Collection
 {
     get { return GetProperty<ExtendedObservableCollection<string>>(); }
 }
+```
 
 # Updating properties without event storms
 
@@ -308,8 +314,10 @@ of the created instance.*
 An example is the following, which doesn't require a setter but will automatically create and instance
 of the collection (obviously include a setter if you might change the actual instance of the ObservableCollection)
 
+```
 [CreateInstance]
 public ObservableCollection<PersonViewModel> Children => GetProperty<ObservableCollection<PersonViewModel>>();
+```
 
 # Comparer attribute (override the default comparison)
 
@@ -319,7 +327,9 @@ comparison code.
 
 Using the 
 
+```
 [Comparer(typeof(MyComparer))]
+```
 
 attribute on your property will cause an instance of MyComparer (requires default ctor) to be created
 and where appropriate, this instance will be shared by all view models that use it - hence, we do not

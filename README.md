@@ -87,7 +87,7 @@ but they come with their own possible issues.*
 Now let's look in a little more depth at the ViewModelCommon implementation and some of the features
 we've mentioned.
 
-#ViewModel
+# ViewModel
 
 The ViewModel removes the need for backing fields, everything can be stored within the view model itself by
 simply using the GetProperty/SetProperty combination in the property getter/setter. This reduces the "plumbing" code
@@ -138,7 +138,7 @@ also fairly powerful.
 The SetProperty/GetProperty combination are pretty similar to the way a DependencyObject works. In 
 this view model's case.
 
-#ViewModelWithoutBacking
+# ViewModelWithoutBacking
 
 *I'm not mad on the name of this class, so it might change in the future*
 
@@ -187,14 +187,14 @@ public class PersonViewModel : ViewModel
 
 You still need to use the GetProperty method to allow the property to be defaulted etc. 
 
-#ViewModelWithModel
+# ViewModelWithModel
 
 If you already have a model with properties which map to the UI, maybe including it's own validation etc. and you need to
 map this to a UI but you cannot implement INotifyPropertyChange or simply put, you don't want to change the code to be UI
 friendly, you can derive a view model from ViewModelWithModel and with the GetProperty/SetProperty, delegate the set/get 
 to the underlying model.
 
-#GetProperty/SetProperty/ReadOnlyProperty
+# GetProperty/SetProperty/ReadOnlyProperty
 
 Each view model, from the NotifyPropertyChanged extension methods through to the ViewModel/ViewModelWithoutBacking/ViewModelWithModel
 stick to the premised of using a SetProperty method to see if a change is going to be made, if so raise a property changing event
@@ -226,7 +226,7 @@ a property then, again, this code will raise a FullName property changed event a
 time the ReadOnlyProperty is evaluated it builds a list of dependencies. When those dependencies change it changes and 
 re-evaluates the dependencies again ready for the next dependency change.
 
-#ViewModelRegistry
+# ViewModelRegistry
 
 Before we start looking at the various attributes etc. I thought it worth pointing out that the ViewModelCommon class uses a
 singleton ViewModelRegistry class. It's probably obvious that to use the attributes to default values, create instances etc.
@@ -244,7 +244,7 @@ be cleaned up.
 *This area may need further tweaking as it's tested further, both from memory usage but probably more importantly a performance
 persective.*
 
-#Defaulting/Initializing properties
+# Defaulting/Initializing properties
 
 Like the old WinForms component model, you can use BeginInit/EndInit so that if you need to default
 properties you can do so without property change events firing or change tracking kicking in. 
@@ -283,7 +283,7 @@ public ExtendedObservableCollection<string> Collection
     get { return GetProperty<ExtendedObservableCollection<string>>(); }
 }
 
-#Updating properties without event storms
+# Updating properties without event storms
 
 Occasionally we get into a situation where we might wish to set many properties and hence we'll get many
 change events (an event storm). In such situations its useful to defer these change events until our setting 
@@ -296,7 +296,7 @@ published with duplicates removed.
 matching number of BeginUpdate/EndUpdate combinations, otherwise by not calling EndUpdate enough the 
 view model will be stuck in update mode.* 
 
-#CreateInstance attribute
+# CreateInstance attribute
 
 In situations where DefaultValue is not sufficiant (basically for anything other than basic types). This 
 attribute can be applied to a property and will set up the property to a new instance of the property type. 
@@ -311,7 +311,7 @@ of the collection (obviously include a setter if you might change the actual ins
 [CreateInstance]
 public ObservableCollection<PersonViewModel> Children => GetProperty<ObservableCollection<PersonViewModel>>();
 
-#Comparer attribute (override the default comparison)
+# Comparer attribute (override the default comparison)
 
 By default the EqualityComparer.Default for the property type is used to determine whether a property
 has changed or not. In some circumstances you might wish to override this behavior with your own 
@@ -325,7 +325,7 @@ attribute on your property will cause an instance of MyComparer (requires defaul
 and where appropriate, this instance will be shared by all view models that use it - hence, we do not
 end up creating 100's of instances of a comparer.
 
-#Validation
+# Validation
 
 Validation can be automatically handled if you use the data annotation ValidationAttribute 
 classes. After a value changes, validation will occur (if it exists for the property). If the 
@@ -344,7 +344,7 @@ to convert a boolean result to a ValidationResult with a supplied error message.
 might be interacting with the view model's data error info. in your own code, you can use the 
 Validation.Ignore method to return a null validation result (or ofcourse do this yourself).
 
-#Change tracking
+# Change tracking
 
 IRevertibleChangeTracking is supported. This is basically an interface for transactional sorts of 
 functionality which we're using on the view model. i.e. You initialize your default values, then you make changes to 
@@ -358,7 +358,7 @@ your view model, for example if you support an IsEnabled property, you probably 
 
 By having change tracking, we're also able to handle Undo/Redo type functionality.
 
-#Rule attributes
+# Rule attributes
 
 Rules can be created against view model properties which work a little like data annotation attributes, in that
 when a property changing even is occurs a rule's PreInvoke is called and after a change occurs the PostInvoke is 
@@ -370,18 +370,18 @@ refresh the ICollectionView property after the Filter changes.
 
 You might write your own rules that automatically change a child object based upon a parent property change etc.
 
-#Collection properties
+# Collection properties
 
 When a property is set which supports INotifyCollectionChanged, INotifyPropertyChanged or the IItemChanged (supplied
 as part of this project and used by ExtendedObservableCollection) changes can be "partially" tracked. At this time
 a change simply causes the IsChanged flag to go true. Hence no undo currently exists on this code.
 
-#Child view models
+# Child view models
 
 If a property supports INotifyPropertyChanged it will be change tracked by default, hence a change on the property 
 will cause the IsChanged to go true, currently undo is not support on child objects.
 
-#IDisposable on the view model
+# IDisposable on the view model
 
 By default IDisposable is implemented on the view model base. This handles Unregistering the view model
 type (the ctor Registers it). This process of register/unregister is used to reduce duplication of state. 
@@ -400,7 +400,7 @@ this should be fairly minimal.
 If your derived class needs to also handle Dispose, you should override DisposeManaged for managed resources and/or
 DisposeUnManaged for unmanaged resources - this is designed along the guidelines of the IDisposable pattern.
 
-#ICommand properties
+# ICommand properties
 
 By default, ICommand properties which are participating in the view model, i.e. have a SetProperty, will
 not be change tracked. Generally speaking commands are not strictly part of the view model data. You can
@@ -410,7 +410,7 @@ hence the the opposite, properties are changed tracked unless ChangeTracking is 
 *Usually we'd probably not include ICommand code in the view model using GetProperty/SetProperty unless there was a 
 good reason to support change notification.*
 
-#ActionCommand
+# ActionCommand
 
 The name for this command is already used in Expressions Interactivity library, hence the name may 
 change in the future if deemed too confusing.
@@ -422,7 +422,7 @@ This allows the ActionCommand to be used via CreateInstance and CreateInstanceUs
 for the view model to assign methods to it post creation. This is really more a "nicety" to remove
 the code to create such commands.
 
-#AsyncCommand
+# AsyncCommand
 
 The AsyncCommand and AsyncCommand<T> can be used with async/task based execute and can execute methods.
 This allows us to execute on another thread and the command will set it's IsBusy property accordingly.

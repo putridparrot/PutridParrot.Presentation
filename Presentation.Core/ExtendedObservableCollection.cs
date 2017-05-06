@@ -5,37 +5,49 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Threading;
+using Presentation.Patterns.Helpers;
+using Presentation.Patterns.Interfaces;
 
-namespace Presentation.Core
+namespace Presentation.Patterns
 {
     /// <summary>
-    /// A dispatcher aware observable collection. As the default ObservableCollection does
-    /// not marshal changes onto the UI thread, this class handled such marshalling as well
-    /// as offering the ability to Begin and End updates, so trying to only fire update events
-    /// when necessary.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class ExtendedObservableCollection<T> : ObservableCollection<T>, IItemChanged
+	/// A dispatcher aware observable collection. As the default ObservableCollection does
+	/// not marshal changes onto the UI thread, this class handled such marshalling as well
+	/// as offering the ability to Begin and End updates, so trying to only fire update events
+	/// when necessary.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class ExtendedObservableCollection<T> : ObservableCollection<T>, IItemChanged
     {
         public event PropertyChangedEventHandler ItemChanged;
 
-        private readonly ReferenceCounter updating = new ReferenceCounter();
+        private ReferenceCounter updating;
+
+        public ExtendedObservableCollection() :
+            base()
+        {            
+        }
+
+        public ExtendedObservableCollection(List<T> list) :
+            base(list)
+        {
+        }
+
+        public ExtendedObservableCollection(IEnumerable<T> collection) :
+            base(collection)
+        {
+        }
 
         /// <summary>
-        /// Adds multiple items to the collection, without calling
-        /// the collection changed event until all items have been 
-        /// added
+        /// Adds multiple items to the collection via an IEnumerable.
+        /// Switches off change notifications whilst this is happening.
         /// </summary>
-        /// <param name="e">The items as an IEnumerable</param>
+        /// <param name="e"></param>
         public void AddRange(IEnumerable<T> e)
         {
             if (e == null)
             {
-#if !NET4
-                throw new ArgumentNullException(nameof(e));
-#else
                 throw new ArgumentNullException("e");
-#endif
             }
 
             try
@@ -54,29 +66,41 @@ namespace Presentation.Core
         }
 
         /// <summary>
-        /// Switch the collection into update mode
+        /// Used internally to track Begin/EndUpdate usage
         /// </summary>
-        public void BeginUpdate()
+        /// <returns></returns>
+        private ReferenceCounter GetOrCreateUpdating()
         {
-            updating.AddRef();
+            return updating != null ? updating : (updating = new ReferenceCounter());
         }
 
         /// <summary>
-        /// End update mode on the collection, this will 
-        /// cause collection changed events
+        /// Supresses collection change notifications, incrementing
+        /// the update ref count.
+        /// </summary>
+        public void BeginUpdate()
+        {
+            GetOrCreateUpdating().AddRef();
+        }
+
+        /// <summary>
+        /// Turns collection change notifications back on when 
+        /// update ref count is zero
         /// </summary>
         public void EndUpdate()
         {
-            if (updating.Release() == 0)
+            if (GetOrCreateUpdating().Release() == 0)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
         }
 
         /// <summary>
-        /// Sort the collection using the supplied comparison delegate
+        /// Sorts the collection in place, i.e. makes changes to 
+        /// the collection. Supresses notification change events
+        /// whilst this happens
         /// </summary>
-        /// <param name="comparison">Delegate used to compare items</param>
+        /// <param name="comparison"></param>
         public void Sort(Comparison<T> comparison)
         {
             try
@@ -92,9 +116,14 @@ namespace Presentation.Core
         }
 
         public override event NotifyCollectionChangedEventHandler CollectionChanged;
+
+        /// <summary>
+        /// When the collection changes but is in update mode, no changes propogate. 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (updating.Count <= 0)
+            if (GetOrCreateUpdating().Count <= 0)
             {
                 //base.OnCollectionChanged(e);
                 // Taken from http://stackoverflow.com/questions/2104614/updating-an-observablecollection-in-a-separate-thread
@@ -103,9 +132,9 @@ namespace Presentation.Core
                 if (eventHandler != null)
                 {
                     var dispatcher = (from NotifyCollectionChangedEventHandler n in eventHandler.GetInvocationList()
-                                             let dpo = n.Target as DispatcherObject
-                                             where dpo != null
-                                             select dpo.Dispatcher).FirstOrDefault();
+                                      let dpo = n.Target as DispatcherObject
+                                      where dpo != null
+                                      select dpo.Dispatcher).FirstOrDefault();
 
                     if (dispatcher != null && !dispatcher.CheckAccess())
                     {
@@ -113,9 +142,8 @@ namespace Presentation.Core
                     }
                     else
                     {
-                        foreach (var eh in eventHandler.GetInvocationList())
+                        foreach (NotifyCollectionChangedEventHandler n in eventHandler.GetInvocationList())
                         {
-                            var n = (NotifyCollectionChangedEventHandler) eh;
                             n.Invoke(this, e);
                         }
                     }
@@ -147,16 +175,10 @@ namespace Presentation.Core
 
         private void ItemPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
-            var itemChanged = ItemChanged;
-#if !NET4
-            itemChanged?.Invoke(sender, propertyChangedEventArgs);
-#else
-            if (itemChanged != null)
+            if (ItemChanged != null)
             {
-                itemChanged(sender, propertyChangedEventArgs);
+                ItemChanged(sender, propertyChangedEventArgs);
             }
-#endif
         }
     }
-
 }

@@ -1,8 +1,14 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Core;
+using Presentation.Patterns.Helpers;
 
-namespace Tests.Presentation.Core
+namespace Tests.Presentation
 {
     [ExcludeFromCodeCoverage]
     [TestFixture]
@@ -12,7 +18,9 @@ namespace Tests.Presentation.Core
         public void AddRef_AddASingleReference_ExpectReturnOfOne()
         {
             var rc = new ReferenceCounter();
-            Assert.AreEqual(1, rc.AddRef());
+            rc.AddRef()
+                .Should()
+                .Be(1);
         }
 
         [Test]
@@ -23,14 +31,18 @@ namespace Tests.Presentation.Core
             rc.AddRef();
             rc.AddRef();
 
-            Assert.AreEqual(4, rc.AddRef());
+            rc.AddRef()
+                .Should()
+                .Be(4);
         }
 
         [Test]
         public void Count_InitialState_ExpectZero()
         {
             var rc = new ReferenceCounter();
-            Assert.AreEqual(0, rc.Count);
+            rc.Count
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -38,7 +50,9 @@ namespace Tests.Presentation.Core
         {
             var rc = new ReferenceCounter();
             rc.AddRef();
-            Assert.AreEqual(1, rc.Count);
+            rc.Count
+                .Should()
+                .Be(1);
         }
 
         [Test]
@@ -50,7 +64,9 @@ namespace Tests.Presentation.Core
             rc.AddRef();
             rc.AddRef();
 
-            Assert.AreEqual(4, rc.Count);
+            rc.Count
+                .Should()
+                .Be(4);
         }
 
         [Test]
@@ -58,7 +74,9 @@ namespace Tests.Presentation.Core
         {
             var rc = new ReferenceCounter();
             rc.Release();
-            Assert.AreEqual(0, rc.Count);
+            rc.Count
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -67,7 +85,9 @@ namespace Tests.Presentation.Core
             var rc = new ReferenceCounter();
             rc.AddRef();
             rc.Release();
-            Assert.AreEqual(0, rc.Count);
+            rc.Count
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -79,14 +99,18 @@ namespace Tests.Presentation.Core
             rc.AddRef();
             rc.AddRef();
             rc.Release();
-            Assert.AreEqual(3, rc.Count);
+            rc.Count
+                .Should()
+                .Be(3);
         }
 
         [Test]
         public void Release_OnZeroCount_ExpectZeroReturn()
         {
             var rc = new ReferenceCounter();
-            Assert.AreEqual(0, rc.Release());
+            rc.Release()
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -94,7 +118,9 @@ namespace Tests.Presentation.Core
         {
             var rc = new ReferenceCounter();
             rc.AddRef();
-            Assert.AreEqual(0, rc.Release());
+            rc.Release()
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -105,8 +131,9 @@ namespace Tests.Presentation.Core
             rc.AddRef();
             rc.AddRef();
             rc.AddRef();
-            Assert.AreEqual(3, rc.Release());
+            rc.Release()
+                .Should()
+                .Be(3);
         }
     }
-
 }

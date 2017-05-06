@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Presentation.Core
+namespace Presentation.Patterns
 {
     /// <summary>
     /// A collection of rule objects associated with a property 
@@ -10,7 +10,7 @@ namespace Presentation.Core
     /// </summary>
     public class Rules : Rule
     {
-        protected readonly Dictionary<string, IList<Rule>> _rules;
+        private readonly Dictionary<string, IList<Rule>> _rules;
 
         public Rules()
         {
@@ -73,4 +73,5 @@ namespace Presentation.Core
             return InvokeRules(viewModel, propertyName, (r, vm, pn) => r.PostInvoke(vm, pn));
         }
     }
+
 }

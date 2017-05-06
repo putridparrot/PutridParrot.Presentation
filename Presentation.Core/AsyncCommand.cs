@@ -2,94 +2,56 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Presentation.Patterns.Helpers;
 
-namespace Presentation.Core
+namespace Presentation.Patterns
 {
     /// <summary>
     /// A Task/async aware command object. Automatically handles changes
     /// to the IsBusy flag
     /// </summary>
-    public class AsyncCommand : NotifyPropertyChanged, ICommand
+    public class AsyncCommand : CommandCommon
     {
-        private readonly Func<object, Task> _executeObjectCommand;
-        private readonly Func<object, Task<bool>> _canExecuteObjectCommand;
-        private readonly Func<Task> _executeCommand;
-        private readonly Func<Task<bool>> _canExecuteCommand;
-
-        private readonly ReferenceCounter _busyCount = new ReferenceCounter();
-
-        public event EventHandler CanExecuteChanged;
+        private ReferenceCounter _busyCount;
 
         public AsyncCommand()
         {
         }
 
-        public AsyncCommand(Func<object, Task> execute)
-        {
-            _executeObjectCommand = execute;
-        }
-
         public AsyncCommand(Func<Task> execute)
         {
-            _executeCommand = execute;
+            ExecuteCommand = execute;
         }
 
-        public AsyncCommand(Func<object, Task> execute, Func<object, Task<bool>> canExecute)
+        public AsyncCommand(Func<Task> execute, Func<Task<bool>> canExecute) :
+            this(execute)
         {
-            _executeObjectCommand = execute;
-            _canExecuteObjectCommand = canExecute;
+            CanExecuteCommand = canExecute;
         }
 
-        public AsyncCommand(Func<Task> execute, Func<Task<bool>> canExecute)
-        {
-            _executeCommand = execute;
-            _canExecuteCommand = canExecute;
-        }
+        public Func<Task> ExecuteCommand { get; set; }
+        public Func<Task<bool>> CanExecuteCommand { get; set; }
 
-        public void RaiseCanExecuteChanged()
-        {
-            var canExecuteChanged = CanExecuteChanged;
-#if !NET4
-            canExecuteChanged?.Invoke(this, EventArgs.Empty);
-#else
-            if (canExecuteChanged != null)
-            {
-                canExecuteChanged(this, EventArgs.Empty);
-            }
-#endif
-        }
-
-        public bool CanExecute(object parameter)
+        public override bool CanExecute(object parameter)
         {
             // slightly naff to use the Result like this, but need this method
             // signature to support ICommand
             bool result = true;
-
-            if (_canExecuteObjectCommand != null)
-                result = _canExecuteObjectCommand(parameter).Result;
-            else if (_canExecuteCommand != null)
-                result = _canExecuteCommand().Result;
+            if(CanExecuteCommand != null)
+                result = CanExecuteCommand().Result;
 
             return result && !IsBusy;
         }
 
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             try
             {
-                if (_executeObjectCommand != null)
+                if (ExecuteCommand != null)
                 {
                     IsBusy = true;
 
-                    _executeObjectCommand(parameter).
-                        ContinueWith(CompleteTask,
-                            TaskScheduler.FromCurrentSynchronizationContext());
-                }
-                else if (_executeCommand != null)
-                {
-                    IsBusy = true;
-
-                    _executeCommand().
+                    ExecuteCommand().
                         ContinueWith(CompleteTask,
                             TaskScheduler.FromCurrentSynchronizationContext());
                 }
@@ -110,19 +72,114 @@ namespace Presentation.Core
             }
         }
 
+        private ReferenceCounter GetOrCreateBusyCount()
+        {
+            return _busyCount ?? (_busyCount = new ReferenceCounter());
+        }
+
         public bool IsBusy
         {
-            get { return _busyCount.Count > 0; }
+            get { return GetOrCreateBusyCount().Count > 0; }
             set
             {
-                var current = _busyCount.Count;
-                if ((value ? _busyCount.AddRef() : _busyCount.Release()) != current)
+                var busyCount = GetOrCreateBusyCount();
+                var current = busyCount.Count;
+                if ((value ? busyCount.AddRef() : busyCount.Release()) != current)
                 {
-                    OnPropertyChanged("IsBusy");
+                    OnPropertyChanged();
                     RaiseCanExecuteChanged();
                 }
             }
         }
     }
 
+    /// <summary>
+    /// A Task/async aware command object. Automatically handles changes
+    /// to the IsBusy flag
+    /// </summary>
+    public class AsyncCommand<T> : CommandCommon
+    {
+        private ReferenceCounter _busyCount;
+
+        public AsyncCommand()
+        {
+        }
+
+        public AsyncCommand(Func<T, Task> execute)
+        {
+            ExecuteObjectCommand = execute;
+        }
+
+        public AsyncCommand(Func<T, Task> execute, Func<T, Task<bool>> canExecute) :
+            this(execute)
+        {
+            CanExecuteObjectCommand = canExecute;
+        }
+
+        public Func<T, Task> ExecuteObjectCommand { get; set; }
+        public Func<T, Task<bool>> CanExecuteObjectCommand { get; set; }
+
+        public override bool CanExecute(object parameter)
+        {
+            // slightly naff to use the Result like this, but need this method
+            // signature to support ICommand
+            var result = true;
+
+            if (CanExecuteObjectCommand != null)
+            {
+                result = CanExecuteObjectCommand((T) parameter).Result;
+            }
+
+            return result && !IsBusy;
+        }
+
+        public override void Execute(object parameter)
+        {
+            try
+            {
+                if (ExecuteObjectCommand != null)
+                {
+                    IsBusy = true;
+
+                    ExecuteObjectCommand((T)parameter).
+                        ContinueWith(CompleteTask,
+                            TaskScheduler.FromCurrentSynchronizationContext());
+                }
+            }
+            catch
+            {
+                IsBusy = false;
+            }
+        }
+
+        private void CompleteTask(Task tsk)
+        {
+            IsBusy = false;
+
+            if (tsk.IsFaulted)
+            {
+                Dispatcher.CurrentDispatcher.Throw(tsk.Exception);
+            }
+        }
+
+        private ReferenceCounter GetOrCreateBusyCount()
+        {
+            return _busyCount ?? (_busyCount = new ReferenceCounter());
+        }
+
+        public bool IsBusy
+        {
+            get { return GetOrCreateBusyCount().Count > 0; }
+            set
+            {
+                var busyCount = GetOrCreateBusyCount();
+                var current = busyCount.Count;
+                if ((value ? busyCount.AddRef() : busyCount.Release()) != current)
+                {
+                    OnPropertyChanged();
+                    RaiseCanExecuteChanged();
+                }
+            }
+        }
+    }
 }

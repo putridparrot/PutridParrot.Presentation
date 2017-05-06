@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Core;
+using Presentation.Patterns;
 
-namespace Tests.Presentation.Core
+namespace Tests.Presentation
 {
     [ExcludeFromCodeCoverage]
     [TestFixture]
@@ -17,14 +14,18 @@ namespace Tests.Presentation.Core
         public void Constructor_ExpectEmptyErrors()
         {
             var dataErrorInfo = new DataErrorInfo();
-            Assert.AreEqual(0, dataErrorInfo.Errors.Length);
+            dataErrorInfo.Errors
+                .Should()
+                .BeNull();
         }
 
         [Test]
         public void Constructor_ExpectEmptyProperties()
         {
             var dataErrorInfo = new DataErrorInfo();
-            Assert.AreEqual(0, dataErrorInfo.Errors.Length);
+            dataErrorInfo.Properties
+                .Should()
+                .BeNull();
         }
 
         [Test]
@@ -36,7 +37,9 @@ namespace Tests.Presentation.Core
             var dataErrorInfo = new DataErrorInfo();
             dataErrorInfo.Add(PROP, ERR);
 
-            Assert.AreEqual(ERR, dataErrorInfo[PROP]);
+            dataErrorInfo[PROP]
+                .Should()
+                .Be(ERR);
         }
 
         [Test]
@@ -48,7 +51,9 @@ namespace Tests.Presentation.Core
             var dataErrorInfo = new DataErrorInfo();
             dataErrorInfo.Add(PROP, ERR);
 
-            Assert.AreEqual(1, dataErrorInfo.Properties.Length);
+            dataErrorInfo.Properties.Length
+                .Should()
+                .Be(1);
         }
 
         [Test]
@@ -60,7 +65,9 @@ namespace Tests.Presentation.Core
             var dataErrorInfo = new DataErrorInfo();
             dataErrorInfo.Add(PROP, ERR);
 
-            Assert.AreEqual(1, dataErrorInfo.Errors.Length);
+            dataErrorInfo.Errors.Length
+                .Should()
+                .Be(1);
         }
 
         [Test]
@@ -70,7 +77,9 @@ namespace Tests.Presentation.Core
 
             var dataErrorInfo = new DataErrorInfo();
 
-            Assert.IsFalse(dataErrorInfo.Remove(PROP));
+            dataErrorInfo.Remove(PROP)
+                .Should()
+                .BeFalse();
         }
 
         [Test]
@@ -82,7 +91,9 @@ namespace Tests.Presentation.Core
             var dataErrorInfo = new DataErrorInfo();
             dataErrorInfo.Add(PROP, ERR);
 
-            Assert.IsTrue(dataErrorInfo.Remove(PROP));
+            dataErrorInfo.Remove(PROP)
+                .Should()
+                .BeTrue();
         }
 
         [Test]
@@ -94,7 +105,9 @@ namespace Tests.Presentation.Core
             var dataErrorInfo = new DataErrorInfo();
             dataErrorInfo.Add(PROP, ERR);
 
-            Assert.IsTrue(dataErrorInfo.Clear());
+            dataErrorInfo.Clear()
+                .Should()
+                .BeTrue();
         }
 
         [Test]
@@ -108,7 +121,9 @@ namespace Tests.Presentation.Core
 
             dataErrorInfo.Clear();
 
-            Assert.AreEqual(0, dataErrorInfo.Properties.Length);
+            dataErrorInfo.Properties.Length
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -122,7 +137,9 @@ namespace Tests.Presentation.Core
 
             dataErrorInfo.Clear();
 
-            Assert.AreEqual(0, dataErrorInfo.Errors.Length);
+            dataErrorInfo.Errors.Length
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -131,10 +148,11 @@ namespace Tests.Presentation.Core
             const string PROP = "Prop1";
             const string ERR = "Prop1Error";
 
-            var dataErrorInfo = new DataErrorInfo();
-            dataErrorInfo[PROP] =  ERR;
+            var dataErrorInfo = new DataErrorInfo {[PROP] = ERR};
 
-            Assert.AreEqual(1, dataErrorInfo.Errors.Length);
+            dataErrorInfo.Errors.Length
+                .Should()
+                .Be(1);
         }
 
         [Test]
@@ -148,7 +166,9 @@ namespace Tests.Presentation.Core
 
             dataErrorInfo[PROP] = ERR + "!";
 
-            Assert.AreEqual(1, dataErrorInfo.Errors.Length);
+            dataErrorInfo.Errors.Length
+                .Should()
+                .Be(1);
         }
 
         [Test]
@@ -162,7 +182,9 @@ namespace Tests.Presentation.Core
 
             dataErrorInfo[PROP] = null;
 
-            Assert.AreEqual(0, dataErrorInfo.Errors.Length);
+            dataErrorInfo.Errors.Length
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -176,7 +198,9 @@ namespace Tests.Presentation.Core
 
             dataErrorInfo[PROP] = String.Empty;
 
-            Assert.AreEqual(0, dataErrorInfo.Errors.Length);
+            dataErrorInfo.Errors.Length
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -191,7 +215,9 @@ namespace Tests.Presentation.Core
             dataErrorInfo.Add(PROP1, ERR1);
             dataErrorInfo.Add(PROP2, ERR2);
 
-            Assert.AreEqual("Prop1Error\r\nProp2Error\r\n", dataErrorInfo.Error);
+            dataErrorInfo.Error
+                .Should()
+                .Be("Prop1Error\r\nProp2Error\r\n");
         }
 
         [Test]
@@ -208,7 +234,9 @@ namespace Tests.Presentation.Core
 
             dataErrorInfo.SetError("Errors!");
 
-            Assert.AreEqual("Errors!", dataErrorInfo.Error);
+            dataErrorInfo.Error
+                .Should()
+                .Be("Errors!");
         }
     }
 }

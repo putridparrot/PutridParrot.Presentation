@@ -1,9 +1,12 @@
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using Presentation.Patterns.Interfaces;
 
-namespace Presentation.Core
+namespace Presentation.Patterns
 {
     /// <summary>
     /// Implementation of an IExtendedDataErrorInfo for use with the IDataErrorInfo
@@ -11,9 +14,36 @@ namespace Presentation.Core
     /// </summary>
     public class DataErrorInfo : IExtendedDataErrorInfo
     {
-        private readonly Dictionary<string, string> _errors = new Dictionary<string, string>();
         private readonly object _syncObject = new object();
+        private Dictionary<string, string> _errors;
         private string _error;
+
+#if !NET4
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+#endif
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            var error = this[propertyName];
+            if (!String.IsNullOrEmpty(error))
+                return new[] { error };
+
+            return null;
+        }
+
+#if !NET4
+        public bool HasErrors => _errors?.Count > 0;
+#else
+        public bool HasErrors
+        {
+            get { return _errors != null && _errors.Count > 0; }
+        }
+#endif
+
+        private Dictionary<string, string> GetOrCreateErrors()
+        {
+            return _errors ?? (_errors = new Dictionary<string, string>());
+        }
 
         /// <summary>
         /// Gets/Sets the error string - if none exists and errors exist
@@ -25,15 +55,21 @@ namespace Presentation.Core
             {
                 if (String.IsNullOrEmpty(_error))
                 {
-                    var sb = new StringBuilder();
-                    lock (_syncObject)
+                    if (_errors != null)
                     {
-                        foreach (var e in _errors.Values)
+                        var sb = new StringBuilder();
+                        lock (_syncObject)
                         {
-                            sb.AppendLine(e);
+                            if (_errors != null)
+                            {
+                                foreach (var e in _errors.Values)
+                                {
+                                    sb.AppendLine(e);
+                                }
+                            }
                         }
+                        return sb.ToString();
                     }
-                    return sb.ToString();
                 }
                 return _error;
             }
@@ -51,6 +87,9 @@ namespace Presentation.Core
         {
             get
             {
+                if (_errors == null)
+                    return null;
+
                 lock (_syncObject)
                 {
                     return (from propertyErrorPair in _errors
@@ -67,6 +106,9 @@ namespace Presentation.Core
         {
             get
             {
+                if (_errors == null)
+                    return null;
+
                 lock (_syncObject)
                 {
                     return (from propertyErrorPair in _errors
@@ -74,6 +116,14 @@ namespace Presentation.Core
                             select propertyErrorPair.Value).ToArray();
                 }
             }
+        }
+
+        private void OnErrorsChanged(string propertyName)
+        {
+#if !NET4
+            var errorsChanged = ErrorsChanged;
+            errorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+#endif
         }
 
         /// <summary>
@@ -88,7 +138,16 @@ namespace Presentation.Core
             {
                 lock (_syncObject)
                 {
-                    return !_errors.ContainsKey(propertyName) ? null : _errors[propertyName];
+                    string value = null;
+#if !NET4
+                    _errors?.TryGetValue(propertyName, out value);
+#else
+                    if (_errors != null)
+                    {
+                        _errors.TryGetValue(propertyName, out value);
+                    }
+#endif
+                    return value;
                 }
             }
             set
@@ -114,8 +173,10 @@ namespace Presentation.Core
         {
             lock (_syncObject)
             {
-                _errors[propertyName] = message;
+                var errors = GetOrCreateErrors();
+                errors[propertyName] = message;
             }
+            OnErrorsChanged(propertyName);
             return true;
         }
 
@@ -126,14 +187,17 @@ namespace Presentation.Core
         /// <returns></returns>
         public bool Remove(string propertyName)
         {
-            lock (_syncObject)
+            if (_errors != null)
             {
-                if (_errors.ContainsKey(propertyName))
+                lock (_syncObject)
                 {
-                    _errors.Remove(propertyName);
-                    return true;
+                    if (_errors != null)
+                    {
+                        return _errors.Remove(propertyName);
+                    }
                 }
             }
+            OnErrorsChanged(propertyName);
             return false;
         }
 
@@ -143,9 +207,28 @@ namespace Presentation.Core
         /// <returns></returns>
         public bool Clear()
         {
-            lock (_syncObject)
+            if (_errors != null)
             {
-                _errors.Clear();
+                string[] properties;
+                lock (_syncObject)
+                {
+                    properties = Properties;
+#if !NET4
+                    _errors?.Clear();
+#else
+                    if (_errors != null)
+                    {
+                        _errors.Clear();
+                    }
+#endif
+                }
+                if (properties != null)
+                {
+                    foreach (var property in properties)
+                    {
+                        OnErrorsChanged(property);
+                    }
+                }
             }
             return true;
         }

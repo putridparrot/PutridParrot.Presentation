@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using Presentation.Patterns.Interfaces;
 
-namespace Presentation.Core
+namespace Presentation.Patterns
 {
     /// <summary>
     /// Implementation of an INotifyPropertyChanged interface. This is
@@ -17,18 +18,18 @@ namespace Presentation.Core
 #if !NET4
         protected virtual bool OnPropertyChanging([CallerMemberName] string propertyName = null)
         {
-            var handler = propertyChanging;
+            var handler = PropertyChanging;
             handler?.Invoke(this, new PropertyChangingEventArgs(propertyName));
             return true;
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            var handler = propertyChanged;
+            var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 #else    
-        protected virtual bool OnPropertyChanging(string propertyName = null)
+        protected virtual bool OnPropertyChanging([CallerMemberName] string propertyName = null)
         {
             var handler = PropertyChanging;
             if (handler != null)
@@ -38,7 +39,7 @@ namespace Presentation.Core
             return true;
         }
 
-        protected virtual void OnPropertyChanged(string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             var handler = PropertyChanged;
             if (handler != null)
@@ -56,6 +57,7 @@ namespace Presentation.Core
         /// <returns></returns>
         public bool RaisePropertyChanging(string propertyName)
         {
+            // ReSharper disable once ExplicitCallerInfoArgument
             return OnPropertyChanging(propertyName);
         }
 
@@ -66,6 +68,7 @@ namespace Presentation.Core
         /// <param name="propertyName"></param>
         public void RaisePropertyChanged(string propertyName = null)
         {
+            // ReSharper disable once ExplicitCallerInfoArgument
             OnPropertyChanged(propertyName);
         }
 
@@ -80,6 +83,7 @@ namespace Presentation.Core
             {
                 foreach (var propertyName in propertyNames)
                 {
+                    // ReSharper disable once ExplicitCallerInfoArgument
                     OnPropertyChanged(propertyName);
                 }
             }

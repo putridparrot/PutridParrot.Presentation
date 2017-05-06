@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0BEF560D-FC49-47F1-8FE2-81FA9C068604}</ProjectGuid>
+    <ProjectGuid>{BDF4C8EA-273E-4F30-AC9A-E9DE6CA567FD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tests.Presentation.Core</RootNamespace>
-    <AssemblyName>Tests.Presentation.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>Tests.Presentation</RootNamespace>
+    <AssemblyName>Tests.Presentation</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,58 +30,78 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=4.19.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.0\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
+    <Reference Include="FluentAssertions.Core, Version=4.19.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.0\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndRulesTests.cs" />
+    <Compile Include="ActionCommandTests.cs" />
     <Compile Include="AsyncCommandTests.cs" />
-    <Compile Include="BackingStoreTests.cs" />
-    <Compile Include="ComparerImplTests.cs" />
+    <Compile Include="ChainReadPropertyTests.cs" />
+    <Compile Include="CreateInstanceAttributeTests.cs" />
     <Compile Include="DataErrorInfoTests.cs" />
-    <Compile Include="ExpressionTests.cs" />
-    <Compile Include="ExtendedObservableCollectionTests.cs" />
+    <Compile Include="DefaultValueAttributeTests.cs" />
+    <Compile Include="DisposableActionTestscs.cs" />
+    <Compile Include="Helpers\GenderFactory.cs" />
+    <Compile Include="Helpers\MyViewModelWithOwnBacking.cs" />
+    <Compile Include="Helpers\ViewBinding.cs" />
     <Compile Include="ListExtensionTests.cs" />
-    <Compile Include="MyNotifyPropertyChanged.cs" />
-    <Compile Include="MyViewModel.cs" />
-    <Compile Include="MyViewModel1.cs" />
-    <Compile Include="MyViewModel2.cs" />
-    <Compile Include="NotifyPropertyChangedListener.cs" />
-    <Compile Include="NotifyPropertyChangedTests.cs" />
-    <Compile Include="OrRulesTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MultipleReadPropertyTests.cs" />
+    <Compile Include="PropertyChainAttributeTests.cs" />
+    <Compile Include="CustomRuleAttributeTests.cs" />
+    <Compile Include="ReadOnlyEnsureNoStackOverflow.cs" />
+    <Compile Include="ReadWithBranchesPropertyTests.cs" />
     <Compile Include="ReferenceCounterTests.cs" />
-    <Compile Include="ViewModelWithBackingDomainObjectTests.cs" />
-    <Compile Include="ViewModelWithBackingFieldsTests.cs" />
-    <Compile Include="ViewModelWithBackingStoreTests.cs" />
+    <Compile Include="SafeConvertTests.cs" />
+    <Compile Include="ObservableViewCollectionTests.cs" />
+    <Compile Include="UndoRedoStackTests.cs" />
+    <Compile Include="Helpers\DivisibleBy100Comparer.cs" />
+    <Compile Include="InitializationDisposableTests.cs" />
+    <Compile Include="Helpers\MyViewModel.cs" />
+    <Compile Include="Helpers\NotifyPropertyChangedListener.cs" />
+    <Compile Include="NotifyPropertyChangedTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdatingDisposableTests.cs" />
+    <Compile Include="ViewModelCollectionTests.cs" />
+    <Compile Include="ViewModelCommandTests.cs" />
+    <Compile Include="ViewModelWithModelTests.cs" />
+    <Compile Include="ViewModelPerformanceTests.cs" />
+    <Compile Include="ViewModelReadOnlyPropertyTests.cs" />
+    <Compile Include="ViewModelRegistryTests.cs" />
+    <Compile Include="ViewModelTests.cs" />
+    <Compile Include="ViewModelValidationTests.cs" />
+    <Compile Include="ViewModelWithoutBackingCollectionTests.cs" />
+    <Compile Include="ViewModelWithoutBackingReadOnlyPropertyTests.cs" />
+    <Compile Include="ViewModelWithoutBackingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Presentation.Core\Presentation.Core.csproj">
-      <Project>{5F777D3D-CACB-4208-AF6D-10983EF15D04}</Project>
+      <Project>{e31e1b2e-fe62-47de-8e45-9eafacc2ffcd}</Project>
       <Name>Presentation.Core</Name>
     </ProjectReference>
   </ItemGroup>

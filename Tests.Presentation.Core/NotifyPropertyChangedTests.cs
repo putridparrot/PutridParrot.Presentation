@@ -1,20 +1,44 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Core;
+using Presentation.Patterns;
+using Presentation.Patterns.Helpers;
+using Tests.Presentation.Helpers;
 
-namespace Tests.Presentation.Core
+namespace Tests.Presentation
 {
     [ExcludeFromCodeCoverage]
     [TestFixture]
     public class NotifyPropertyChangedTests
     {
+        public class MyNotifyPropertyChanged : NotifyPropertyChanged
+        {
+            private string _name;
+            private string _address;
+
+            public string Name
+            {
+                get { return _name; }
+                set { this.SetProperty(x => x.Name, ref _name, value); }
+            }
+
+            public string Address
+            {
+                get { return _address; }
+                set { this.SetProperty(x => x.Address, ref _address, value); }
+            }
+        }
+
+
         [Test]
         public void NotifyPropertyChanged_OnMethod_ExpectException()
         {
             var viewModel = new MyNotifyPropertyChanged();
 
-            Assert.Throws<Exception>(() => viewModel.RaisePropertyChanged(x => x.ToString()));
+            Action action = () => viewModel.RaisePropertyChanged(x => x.ToString());
+            action
+                .ShouldThrow<Exception>();
         }
 
         [Test]
@@ -25,8 +49,12 @@ namespace Tests.Presentation.Core
 
             viewModel.Name = "Scooby Doo";
 
-            Assert.AreEqual(1, listener.Changed.Count);
-            Assert.AreEqual("Name", listener.Changed[0]);
+            listener.Changed.Count
+                .Should()
+                .Be(1);
+            listener.Changed[0]
+                .Should()
+                .Be("Name");
         }
 
         [Test]
@@ -38,8 +66,12 @@ namespace Tests.Presentation.Core
             viewModel.Name = "Scooby Doo";
             viewModel.Name = "Scooby Doo";
 
-            Assert.AreEqual(1, listener.Changed.Count);
-            Assert.AreEqual("Name", listener.Changed[0]);
+            listener.Changed.Count
+                .Should()
+                .Be(1);
+            listener.Changed[0]
+                .Should()
+                .Be("Name");
         }
 
         [Test]
@@ -51,9 +83,15 @@ namespace Tests.Presentation.Core
             viewModel.Name = "Scooby Doo1";
             viewModel.Name = "Scooby Doo2";
 
-            Assert.AreEqual(2, listener.Changed.Count);
-            Assert.AreEqual("Name", listener.Changed[0]);
-            Assert.AreEqual("Name", listener.Changed[1]);
+            listener.Changed.Count
+                .Should()
+                .Be(2);
+            listener.Changed[0]
+                .Should()
+                .Be("Name");
+            listener.Changed[1]
+                .Should()
+                .Be("Name");
         }
 
         [Test]
@@ -64,8 +102,12 @@ namespace Tests.Presentation.Core
 
             viewModel.Name = "Scooby Doo";
 
-            Assert.AreEqual(1, listener.Changing.Count);
-            Assert.AreEqual("Name", listener.Changing[0]);
+            listener.Changing.Count
+                .Should()
+                .Be(1);
+            listener.Changing[0]
+                .Should()
+                .Be("Name");
         }
 
         [Test]
@@ -77,8 +119,12 @@ namespace Tests.Presentation.Core
             viewModel.Name = "Scooby Doo";
             viewModel.Name = "Scooby Doo";
 
-            Assert.AreEqual(1, listener.Changing.Count);
-            Assert.AreEqual("Name", listener.Changing[0]);
+            listener.Changing.Count
+                .Should()
+                .Be(1);
+            listener.Changing[0]
+                .Should()
+                .Be("Name");
         }
 
         [Test]
@@ -90,9 +136,15 @@ namespace Tests.Presentation.Core
             viewModel.Name = "Scooby Doo1";
             viewModel.Name = "Scooby Doo2";
 
-            Assert.AreEqual(2, listener.Changing.Count);
-            Assert.AreEqual("Name", listener.Changing[0]);
-            Assert.AreEqual("Name", listener.Changing[1]);
+            listener.Changing.Count
+                .Should()
+                .Be(2);
+            listener.Changing[0]
+                .Should()
+                .Be("Name");
+            listener.Changing[1]
+                .Should()
+                .Be("Name");
         }
 
         [Test]
@@ -103,10 +155,15 @@ namespace Tests.Presentation.Core
 
             viewModel.RaiseMultiplePropertyChanged(x => x.Name);
 
-            Assert.AreEqual(1, listener.Changed.Count);
-            Assert.AreEqual("Name", listener.Changed[0]);
-
-            Assert.AreEqual(0, listener.Changing.Count);
+            listener.Changed.Count
+                .Should()
+                .Be(1);
+            listener.Changed[0]
+                .Should()
+                .Be("Name");
+            listener.Changing.Count
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -117,10 +174,15 @@ namespace Tests.Presentation.Core
 
             viewModel.RaiseMultiplePropertyChanged("Name", "Name");
 
-            Assert.AreEqual(2, listener.Changed.Count);
-            Assert.AreEqual("Name", listener.Changed[0]);
-
-            Assert.AreEqual(0, listener.Changing.Count);
+            listener.Changed.Count
+                .Should()
+                .Be(2);
+            listener.Changed[0]
+                .Should()
+                .Be("Name");
+            listener.Changing.Count
+                .Should()
+                .Be(0);
         }
 
         [Test]
@@ -131,11 +193,15 @@ namespace Tests.Presentation.Core
 
             viewModel.RaisePropertyChanged();
 
-            Assert.AreEqual(1, listener.Changed.Count);
-            Assert.AreEqual(null, listener.Changed[0]);
-
-            Assert.AreEqual(0, listener.Changing.Count);
+            listener.Changed.Count
+                .Should()
+                .Be(1);
+            listener.Changed[0]
+                .Should()
+                .BeNull();
+            listener.Changing.Count
+                .Should()
+                .Be(0);
         }
     }
-
 }

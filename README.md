@@ -4,8 +4,8 @@ in my opinion. Hence this solution contains various base classes which you can d
 view model from, each building upon the functionality of the other. 
 
 If speed is your main concern, you might simply roll your own INotifyPropertyChanged implementation,
-in which cases these classes only offer some shared functionality which could be of use. But 
-if you want to be close to the metal you can use the NotifyPropertyChanged class as your base, 
+in which cases these classes only offer some shared functionality which could be of use. If you want to 
+be close to the metal you can use the NotifyPropertyChanged class as your base, 
 along with extension methods (I think they were originally inspired by Reactive UI, I cannot recall now). 
 
 *One of the main aims of these classes is to remove "plumbing" code from your view model, hopefully leaving 
@@ -52,8 +52,8 @@ public class PersonViewModel : NotifyPropertyChanged
 }
 ```
 
-So the setters are simplified using the extension methods SetProperty - the NotifyPropertyChanged implementation
-doesn't handle anything to do with setting properties but just offers up the change event notifications etc. 
+So the setters are simplified using the extension method SetProperty - the NotifyPropertyChanged implementation
+doesn't handle anything to do with setting properties but just offers us the change event notifications etc. 
 
 What you then generally find is that you might wish to extend this code to add things like
 data error info. support for validation/error display, maybe ways to suppress property changes
@@ -68,30 +68,28 @@ class is not really mean't for you to derive directly from but instead offers co
 for the heavier weight ViewModel classes. This code includes change tracking, revert and the likes 
 along with the ability to use attributes in a sort of AOP-like way within your view model. So in scenarios
 where your view model has more complicated requirements, this class implements those things, but 
-at the cost of performances. However if you're displaying an input UI then of the performance of creating 
-100,000's of the view model and handling 100,000's changes and the performance thereof is probably 
-not the number one concern. 
+at the cost of performances. However if you're displaying an input UI then the performance drop off when creating 
+100,000's view models and handling 100,000's changes is probably not the number one concern. 
 
-So the ViewModelCommon is the base for ViewModel, ViewModelWithModel and ViewModelWithoutBacking.
+The ViewModelCommon is the base for ViewModel, ViewModelWithModel and ViewModelWithoutBacking.
 
 Each of these adds what's required for their specific implementations. 
 
-Once we to using the ViewModelCommon class, we get a lot of capabilities thrown in, with the sole aim
-or reducing the plumbing code and automating certain common functionality. Such common functionality 
-can be set up using the attribute meta data. Such as data annotations for validation. The ViewModelCommon
-comes with the ability to run validation, the handle error info. and more.
+Once we start using the ViewModelCommon class, we get a lot of capabilities thrown in, with the sole aim
+of reducing the plumbing code to a minimum and automating certain common functionality. Such common functionality 
+can be set up using the attribute meta data. Such as data annotations for validation. 
 
-*Possibly the best was to really achieve this would be using some form of code weaver/injection/AOP,
+*Possibly the best was to really achieve this ViewModel code, would be using some form of code weaver/injection/AOP,
 but they come with their own possible issues.*
 
-Now let's look in a little more depth at the ViewModelCommon implementation and some of the features
+Let's look in a little more depth at the ViewModelCommon implementations and some of the features
 we've mentioned.
 
 # ViewModel
 
 The ViewModel removes the need for backing fields, everything can be stored within the view model itself by
 simply using the GetProperty/SetProperty combination in the property getter/setter. This reduces the "plumbing" code
-to the bare minimum and makes for a clean and minimal design. Behind the scenes the data is stored within a Dictionary.
+to the barest minimum and makes for a clean and minimal design. Behind the scenes the data is stored within a Dictionary.
 
 The downside of this implementation is probably obvious, by using a Dictionary, each property lookup is slower than 
 a direct call to a backing field. 
@@ -132,17 +130,15 @@ public class PersonViewModel : ViewModel
 }
 ```
 
-Now the PersonViewModel is pretty minimal and a very basic example, but hopefully its obvious that it's 
-also fairly powerful. 
+Now the PersonViewModel is very basic example, but hopefully its obvious that it's also fairly powerful. 
 
-The SetProperty/GetProperty combination are pretty similar to the way a DependencyObject works. In 
-this view model's case.
+The SetProperty/GetProperty combination is (sort of) similar to the way a DependencyObject works in WPF. 
 
 # ViewModelWithoutBacking
 
 *I'm not mad on the name of this class, so it might change in the future*
 
-So the ViewModel offers us a great way to achieve clean code of the fundamental view model like functionality, 
+The ViewModel offers us a great way to achieve clean code of the fundamental view model like functionality, 
 properties, validation etc. But, as stated, it's using a Dictionary lookup which ultimately has a performance
 (however small) price. In such situations where you still require all the goodies of ViewModelCommon but want 
 to handle the backing fields yourself, then you can derive from ViewModelWithoutBacking, like so 
@@ -196,8 +192,8 @@ to the underlying model.
 
 # GetProperty/SetProperty/ReadOnlyProperty
 
-Each view model, from the NotifyPropertyChanged extension methods through to the ViewModel/ViewModelWithoutBacking/ViewModelWithModel
-stick to the premised of using a SetProperty method to see if a change is going to be made, if so raise a property changing event
+Each view model class - from the NotifyPropertyChanged extension methods through to the ViewModel/ViewModelWithoutBacking/ViewModelWithModel
+stick to the premise of using a SetProperty method to see if a change is going to be made, if so raise a property changing event
 then assign the change then raise a property changed event. In the case of the ViewModelCommon classes a GetProperty method is
 used even when the developer provides the backing store, so that defaulting etc. can take place. The GetProperty/SetProperty are 
 lazily initialized i.e. no value exists until one of the other is called. 
@@ -219,24 +215,24 @@ Assuming that FirstName and LastName are properties using GetProperty syntax thi
 and raise a property change event on itself when FirstName or LastName properties change. FullName is dependent upon the other
 properties and monitors their changes. In convential view model code, you'd change FirstName (for example), raise it's property
 change event then raise a property change event for FullName to get the UI to update. This all happens automatically within
-the view model.
+the view model virtue of the ReadOnlyProperty.
 
 We can extend this further so that FullName could actually use "if" statements etc. to return data, if those "if" statements use
-a property then, again, this code will raise a FullName property changed event and update the UI - basically wha happens is each
+a property then, again, this code will raise a FullName property changed event and update the UI - basically what happens is each
 time the ReadOnlyProperty is evaluated it builds a list of dependencies. When those dependencies change it changes and 
 re-evaluates the dependencies again ready for the next dependency change.
 
 # ViewModelRegistry
 
 Before we start looking at the various attributes etc. I thought it worth pointing out that the ViewModelCommon class uses a
-singleton ViewModelRegistry class. It's probably obvious that to use the attributes to default values, create instances etc.
+singleton ViewModelRegistry class. It's probably obvious that to get meta data/attributes such as default values, create instances etc.
 we will need to use reflection to find what each property supports. As such we don't really want to do this for every 
 instance of a PersonViewModel (for example), so in situations where we're creating many view models of the same type, the 
 ViewModelRegistry will cache the property definitions as well as supply code to automatically create our default values, instances
 etc. Comparers will also be reused, so if multiple properties across multiples types use the same comparer then only a single 
 instance will be created. 
 
-The only issue with this is I didn't want a situation where such property definitions were created an held in memory until the
+The only issue with this is I didn't want a situation where such property definitions were created and held in memory until the
 application closes, so ViewModelCommon will register itself with the ViewModelRegistry to initiate creation of the propery 
 definitions but must also unregister itself when being disposed of to hopefully, eventually, allow the property definitions to 
 be cleaned up. 
@@ -277,7 +273,9 @@ public string[] Array
 Whilst the DefaultValue can be assigned to primitive types and arrays, what if we have another type, such as a view model
 or ObservableCollection. In such a case we can use the DefaultValue in combination with the CreateInstance (or CreateInstanceUsing)
 so that when the type is created, as long as it has a constructor which can take the DefaultValue argument then we can default
-such, more complex, types. For example, this property will create an ExtendedObservableCollection, passing the DefaultValue
+more complex, types. 
+
+For example, this property will create an ExtendedObservableCollection, passing the DefaultValue
 into the ctor.
 
 ```
@@ -311,7 +309,7 @@ attribute can be applied to a property and will set up the property to a new ins
 constructor. As mentioned in DefaultValue, combining with DefaultValue will try to pass your DefaultValue into the ctor
 of the created instance.*
 
-An example is the following, which doesn't require a setter but will automatically create and instance
+An example is the following, which doesn't require a setter but will automatically create an instance
 of the collection (obviously include a setter if you might change the actual instance of the ObservableCollection)
 
 ```
@@ -343,7 +341,7 @@ change fails validation, the error information will be updated and events fired 
 that handle data error info. will automatically update.
 
 You can easily write your own custom validation attributes compatible with the data annotations, 
-but if you prefer, you can also supply a Func<T, ValidationResult> to the  SetProperty method and this
+but if you prefer, you can also supply a Func<T, ValidationResult> to the SetProperty method and this
 will be run during validation. If any single validation fails no further validation will take place on the
 property until it's changed again. Whilst this does mean you will not see a list of all possible failures, 
 it's obviously more performant than going through every validation step. 
@@ -370,8 +368,8 @@ By having change tracking, we're also able to handle Undo/Redo type functionalit
 
 # Rule attributes
 
-Rules can be created against view model properties which work a little like data annotation attributes, in that
-when a property changing even is occurs a rule's PreInvoke is called and after a change occurs the PostInvoke is 
+Rules can be created against view model properties which work a little like data annotation attributes, in that,
+when a property changing event occurs a rule's PreInvoke is called and after a change occurs the PostInvoke is 
 called. This allows you to write rules for your properties. One included rule is the PropertyChainAttribute which
 can be applied to a property, when a change occurs it will automatically raise property change events for the 
 properties listed in the PropertyChainAttribute. This can be useful in situations where, maybe a "Filter" property
@@ -379,6 +377,9 @@ is changed and we change some ICollectionView filter (for example) - hence we ca
 refresh the ICollectionView property after the Filter changes.
 
 You might write your own rules that automatically change a child object based upon a parent property change etc.
+
+*Rules are a bit of a legacy feature from a previous implementation of the view model classes. I would like to come 
+up with "better" ways to do these, but for now they'll suffice.*
 
 # Collection properties
 
@@ -400,12 +401,11 @@ properties which are not supported here) and the attributes like-wise do not cha
 want to reflect across this data and create multiple instances of comparers (for example) for every
 instance of the PersonViewModel. Instead, when the first instance is created it registers itself with the
 ViewModelRegistry which then creates a reusable state for this type. Subsequent creations of the 
-PersonViewModel will register also but each new instance will reuse the original state. Now we need a
+PersonViewModel will register also, but each new instance will reuse the original state. Now we need a
 way to eventually clear out the satte when not longer required, hence you can call Dispose directly or
-let the finalizer do this. Unregister is called an when no further types appear to reference the 
-PersonViewModel state in the ViewModelRegistry, it will be removed. If you do not Dispose/Unregister it 
-just means there's the potential of unused state sitting around for the life of the application, but against
-this should be fairly minimal.
+let the finalizer do this. Unregister is called when no further types appear to reference the 
+PersonViewModel state in the ViewModelRegistry and that state will be removed. If you do not Dispose/Unregister it 
+just means there's the potential of unused state sitting around for the life of the application.
 
 If your derived class needs to also handle Dispose, you should override DisposeManaged for managed resources and/or
 DisposeUnManaged for unmanaged resources - this is designed along the guidelines of the IDisposable pattern.
@@ -417,8 +417,7 @@ not be change tracked. Generally speaking commands are not strictly part of the 
 override this by applying a ChangeTracking attribute with value True. By default non-ICommand properties are tracked, 
 hence the the opposite, properties are changed tracked unless ChangeTracking is set to False;
 
-*Usually we'd probably not include ICommand code in the view model using GetProperty/SetProperty unless there was a 
-good reason to support change notification.*
+*Usually we'd probably not include ICommand code in the view model using GetProperty/SetProperty.*
 
 # ActionCommand
 
@@ -426,9 +425,9 @@ The name for this command is already used in Expressions Interactivity library, 
 change in the future if deemed too confusing.
 
 The ActionCommand and ActionCommand<T> allow us to implement an ICommand object easily, passing 
-execution and can execute to supplied functions. Unlike the Expressions implementation this command
-allows us to declare the Execute and CanExecute methods after creation using a default constructor. 
-This allows the ActionCommand to be used via CreateInstance and CreateInstanceUsing attributes and
+execution and can execute to supplied functions. Unlike the *Expressions Interactivity* implementation 
+this command allows us to declare the Execute and CanExecute methods after creation using a default
+constructor. This allows the ActionCommand to be used via CreateInstance and CreateInstanceUsing attributes and
 for the view model to assign methods to it post creation. This is really more a "nicety" to remove
 the code to create such commands.
 

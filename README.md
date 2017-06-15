@@ -376,11 +376,10 @@ properties listed in the PropertyChainAttribute. This can be useful in situation
 is changed and we change some ICollectionView filter (for example) - hence we can chain things to get the UI to 
 refresh the ICollectionView property after the Filter changes.
 
-![Alt You might write your own rules that automatically change a child object based upon a parent property change etc.
+You might write your own rules that automatically change a child object based upon a parent property change etc.
 
 *Rules are a bit of a legacy feature from a previous implementation of the view model classes. I would like to come 
 up with "better" ways to do these, but for now they'll suffice.*
-
 
 
 # Collection properties
@@ -438,4 +437,4 @@ the code to create such commands.
 The AsyncCommand and AsyncCommand<T> can be used with async/task based execute and can execute methods.
 This allows us to execute on another thread and the command will set it's IsBusy property accordingly.
 
-[!Uses NDepend](https://user-images.githubusercontent.com/7886450/27169250-ee46df74-51a0-11e7-9e28-0732712cebdd.jpg, "Uses NDepend")
+[![Uses NDepend]](https://user-images.githubusercontent.com/7886450/27169250-ee46df74-51a0-11e7-9e28-0732712cebdd.jpg, "Uses NDepend")

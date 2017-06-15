@@ -437,4 +437,4 @@ the code to create such commands.
 The AsyncCommand and AsyncCommand<T> can be used with async/task based execute and can execute methods.
 This allows us to execute on another thread and the command will set it's IsBusy property accordingly.
 
-![Uses NDepend](https://user-images.githubusercontent.com/7886450/27169250-ee46df74-51a0-11e7-9e28-0732712cebdd.jpg, "Uses NDepend")
+![Uses NDepend](https://user-images.githubusercontent.com/7886450/27169250-ee46df74-51a0-11e7-9e28-0732712cebdd.jpg)

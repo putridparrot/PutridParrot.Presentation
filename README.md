@@ -439,4 +439,4 @@ This allows us to execute on another thread and the command will set it's IsBusy
 
 # Thanks to
 
-![Powered by NDepend](https://user-images.githubusercontent.com/7886450/27169250-ee46df74-51a0-11e7-9e28-0732712cebdd.jpg)
+![Powered by NDepend](http://putridparrot.com/blog/wp-content/uploads/2017/06/NDependLogo.jpg)

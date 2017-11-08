@@ -6,7 +6,7 @@
     /// This is useful for getter only properties or situations
     /// where DefaultValue cannot handle the type.
     /// </summary>
-    public class CreateInstanceAttribute : PropertyAttribute
+    public sealed class CreateInstanceAttribute : PropertyAttribute
     {
     }
 }

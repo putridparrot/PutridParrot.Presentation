@@ -18,7 +18,7 @@ namespace Presentation.Patterns.Attributes
     /// changing. We can therefore chain these propetries 
     /// to achieve this.
     /// </example>
-    public class PropertyChainAttribute : RuleAttribute
+    public sealed class PropertyChainAttribute : RuleAttribute
     {
         public PropertyChainAttribute(params string[] properties)
         {

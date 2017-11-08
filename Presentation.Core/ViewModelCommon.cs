@@ -20,7 +20,7 @@ namespace Presentation.Patterns
     /// property attribute capabilities etc.
     /// </summary>
     public class ViewModelCommon : ExtendedNotifyPropertyChanged,
-        IRevertibleChangeTracking
+        IRevertibleChangeTracking, IDisposable
     {
         /// <summary>
         /// Tracks if the properties have changed

@@ -6,7 +6,7 @@ namespace Presentation.Patterns.Attributes
     /// you only need to really use this to turn off change tracking, unless
     /// you want to be explicit in usage.
     /// </summary>
-    public class ChangeTrackingAttribute : PropertyAttribute
+    public sealed class ChangeTrackingAttribute : PropertyAttribute
     {
         public ChangeTrackingAttribute(bool isTracking = true)
         {

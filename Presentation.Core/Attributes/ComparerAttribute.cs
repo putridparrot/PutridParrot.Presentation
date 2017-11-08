@@ -8,7 +8,7 @@ namespace Presentation.Patterns.Attributes
     /// EqualityComparer&lt;T&gt;.Default is used, so you only need
     /// to use this attribute if providing a different comparer
     /// </summary>
-    public class ComparerAttribute : PropertyAttribute
+    public sealed class ComparerAttribute : PropertyAttribute
     {
         public ComparerAttribute(Type comparerType)
         {

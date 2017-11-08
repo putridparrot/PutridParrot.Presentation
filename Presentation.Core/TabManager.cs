@@ -40,9 +40,6 @@ namespace Presentation.Patterns
         {
         }
 
-        /// <summary>
-        /// Force loads the curve into all view models
-        /// </summary>
         public void LoadAll()
         {
             foreach (var item in Items)

@@ -9,7 +9,7 @@ namespace Presentation.Patterns.Attributes
     /// for situations where you want to use customised
     /// creation logic, type must implement IFactory
     /// </summary>
-    public class CreateInstanceUsingAttribute : PropertyAttribute
+    public sealed class CreateInstanceUsingAttribute : PropertyAttribute
     {
         public CreateInstanceUsingAttribute(Type factoryType)
         {

@@ -84,7 +84,6 @@
     <Compile Include="Interfaces\ISupportUpdate.cs" />
     <Compile Include="PropertyRecorder.cs" />
     <Compile Include="NotifyPropertyChanged.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="PropertyCommon.cs" />
     <Compile Include="Rule.cs" />
@@ -99,6 +98,9 @@
     <Compile Include="ViewModelRegistry.cs" />
     <Compile Include="ViewModelWithoutBacking.cs" />
     <Compile Include="ViewTemplateSelector.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

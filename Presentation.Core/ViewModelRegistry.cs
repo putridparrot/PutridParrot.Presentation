@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -301,9 +299,9 @@ namespace Presentation.Patterns
         /// Assigns attribute data to the property definition to save us having to find
         /// this on a usage basis for the given type.
         /// </summary>
-        /// <param name="property"></param>
-        /// <param name="propertyDefinition"></param>
-        /// <param name="attribute"></param>
+        /// <param name="property">The PropertyInfo to be applied to the PropertyDefinition</param>
+        /// <param name="propertyDefinition">The PropertyDefinition is the locally stored data from PropertyInfo and Attribute</param>
+        /// <param name="attribute">The Attribute to be applied to the PropertyDefinition</param>
         private void AssignAttribute(PropertyInfo property, PropertyDefinition propertyDefinition, Attribute attribute)
         {
             propertyDefinition.PropertyType = property.PropertyType;
@@ -395,7 +393,7 @@ namespace Presentation.Patterns
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        private bool TypeSupportsNotifications(Type type)
+        private static bool TypeSupportsNotifications(Type type)
         {
             return typeof(INotifyCollectionChanged).IsAssignableFrom(type) ||
                    typeof(INotifyPropertyChanged).IsAssignableFrom(type) ||

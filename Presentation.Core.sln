@@ -15,9 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Core.Net471", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Core.NetStandard2", "Presentation.Core.NetStandard2\Presentation.Core.NetStandard2.csproj", "{83820800-E7C8-473F-A893-1CCCF07C9BFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Core.Net45", "Presentation.Core.Net45\Presentation.Core.Net45.csproj", "{75908FB4-980A-4832-BEF1-841CD9EBF5AA}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Presentation.Core.Shared\Presentation.Core.Shared.projitems*{04a097a2-a847-4081-96f5-ca654a0ea1e7}*SharedItemsImports = 4
+		Presentation.Core.Shared\Presentation.Core.Shared.projitems*{75908fb4-980a-4832-bef1-841cd9ebf5aa}*SharedItemsImports = 4
 		Presentation.Core.Shared\Presentation.Core.Shared.projitems*{e50e896d-0c4c-412a-b187-11a116c0ef44}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +48,10 @@ Global
 		{83820800-E7C8-473F-A893-1CCCF07C9BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83820800-E7C8-473F-A893-1CCCF07C9BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83820800-E7C8-473F-A893-1CCCF07C9BFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75908FB4-980A-4832-BEF1-841CD9EBF5AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75908FB4-980A-4832-BEF1-841CD9EBF5AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75908FB4-980A-4832-BEF1-841CD9EBF5AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75908FB4-980A-4832-BEF1-841CD9EBF5AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

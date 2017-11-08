@@ -381,6 +381,7 @@ You might write your own rules that automatically change a child object based up
 *Rules are a bit of a legacy feature from a previous implementation of the view model classes. I would like to come 
 up with "better" ways to do these, but for now they'll suffice.*
 
+
 # Collection properties
 
 When a property is set which supports INotifyCollectionChanged, INotifyPropertyChanged or the IItemChanged (supplied
@@ -435,3 +436,7 @@ the code to create such commands.
 
 The AsyncCommand and AsyncCommand<T> can be used with async/task based execute and can execute methods.
 This allows us to execute on another thread and the command will set it's IsBusy property accordingly.
+
+# Thanks to
+
+![Powered by NDepend](http://putridparrot.com/blog/wp-content/uploads/2017/06/NDependLogo.jpg)

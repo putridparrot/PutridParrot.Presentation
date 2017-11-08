@@ -45,61 +45,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionCommand.cs" />
-    <Compile Include="AsyncCommand.cs" />
-    <Compile Include="Attributes\ChangeTrackingAttribute.cs" />
-    <Compile Include="Attributes\ComparerAttribute.cs" />
-    <Compile Include="Attributes\CreateInstanceAttribute.cs" />
-    <Compile Include="Attributes\CreateInstanceUsingAttribute.cs" />
-    <Compile Include="Attributes\PropertyAttribute.cs" />
-    <Compile Include="Attributes\PropertyChainAttribute.cs" />
-    <Compile Include="Attributes\RuleAttribute.cs" />
-    <Compile Include="CommandCommon.cs" />
-    <Compile Include="DataErrorInfo.cs" />
-    <Compile Include="DependentProperty.cs" />
-    <Compile Include="Exceptions\PropertyCannotCallItselfException.cs" />
-    <Compile Include="Exceptions\TypeNotRegisteredException.cs" />
-    <Compile Include="ExtendedNotifyPropertyChanged.cs" />
-    <Compile Include="ExtendedObservableCollection.cs" />
-    <Compile Include="Helpers\ComparerImpl.cs" />
-    <Compile Include="Helpers\DispatcherExtensions.cs" />
-    <Compile Include="Helpers\DisposableAction.cs" />
-    <Compile Include="Helpers\ListExtensions.cs" />
-    <Compile Include="Helpers\ListFilter.cs" />
-    <Compile Include="Helpers\ReferenceCounter.cs" />
-    <Compile Include="Helpers\UndoRedoStack.cs" />
-    <Compile Include="Helpers\ViewModelConvention.cs" />
-    <Compile Include="Helpers\ViewModelExpressions.cs" />
-    <Compile Include="Helpers\SafeConvert.cs" />
-    <Compile Include="Helpers\ValidationResultExtensions.cs" />
-    <Compile Include="Helpers\ViewModelExtensions.cs" />
-    <Compile Include="InitializationDisposable.cs" />
-    <Compile Include="Interfaces\IDependentProperty.cs" />
-    <Compile Include="Interfaces\IExtendedDataErrorInfo.cs" />
-    <Compile Include="Interfaces\IFactory.cs" />
-    <Compile Include="Interfaces\IItemChanged.cs" />
-    <Compile Include="Interfaces\INotifyViewModel.cs" />
-    <Compile Include="Interfaces\IProperty.cs" />
-    <Compile Include="Interfaces\IPropertyRecorder.cs" />
-    <Compile Include="Interfaces\ISupportUpdate.cs" />
-    <Compile Include="PropertyRecorder.cs" />
-    <Compile Include="NotifyPropertyChanged.cs" />
-    <Compile Include="Property.cs" />
-    <Compile Include="PropertyCommon.cs" />
-    <Compile Include="Rule.cs" />
-    <Compile Include="Rules.cs" />
-    <Compile Include="ObservableViewCollection.cs" />
-    <Compile Include="TabManager.cs" />
-    <Compile Include="UpdatingDisposable.cs" />
-    <Compile Include="ViewModel.cs" />
-    <Compile Include="ViewModelCommon.cs" />
-    <Compile Include="ViewLocator.cs" />
-    <Compile Include="ViewModelWithModel.cs" />
-    <Compile Include="ViewModelRegistry.cs" />
-    <Compile Include="ViewModelWithoutBacking.cs" />
-    <Compile Include="ViewTemplateSelector.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

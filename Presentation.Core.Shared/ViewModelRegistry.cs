@@ -283,6 +283,7 @@ namespace Presentation.Patterns
         /// <param name="type"></param>
         private void AssociateMetadataType(PropertyDefinitions propertyDefinitions, Type type)
         {
+#if !NETSTANDARD2_0
             foreach (var attribute in type.GetCustomAttributes(typeof(MetadataTypeAttribute), true).Cast<MetadataTypeAttribute>())
             {
                 if (type != attribute.MetadataClassType)
@@ -293,6 +294,7 @@ namespace Presentation.Patterns
                     Populate(propertyDefinitions, attribute.MetadataClassType);
                 }
             }
+#endif
         }
 
         /// <summary>

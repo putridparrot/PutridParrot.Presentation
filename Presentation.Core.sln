@@ -1,26 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Core", "Presentation.Core\Presentation.Core.csproj", "{E31E1B2E-FE62-47DE-8E45-9EAFACC2FFCD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Presentation.Core", "Tests.Presentation.Core\Tests.Presentation.Core.csproj", "{BDF4C8EA-273E-4F30-AC9A-E9DE6CA567FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfilingApp", "ProfilingApp\ProfilingApp.csproj", "{4DC280E3-D691-4FF5-B100-05194D73AE7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{E62FFE9C-5250-494B-8B2B-59D55D2A4250}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Presentation.Core.Shared", "Presentation.Core.Shared\Presentation.Core.Shared.shproj", "{E50E896D-0C4C-412A-B187-11A116C0EF44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Core.Net471", "Presentation.Core.Net471\Presentation.Core.Net471.csproj", "{04A097A2-A847-4081-96F5-CA654A0EA1E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Core.NetStandard2", "Presentation.Core.NetStandard2\Presentation.Core.NetStandard2.csproj", "{83820800-E7C8-473F-A893-1CCCF07C9BFF}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Presentation.Core.Shared\Presentation.Core.Shared.projitems*{04a097a2-a847-4081-96f5-ca654a0ea1e7}*SharedItemsImports = 4
+		Presentation.Core.Shared\Presentation.Core.Shared.projitems*{e50e896d-0c4c-412a-b187-11a116c0ef44}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E31E1B2E-FE62-47DE-8E45-9EAFACC2FFCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E31E1B2E-FE62-47DE-8E45-9EAFACC2FFCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E31E1B2E-FE62-47DE-8E45-9EAFACC2FFCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E31E1B2E-FE62-47DE-8E45-9EAFACC2FFCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BDF4C8EA-273E-4F30-AC9A-E9DE6CA567FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BDF4C8EA-273E-4F30-AC9A-E9DE6CA567FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDF4C8EA-273E-4F30-AC9A-E9DE6CA567FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,8 +37,19 @@ Global
 		{E62FFE9C-5250-494B-8B2B-59D55D2A4250}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E62FFE9C-5250-494B-8B2B-59D55D2A4250}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E62FFE9C-5250-494B-8B2B-59D55D2A4250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04A097A2-A847-4081-96F5-CA654A0EA1E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A097A2-A847-4081-96F5-CA654A0EA1E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04A097A2-A847-4081-96F5-CA654A0EA1E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04A097A2-A847-4081-96F5-CA654A0EA1E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83820800-E7C8-473F-A893-1CCCF07C9BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83820800-E7C8-473F-A893-1CCCF07C9BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83820800-E7C8-473F-A893-1CCCF07C9BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83820800-E7C8-473F-A893-1CCCF07C9BFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7244FAB4-421D-4230-96CF-74824C112ECF}
 	EndGlobalSection
 EndGlobal

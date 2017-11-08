@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+#if !NETSTANDARD2_0
 using System.Windows.Threading;
+#endif
 using Presentation.Patterns.Helpers;
 using Presentation.Patterns.Interfaces;
 
@@ -131,6 +133,7 @@ namespace Presentation.Patterns
                 var eventHandler = CollectionChanged;
                 if (eventHandler != null)
                 {
+#if !NETSTANDARD2_0
                     var dispatcher = (from NotifyCollectionChangedEventHandler n in eventHandler.GetInvocationList()
                                       let dpo = n.Target as DispatcherObject
                                       where dpo != null
@@ -142,11 +145,14 @@ namespace Presentation.Patterns
                     }
                     else
                     {
+#endif
                         foreach (NotifyCollectionChangedEventHandler n in eventHandler.GetInvocationList())
                         {
                             n.Invoke(this, e);
                         }
+#if !NETSTANDARD2_0
                     }
+#endif
                 }
             }
             if (e.NewItems != null)

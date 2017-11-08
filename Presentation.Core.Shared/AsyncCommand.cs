@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+#if !NETSTANDARD2_0
 using System.Windows.Threading;
+#endif
 using Presentation.Patterns.Helpers;
 
 namespace Presentation.Patterns
@@ -68,7 +70,9 @@ namespace Presentation.Patterns
 
             if (tsk.IsFaulted)
             {
+#if !NETSTANDARD2_0
                 Dispatcher.CurrentDispatcher.Throw(tsk.Exception);
+#endif
             }
         }
 
@@ -158,7 +162,9 @@ namespace Presentation.Patterns
 
             if (tsk.IsFaulted)
             {
+#if !NETSTANDARD2_0
                 Dispatcher.CurrentDispatcher.Throw(tsk.Exception);
+#endif
             }
         }
 

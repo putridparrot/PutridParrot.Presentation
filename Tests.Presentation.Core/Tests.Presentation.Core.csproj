@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tests.Presentation</RootNamespace>
     <AssemblyName>Tests.Presentation</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -100,9 +100,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Presentation.Core\Presentation.Core.csproj">
-      <Project>{e31e1b2e-fe62-47de-8e45-9eafacc2ffcd}</Project>
-      <Name>Presentation.Core</Name>
+    <ProjectReference Include="..\Presentation.Core.Net471\Presentation.Core.Net471.csproj">
+      <Project>{04a097a2-a847-4081-96f5-ca654a0ea1e7}</Project>
+      <Name>Presentation.Core.Net471</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

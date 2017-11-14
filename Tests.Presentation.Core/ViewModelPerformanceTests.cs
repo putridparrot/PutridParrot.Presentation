@@ -418,8 +418,7 @@ namespace Tests.Presentation
 
             for (var i = 0; i < 100000; i++)
             {
-                string result;
-                d.TryGetValue(i.ToString(), out result);
+                d.TryGetValue(i.ToString(), out var _);
             }
 
             sw.Stop();

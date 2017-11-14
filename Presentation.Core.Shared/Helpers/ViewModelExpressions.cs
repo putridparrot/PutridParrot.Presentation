@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using Presentation.Patterns.Interfaces;
 
 namespace Presentation.Patterns.Helpers
@@ -38,8 +37,7 @@ namespace Presentation.Patterns.Helpers
             // to convert to the same underlying type
             if (propertyExpression.Body.NodeType == ExpressionType.Convert)
             {
-                var convert = propertyExpression.Body as UnaryExpression;
-                if (convert != null)
+                if (propertyExpression.Body is UnaryExpression convert)
                 {
                     property = convert.Operand as MemberExpression;
                 }

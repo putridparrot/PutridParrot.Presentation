@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Presentation.Patterns.Helpers;
 
 namespace Presentation.Patterns

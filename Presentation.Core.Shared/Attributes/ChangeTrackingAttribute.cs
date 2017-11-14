@@ -18,6 +18,6 @@ namespace Presentation.Patterns.Attributes
         /// in the change tracking , i.e. IsTracking = false
         /// means changes to this property should not be tracked
         /// </summary>
-        public bool IsTracking { get; private set; }
+        public bool IsTracking { get; }
     }
 }

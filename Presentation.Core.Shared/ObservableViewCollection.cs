@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using Presentation.Core.Shared.Helpers;
 
 namespace Presentation.Patterns
 {
@@ -13,7 +13,8 @@ namespace Presentation.Patterns
     /// <typeparam name="T"></typeparam>
     public class ObservableViewCollection<T> : ExtendedObservableCollection<T>
     {
-        private T _selected;
+        private int _selectedIndex = -1;
+        private T _defaultValue;
         private Predicate<T> _filter;
         private ExtendedObservableCollection<T> _filtered;
 
@@ -32,15 +33,41 @@ namespace Presentation.Patterns
         {
         }
 
-        public T Selected
+        public T DefaultValue
         {
-            get { return _selected; }
+            get => _defaultValue;
             set
             {
-                if (!EqualityComparer<T>.Default.Equals(_selected, value))
+                if (!EqualityComparer<T>.Default.Equals(_defaultValue, value))
                 {
-                    _selected = Contains(value) ? value : default(T);
-                    OnPropertyChanged(new PropertyChangedEventArgs("Selected"));
+                    _defaultValue = value;
+                    OnPropertyChanged(PropertyChangedEventFactory.Create());
+                }
+            }
+        }
+
+        public T SelectedItem
+        {
+            get => SelectedIndex < 0 ? DefaultValue : this[SelectedIndex];
+            set
+            {
+                if (SelectedIndex < 0 || !EqualityComparer<T>.Default.Equals(this[SelectedIndex], value))
+                {
+                    SelectedIndex = IndexOf(value);
+                    OnPropertyChanged(PropertyChangedEventFactory.Create());
+                }
+            }
+        }
+
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set
+            {
+                if (_selectedIndex != value)
+                {
+                    _selectedIndex = value;
+                    OnPropertyChanged(PropertyChangedEventFactory.Create());
                 }
             }
         }
@@ -56,8 +83,19 @@ namespace Presentation.Patterns
             }
         }
 
+        protected override void ClearItems()
+        {
+            SelectedIndex = -1;
+            base.ClearItems();
+        }
+
         protected override void RemoveItem(int index)
         {
+            if (index == SelectedIndex)
+            {
+                SelectedIndex = -1;
+            }
+
             var item = this[index];
 
             base.RemoveItem(index);
@@ -71,6 +109,11 @@ namespace Presentation.Patterns
 
         protected override void SetItem(int index, T item)
         {
+            if (index == SelectedIndex && !EqualityComparer<T>.Default.Equals(this[SelectedIndex], item))
+            {
+                SelectedIndex = -1;
+            }
+
             var oldItem = this[index];
 
             base.SetItem(index, item);
@@ -84,14 +127,14 @@ namespace Presentation.Patterns
 
         public Predicate<T> Filter
         {
-            get { return _filter; }
+            get => _filter;
             set
             {
                 if (_filter != value)
                 {
                     _filter = value;
                     ApplyFilter();
-                    OnPropertyChanged(new PropertyChangedEventArgs("Filter"));
+                    OnPropertyChanged(PropertyChangedEventFactory.Create());
                 }
             }
         }
@@ -123,15 +166,14 @@ namespace Presentation.Patterns
                     }
                 }
                 _filtered.EndUpdate();
-                Selected = default(T);
+                SelectedIndex = -1;
             }
             else
             {
                 // filter has been removed so let's free memory etc.
                 _filtered = null;
             }
-            OnPropertyChanged(new PropertyChangedEventArgs("Filtered"));
+            OnPropertyChanged(PropertyChangedEventFactory.Create(nameof(Filtered)));
         }
-
     }
 }

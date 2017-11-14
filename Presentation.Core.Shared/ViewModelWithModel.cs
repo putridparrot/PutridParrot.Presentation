@@ -156,8 +156,7 @@ namespace Presentation.Patterns
             if (propertyName == null)
                 return default(TProperty);
 
-            IProperty property;
-            if (!_properties.TryGetValue(propertyName, out property))
+            if (!_properties.TryGetValue(propertyName, out var property))
             {
                 var p = propertyFactory();
                 property = p;

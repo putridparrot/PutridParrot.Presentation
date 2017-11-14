@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\DisposableAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ListFilter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\PropertyChangedEventArgsFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ReferenceCounter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\SafeConvert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\UndoRedoStack.cs" />

@@ -16,10 +16,7 @@ namespace Presentation.Patterns.Helpers
 
         public ComparerImpl(Func<T, T, int> objectComparer, Func<T, int> objectHash)
         {
-            if (objectComparer == null)
-                throw new NullReferenceException("Comparer cannot be null");
-
-            _objectComparer = objectComparer;
+            _objectComparer = objectComparer ?? throw new NullReferenceException("Comparer cannot be null");
             _objectHash = objectHash;
         }
 

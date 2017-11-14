@@ -18,6 +18,6 @@ namespace Presentation.Patterns.Attributes
         /// <summary>
         /// The type of the comparer
         /// </summary>
-        public Type ComparerType { get; private set; }
+        public Type ComparerType { get; }
     }
 }

@@ -116,8 +116,7 @@ namespace Presentation.Patterns
 
                 if (!String.IsNullOrEmpty(propertyName))
                 {
-                    IProperty property;
-                    if (_properties.TryGetValue(propertyName, out property))
+                    if (_properties.TryGetValue(propertyName, out var property))
                     {
                         var propertyRules = property.Rules;
 #if !NET4

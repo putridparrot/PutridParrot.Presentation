@@ -19,6 +19,6 @@ namespace Presentation.Patterns.Attributes
         /// <summary>
         /// The type for the factory code
         /// </summary>
-        public Type FactoryType { get; private set; }
+        public Type FactoryType { get; }
     }
 }

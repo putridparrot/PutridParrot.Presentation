@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Presentation.Patterns.Helpers;
-using Presentation.Patterns.Interfaces;
 
 namespace Presentation.Patterns
 {
@@ -146,8 +144,7 @@ namespace Presentation.Patterns
             if (propertyName == null)
                 return default(TProperty);
 
-            IProperty property;
-            if (!_properties.TryGetValue(propertyName, out property))
+            if (!_properties.TryGetValue(propertyName, out var property))
             {
                 var p = propertyFactory();
                 property = p;

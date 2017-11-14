@@ -86,10 +86,9 @@ namespace Presentation.Patterns
                     if (ComparerType == null)
                         return null;
 
-                    object comparer;
                     // we want to maintain the only a single instance
                     // of a comparer for each comparer type
-                    if (!Instance._comparerTypes.TryGetValue(ComparerType, out comparer) || comparer == null)
+                    if (!Instance._comparerTypes.TryGetValue(ComparerType, out var comparer) || comparer == null)
                     {
                         try
                         {
@@ -123,11 +122,10 @@ namespace Presentation.Patterns
             {
                 get
                 {
-                    PropertyDefinition propertyDefinition;
-                    _properties.TryGetValue(propertyName, out propertyDefinition);
+                    _properties.TryGetValue(propertyName, out var propertyDefinition);
                     return propertyDefinition;
                 }
-                set { _properties[propertyName] = value; }
+                set => _properties[propertyName] = value;
             }
 
             public HashSet<string> NonTrackableProperties { get; internal set; }
@@ -168,8 +166,7 @@ namespace Presentation.Patterns
         /// <param name="type"></param>
         public PropertyDefinitions Register(Type type)
         {
-            PropertyDefinitions propertyDefinitions;
-            if (!_typePropertyDefinitions.TryGetValue(type, out propertyDefinitions))
+            if (!_typePropertyDefinitions.TryGetValue(type, out var propertyDefinitions))
             {
                 propertyDefinitions = new PropertyDefinitions();
                 Populate(propertyDefinitions, type);
@@ -187,8 +184,7 @@ namespace Presentation.Patterns
         /// <param name="type"></param>
         public void UnRegister(Type type)
         {
-            PropertyDefinitions propertyDefinitions;
-            if (_typePropertyDefinitions.TryGetValue(type, out propertyDefinitions))
+            if (_typePropertyDefinitions.TryGetValue(type, out var propertyDefinitions))
             {
                 if (--propertyDefinitions._refCount <= 0)
                 {
@@ -204,8 +200,7 @@ namespace Presentation.Patterns
 
         public PropertyDefinitions Get(Type type)
         {
-            PropertyDefinitions propertyDefinitions;
-            if (!_typePropertyDefinitions.TryGetValue(type, out propertyDefinitions))
+            if (!_typePropertyDefinitions.TryGetValue(type, out var propertyDefinitions))
             {
                 throw new TypeNotRegisteredException("Type not registered");
             }

@@ -10,8 +10,7 @@ namespace Presentation.Patterns.Helpers
             try
             {
                 var ttype = typeof(T);
-                var convertible = value as IConvertible;
-                if (convertible == null)
+                if (!(value is IConvertible))
                 {
                     if (value == null)
                     {

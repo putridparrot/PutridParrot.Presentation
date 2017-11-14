@@ -155,15 +155,13 @@ namespace Presentation.Patterns
             if (propertyName == null)
                 return default(TProperty);
 
-            IProperty property;
-            if (!_properties.TryGetValue(propertyName, out property))
+            if (!_properties.TryGetValue(propertyName, out var property))
             {
                 var p = propertyFactory();
                 property = p;
                 ApplyAttributes(propertyName, p);
 
-                var tmp = property as Property<T>;
-                if (tmp != null)
+                if (property is Property<T> tmp)
                 {
 #if !NET4
                     if (!_propertyDefinitions.NonTrackableProperties?.Contains(propertyName) ?? true)

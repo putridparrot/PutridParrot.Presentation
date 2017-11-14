@@ -37,11 +37,8 @@ namespace Tests.Presentation
         [Test]
         public void AfterFilterRemoved_ExpectFilteredToBeAllItems()
         {
-            var collection = new ObservableViewCollection<string>(
-                    new[] { "One", "Two", "Three", "Four" }
-                );
-
-            collection.Filter = s => s.StartsWith("T");
+            var collection = new ObservableViewCollection<string>(new[] {"One", "Two", "Three", "Four"})
+            { Filter = s => s.StartsWith("T")};
 
             collection.Filtered.Count
                 .Should()
@@ -71,11 +68,9 @@ namespace Tests.Presentation
         [Test]
         public void WithFilterSupplied_ExpectFilteredToShowOnlyThoseItemsThatMatchFilter()
         {
-            var collection = new ObservableViewCollection<string>(
-                    new[] { "One", "Two", "Three", "Four" }
-                );
+            var collection = new ObservableViewCollection<string>(new[] {"One", "Two", "Three", "Four"}
+            ) {Filter = s => s.StartsWith("T")};
 
-            collection.Filter = s => s.StartsWith("T");
 
             collection.Filtered.Count
                 .Should()
@@ -312,9 +307,9 @@ namespace Tests.Presentation
                     new[] { "One", "Two", "Three", "Four" }
                 );
 
-            collection.Selected = "Five";
+            collection.SelectedItem = "Five";
 
-            collection.Selected
+            collection.SelectedItem
                 .Should()
                 .Be(default(string));
         }
@@ -326,9 +321,9 @@ namespace Tests.Presentation
                     new[] { "One", "Two", "Three", "Four" }
                 );
 
-            collection.Selected = "Three";
+            collection.SelectedItem = "Three";
 
-            collection.Selected
+            collection.SelectedItem
                 .Should()
                 .Be("Three");
         }
@@ -346,5 +341,130 @@ namespace Tests.Presentation
         //        .Should()
         //        .Be(collection[4]);
         //}
+        [Test]
+        public void Selected_EnsureSelectCorrectlySet()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                4,
+                7,
+                21,
+                100
+            };
+
+            collection.SelectedItem = 21;
+            Assert.AreEqual(21, collection.SelectedItem);
+        }
+
+        [Test]
+        public void Selected_SetToNonExistentValue_ShouldNotBeSet()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                4,
+                7,
+                21,
+                100
+            };
+
+            collection.SelectedItem = 999;
+            Assert.AreEqual(0, collection.SelectedItem);
+        }
+
+        [Test]
+        public void Selected_SetToValidValue_ThenRemoveItem_ExpectSelectedChangesToDefault()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                4,
+                7,
+                21,
+                100
+            };
+
+            collection.SelectedItem = 7;
+            collection.Remove(7);
+            Assert.AreEqual(0, collection.SelectedItem);
+        }
+
+        [Test]
+        public void Selected_SetToValidValue_Clear_ExpectSelectedChangesToDefault()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                4,
+                7,
+                21,
+                100
+            };
+
+            collection.SelectedItem = 7;
+            collection.Clear();
+            Assert.AreEqual(0, collection.SelectedItem);
+        }
+
+        [Test]
+        public void DefaultValue_SetToValue_ExpectSameValueBack()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                4,
+                7,
+                21,
+                100
+            };
+
+            collection.DefaultValue = 999;
+            Assert.AreEqual(999, collection.DefaultValue);
+        }
+
+        [Test]
+        public void DefaultValue_Selected_SetToValidValue_Clear_ExpectSelectedChangesToDefault()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                4,
+                7,
+                21,
+                100
+            };
+
+            collection.DefaultValue = 999;
+            collection.SelectedItem = 7;
+            collection.Clear();
+            Assert.AreEqual(999, collection.SelectedItem);
+        }
+
+        [Test]
+        public void SetItem_SelectedItemChangesSo_ExpectDefaultValue()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                4,
+                7,
+                21,
+                100
+            };
+
+            collection.DefaultValue = 999;
+            collection.SelectedItem = 7;
+            collection[3] = 9;
+            Assert.AreEqual(999, collection.SelectedItem);
+        }
+
     }
 }

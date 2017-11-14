@@ -175,7 +175,7 @@ namespace Presentation.Patterns
 
         public bool IsBusy
         {
-            get { return GetOrCreateBusyCount().Count > 0; }
+            get => GetOrCreateBusyCount().Count > 0;
             set
             {
                 var busyCount = GetOrCreateBusyCount();

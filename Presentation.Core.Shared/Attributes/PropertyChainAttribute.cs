@@ -30,7 +30,7 @@ namespace Presentation.Patterns.Attributes
         /// on when the property associated with this attribute 
         /// changes
         /// </summary>
-        public string[] Properties { get; private set; }
+        public string[] Properties { get; }
 
         public override bool PostInvoke(object o)
         {

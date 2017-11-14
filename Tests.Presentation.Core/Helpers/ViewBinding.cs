@@ -65,8 +65,7 @@ namespace Tests.Presentation.Helpers
         {
             _propertyChanged.Add(e.PropertyName);
 
-            PropertyInfo pi;
-            if (_bindings.TryGetValue(e.PropertyName, out pi))
+            if (_bindings.TryGetValue(e.PropertyName, out var pi))
             {
                 ReadPropertyValue(pi);
             }

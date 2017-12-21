@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Presentation.Core.Shared.Interfaces;
 
 namespace Presentation.Patterns
 {
@@ -8,7 +9,7 @@ namespace Presentation.Patterns
     /// be specific ICommand implementations
     /// </summary>
     public abstract class CommandCommon : NotifyPropertyChanged, 
-        ICommand
+        ICommand, IRaiseCanExecuteChanged
     {
         public event EventHandler CanExecuteChanged;
 

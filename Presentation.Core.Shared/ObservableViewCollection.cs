@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using Presentation.Core.Shared.Helpers;
+using Presentation.Core.Shared.Interfaces;
 
 namespace Presentation.Patterns
 {
@@ -17,6 +19,10 @@ namespace Presentation.Patterns
         private T _defaultValue;
         private Predicate<T> _filter;
         private ExtendedObservableCollection<T> _filtered;
+
+        private ICommand _addCommand;
+        private ICommand _deleteCommand;
+        private ICommand _clearCommand;
 
         public ObservableViewCollection() :
             base()
@@ -68,6 +74,12 @@ namespace Presentation.Patterns
                 {
                     _selectedIndex = value;
                     OnPropertyChanged(PropertyChangedEventFactory.Create());
+                    OnPropertyChanged(PropertyChangedEventFactory.Create(nameof(IsSelectedValid)));
+
+                    if (DeleteCommand is IRaiseCanExecuteChanged deleteCommand)
+                    {
+                        deleteCommand.RaiseCanExecuteChanged();
+                    }
                 }
             }
         }
@@ -87,6 +99,11 @@ namespace Presentation.Patterns
         {
             SelectedIndex = -1;
             base.ClearItems();
+
+            if (ClearCommand is IRaiseCanExecuteChanged clearCommand)
+            {
+                clearCommand.RaiseCanExecuteChanged();
+            }
         }
 
         protected override void RemoveItem(int index)
@@ -174,6 +191,86 @@ namespace Presentation.Patterns
                 _filtered = null;
             }
             OnPropertyChanged(PropertyChangedEventFactory.Create(nameof(Filtered)));
+        }
+
+        public bool IsSelectedValid => SelectedIndex >= 0 && SelectedIndex < Count;
+
+        /// <summary>
+        /// Get/set an add command to allow this class
+        /// to particpate in commands. The default 
+        /// implementation is lazy created and will add a
+        /// default(T) item or a value of type T passed via 
+        /// the command parameters
+        /// </summary>
+        public ICommand AddCommand
+        {
+            get => _addCommand ?? 
+                   (_addCommand = new ActionCommand<T>(Add));
+            set
+            {
+                if (_addCommand != value)
+                {
+                    _addCommand = value;
+                    OnPropertyChanged(PropertyChangedEventFactory.Create());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get/set a delete command to allow this class
+        /// to particpate in commands. The default 
+        /// implementation is lazy created and will add a
+        /// remove the item which at the SelectedIndex. It
+        /// does not do anything with command parsm
+        /// </summary>
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return _deleteCommand ?? 
+                    (_deleteCommand = new ActionCommand(
+                           () =>
+                           {
+                               if (IsSelectedValid)
+                               {
+                                   RemoveItem(SelectedIndex);
+                               }
+                           },
+                           () => IsSelectedValid));
+            }
+            set
+            {
+                if (_deleteCommand != value)
+                {
+                    _deleteCommand = value;
+                    OnPropertyChanged(PropertyChangedEventFactory.Create());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get/set an clear command to allow this class
+        /// to particpate in commands. The default 
+        /// implementation is lazy created and will clear 
+        /// all items from the collection, command parameters
+        /// are ignored.
+        /// </summary>
+        public ICommand ClearCommand
+        {
+            get
+            {
+                return _clearCommand ?? 
+                    (_clearCommand = new ActionCommand(Clear,
+                           () => Count > 0));
+            }
+            set
+            {
+                if (_clearCommand != value)
+                {
+                    _clearCommand = value;
+                    OnPropertyChanged(PropertyChangedEventFactory.Create());
+                }
+            }
         }
     }
 }

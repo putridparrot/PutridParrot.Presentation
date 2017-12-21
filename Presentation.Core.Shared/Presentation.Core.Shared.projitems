@@ -46,6 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\INotifyViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IProperty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IPropertyRecorder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IRaiseCanExecuteChanged.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISupportUpdate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NotifyPropertyChanged.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObservableViewCollection.cs" />

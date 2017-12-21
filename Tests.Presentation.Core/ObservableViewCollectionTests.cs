@@ -466,5 +466,132 @@ namespace Tests.Presentation
             Assert.AreEqual(999, collection.SelectedItem);
         }
 
+        [Test]
+        public void AddCommand_WhenCommandExecutedWithParam_ExpectListToGrow()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                3
+            };
+
+            collection.AddCommand.Execute(123);
+            Assert.AreEqual(4, collection.Count);
+            Assert.AreEqual(123, collection[3]);
+        }
+
+        [Test]
+        public void AddCommand_WhenCommandExecutedWithoutParam_ExpectListToGrowButItemAddedIsDefaultT()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                3
+            };
+
+            collection.AddCommand.Execute(null);
+            Assert.AreEqual(4, collection.Count);
+            Assert.AreEqual(0, collection[3]);
+        }
+
+
+        [Test]
+        public void AddCommand_WhenOverridenCommandExecuted_ExpectListToGrowByTwo()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                3
+            };
+            collection.AddCommand = new ActionCommand(() => collection.AddRange(new [] { 4, 578 }));
+            collection.AddCommand.Execute(null);
+
+            Assert.AreEqual(5, collection.Count);
+            Assert.AreEqual(578, collection[4]);
+        }
+
+        [Test]
+        public void DeleteCommand_WhenNoItemSelected_ExpectCanExecuteCommandToBeFalse()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                3
+            };
+
+            Assert.IsFalse(collection.DeleteCommand.CanExecute(null));
+        }
+
+        [Test]
+        public void DeleteCommand_WithSelectedItem_ExpectCanExecuteCommandToBeTrue()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                3
+            };
+            collection.SelectedIndex = 0;
+
+            Assert.IsTrue(collection.DeleteCommand.CanExecute(null));
+        }
+        [Test]
+        public void DeleteCommand_WhenOverridenCommandExecuted_ExpectListToReduceByTwo()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                3
+            };
+            collection.DeleteCommand = new ActionCommand(() =>
+            {
+                collection.RemoveAt(0);
+                collection.RemoveAt(0);
+            });
+            collection.DeleteCommand.Execute(null);
+
+            Assert.AreEqual(1, collection.Count);
+            Assert.AreEqual(3, collection[0]);
+        }
+
+        [Test]
+        public void ClearCommand_IfNoItems_ExpectCanExecuteToBeFalse()
+        {
+            var collection = new ObservableViewCollection<int>();
+
+            Assert.IsFalse(collection.ClearCommand.CanExecute(null));
+        }
+
+        [Test]
+        public void ClearCommand_IfHasItems_ExpectCanExecuteToBeTrue()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                3
+            };
+
+            Assert.IsTrue(collection.ClearCommand.CanExecute(null));
+        }
+
+        [Test]
+        public void ClearCommand_Execute_ExpectNoItemsLeftInCollection()
+        {
+            var collection = new ObservableViewCollection<int>
+            {
+                1,
+                2,
+                3
+            };
+
+            collection.ClearCommand.Execute(null);
+            Assert.AreEqual(0, collection.Count);
+        }
     }
 }

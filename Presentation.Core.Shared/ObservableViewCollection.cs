@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using Presentation.Core.Shared.Helpers;
-using Presentation.Core.Shared.Interfaces;
+using Presentation.Core.Helpers;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// Used to implement a collection with more

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// A collection of rule objects associated with a property 

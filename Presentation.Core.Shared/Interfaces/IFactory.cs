@@ -1,4 +1,4 @@
-﻿namespace Presentation.Patterns.Interfaces
+﻿namespace Presentation.Core.Interfaces
 {
     /// <summary>
     /// Should be implemented by types which act as factory class.

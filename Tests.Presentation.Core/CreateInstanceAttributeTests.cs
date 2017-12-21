@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Patterns;
-using Presentation.Patterns.Attributes;
+using Presentation.Core;
+using Presentation.Core.Attributes;
 
 namespace Tests.Presentation
 {

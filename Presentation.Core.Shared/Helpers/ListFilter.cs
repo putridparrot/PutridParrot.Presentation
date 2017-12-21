@@ -1,4 +1,4 @@
-﻿namespace Presentation.Patterns.Helpers
+﻿namespace Presentation.Core.Helpers
 {
     public enum ListFilter
     {

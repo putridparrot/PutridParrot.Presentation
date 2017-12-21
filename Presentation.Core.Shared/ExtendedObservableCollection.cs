@@ -7,10 +7,10 @@ using System.Linq;
 #if !NETSTANDARD2_0
 using System.Windows.Threading;
 #endif
-using Presentation.Patterns.Helpers;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Helpers;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
 	/// A dispatcher aware observable collection. As the default ObservableCollection does

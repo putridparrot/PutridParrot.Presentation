@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Threading;
 
-namespace Presentation.Patterns.Helpers
+namespace Presentation.Core.Helpers
 {
     /// <summary>
     /// Dispatcher extensions

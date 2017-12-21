@@ -1,5 +1,5 @@
-﻿using Presentation.Patterns;
-using Presentation.Patterns.Helpers;
+﻿using Presentation.Core;
+using Presentation.Core.Helpers;
 
 namespace ProfilingApp
 {

@@ -1,6 +1,6 @@
-﻿using Presentation.Patterns.Interfaces;
+﻿using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// A rule can be defined so that any pre and post property changes

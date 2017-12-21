@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
-using Presentation.Core.Shared.Interfaces;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// Implemented common functionality that can be used

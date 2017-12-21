@@ -1,4 +1,4 @@
-﻿using Presentation.Patterns;
+﻿using Presentation.Core;
 
 namespace ProfilingApp
 {

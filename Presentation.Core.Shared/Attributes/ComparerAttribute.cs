@@ -1,6 +1,7 @@
 ﻿using System;
+using Presentation.Core.Attributes;
 
-namespace Presentation.Patterns.Attributes
+namespace Presentation.Core.Attributes
 {
     /// <summary>
     /// Used on a property to define the IEqualityComparer&lt;T&gt;

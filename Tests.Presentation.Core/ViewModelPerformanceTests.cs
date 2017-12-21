@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
-using Presentation.Patterns;
-using Presentation.Patterns.Helpers;
+using Presentation.Core;
+using Presentation.Core.Helpers;
 
 namespace Tests.Presentation
 {

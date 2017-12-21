@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-namespace Presentation.Patterns.Exceptions
+namespace Presentation.Core.Exceptions
 {
     [ExcludeFromCodeCoverage]
     [Serializable]

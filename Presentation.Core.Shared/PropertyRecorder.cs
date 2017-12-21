@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// Implements a simple property change recorder.

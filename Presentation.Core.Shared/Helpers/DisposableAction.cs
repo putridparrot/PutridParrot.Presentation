@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Presentation.Patterns.Helpers
+namespace Presentation.Core.Helpers
 {
     /// <summary>
     /// The DisposableAction creates a instance

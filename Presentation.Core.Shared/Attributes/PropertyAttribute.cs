@@ -1,6 +1,6 @@
 using System;
 
-namespace Presentation.Patterns.Attributes
+namespace Presentation.Core.Attributes
 {
     /// <summary>
     /// Base class for view model property attributes

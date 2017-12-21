@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using Presentation.Patterns;
-using Presentation.Patterns.Attributes;
-using Presentation.Patterns.Helpers;
+using Presentation.Core;
+using Presentation.Core.Attributes;
+using Presentation.Core.Helpers;
 
 namespace Tests.Presentation.Helpers
 {

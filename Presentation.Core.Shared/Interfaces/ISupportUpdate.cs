@@ -1,4 +1,4 @@
-namespace Presentation.Patterns.Interfaces
+namespace Presentation.Core.Interfaces
 {
     /// <summary>
     /// Implement by types which support 

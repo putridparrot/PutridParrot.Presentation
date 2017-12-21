@@ -1,7 +1,7 @@
 ﻿using System;
-using Presentation.Patterns.Helpers;
+using Presentation.Core.Helpers;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     public interface IViewLocator
     {

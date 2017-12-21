@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
-using Presentation.Patterns.Helpers;
+using Presentation.Core.Helpers;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// Acts as a base class for view models, requires

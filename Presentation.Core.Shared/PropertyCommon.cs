@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Presentation.Patterns.Attributes;
-using Presentation.Patterns.Helpers;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Attributes;
+using Presentation.Core.Helpers;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     public class PropertyCommon<T> : IProperty
     {

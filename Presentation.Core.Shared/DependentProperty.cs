@@ -1,7 +1,7 @@
 ﻿using System;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// Creates a property which is dependent upon other properties.

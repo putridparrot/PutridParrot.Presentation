@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Presentation.Patterns.Helpers;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Helpers;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// Acts as a base class for view models, can be used

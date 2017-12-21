@@ -1,7 +1,7 @@
-﻿using Presentation.Patterns.Helpers;
-using Presentation.Patterns.Interfaces;
+﻿using Presentation.Core.Helpers;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     public interface ITabManager<T> where T : INotifyViewModel
     {

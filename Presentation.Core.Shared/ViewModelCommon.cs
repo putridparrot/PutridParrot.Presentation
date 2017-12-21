@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Presentation.Patterns.Helpers;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Helpers;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// Includes common functionality for more specific implementations

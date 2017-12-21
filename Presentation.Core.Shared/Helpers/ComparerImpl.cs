@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Presentation.Patterns.Helpers
+namespace Presentation.Core.Helpers
 {
     public class ComparerImpl<T> : IComparer<T>, IEqualityComparer<T>, IComparer
     {

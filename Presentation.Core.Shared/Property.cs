@@ -1,4 +1,4 @@
-﻿namespace Presentation.Patterns
+﻿namespace Presentation.Core
 {
     /// <summary>
     /// Creates a basic property

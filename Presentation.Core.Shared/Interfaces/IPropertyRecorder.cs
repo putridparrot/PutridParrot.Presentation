@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Presentation.Patterns.Interfaces
+namespace Presentation.Core.Interfaces
 {
     /// <summary>
     /// Should be implemented by a type supporting

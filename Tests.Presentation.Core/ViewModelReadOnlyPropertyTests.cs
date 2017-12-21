@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Patterns;
+using Presentation.Core;
 
 namespace Tests.Presentation
 {

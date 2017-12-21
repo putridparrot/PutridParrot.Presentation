@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Presentation.Patterns.Attributes
+namespace Presentation.Core.Attributes
 {
     /// <summary>
     /// Special type of property attribute which adheres

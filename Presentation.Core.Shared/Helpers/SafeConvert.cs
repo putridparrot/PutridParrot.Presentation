@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Presentation.Patterns.Helpers
+namespace Presentation.Core.Helpers
 {
     public static class SafeConvert
     {

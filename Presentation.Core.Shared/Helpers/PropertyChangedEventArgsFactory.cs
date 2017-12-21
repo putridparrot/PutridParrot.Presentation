@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Presentation.Core.Shared.Helpers
+namespace Presentation.Core.Helpers
 {
     /// <summary>
     /// Helper class to further simplify creation of

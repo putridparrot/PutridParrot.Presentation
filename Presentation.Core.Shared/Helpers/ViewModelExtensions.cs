@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns.Helpers
+namespace Presentation.Core.Helpers
 {
     /// <summary>
     /// INotifyViewModel extension methods

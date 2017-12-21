@@ -7,11 +7,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
-using Presentation.Patterns.Attributes;
-using Presentation.Patterns.Exceptions;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Attributes;
+using Presentation.Core.Exceptions;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// This acts as a singleton for view model based code. It's

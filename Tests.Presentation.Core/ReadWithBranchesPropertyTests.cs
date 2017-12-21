@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Patterns;
+using Presentation.Core;
 using Tests.Presentation.Helpers;
 
 namespace Tests.Presentation

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Presentation.Patterns.Attributes;
+using Presentation.Core.Attributes;
 
-namespace Presentation.Patterns.Interfaces
+namespace Presentation.Core.Interfaces
 {
     public interface IProperty
     {

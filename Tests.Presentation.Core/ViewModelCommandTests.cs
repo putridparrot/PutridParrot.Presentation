@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Patterns;
-using Presentation.Patterns.Attributes;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core;
+using Presentation.Core.Attributes;
+using Presentation.Core.Interfaces;
 
 namespace Tests.Presentation
 {

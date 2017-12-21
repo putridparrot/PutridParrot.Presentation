@@ -1,4 +1,4 @@
-﻿namespace Presentation.Patterns.Interfaces
+﻿namespace Presentation.Core.Interfaces
 {
     /// <summary>
     /// Used by a view model implementation to allow external code, such 

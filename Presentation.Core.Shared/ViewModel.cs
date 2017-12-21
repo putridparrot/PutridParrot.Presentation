@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Presentation.Patterns.Exceptions;
-using Presentation.Patterns.Helpers;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Exceptions;
+using Presentation.Core.Helpers;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// Acts as a base class for view models, includes

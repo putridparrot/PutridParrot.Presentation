@@ -1,4 +1,4 @@
-﻿namespace Presentation.Patterns.Interfaces
+﻿namespace Presentation.Core.Interfaces
 {
     /// <summary>
     /// Should be implemented by a property which

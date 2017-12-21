@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Presentation.Patterns.Helpers
+namespace Presentation.Core.Helpers
 {
     public static class Validation
     {

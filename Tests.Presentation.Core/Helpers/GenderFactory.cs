@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Presentation.Patterns;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core;
+using Presentation.Core.Interfaces;
 
 namespace Tests.Presentation.Helpers
 {

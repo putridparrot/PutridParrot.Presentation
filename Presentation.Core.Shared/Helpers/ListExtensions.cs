@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Presentation.Patterns.Helpers
+namespace Presentation.Core.Helpers
 {
     public static class ListExtensions
     {

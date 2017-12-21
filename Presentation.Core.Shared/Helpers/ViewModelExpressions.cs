@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns.Helpers
+namespace Presentation.Core.Helpers
 {
     /// <summary>
     /// Utility class for working with expressions on INotifyViewModel objects

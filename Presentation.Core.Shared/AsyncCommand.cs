@@ -4,9 +4,9 @@ using System.Windows.Input;
 #if !NETSTANDARD2_0
 using System.Windows.Threading;
 #endif
-using Presentation.Patterns.Helpers;
+using Presentation.Core.Helpers;
 
-namespace Presentation.Patterns
+namespace Presentation.Core
 {
     /// <summary>
     /// A Task/async aware command object. Automatically handles changes

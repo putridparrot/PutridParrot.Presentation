@@ -1,7 +1,7 @@
 ﻿using System;
-using Presentation.Patterns.Interfaces;
+using Presentation.Core.Interfaces;
 
-namespace Presentation.Patterns.Attributes
+namespace Presentation.Core.Attributes
 {
     /// <summary>
     /// When a property, with this attribute, changes (i.e.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Presentation.Patterns.Attributes
+namespace Presentation.Core.Attributes
 {
     /// <summary>
     /// Allows the view model to create an instance

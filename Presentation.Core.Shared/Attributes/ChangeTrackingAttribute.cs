@@ -1,6 +1,7 @@
 using System;
+using Presentation.Core.Attributes;
 
-namespace Presentation.Patterns.Attributes
+namespace Presentation.Core.Attributes
 {
     /// <summary>
     /// The attribute is used on a property to set changes tracking on

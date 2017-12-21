@@ -1,4 +1,4 @@
-﻿namespace Presentation.Patterns.Helpers
+﻿namespace Presentation.Core.Helpers
 {
     /// <summary>
     /// Simple reference counter, it doesn't store

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Presentation.Patterns.Interfaces
+namespace Presentation.Core.Interfaces
 {
     /// <summary>
     /// Defines the interface which collections

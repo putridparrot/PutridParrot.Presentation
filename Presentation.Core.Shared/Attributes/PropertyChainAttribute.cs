@@ -1,4 +1,5 @@
-﻿using Presentation.Patterns.Interfaces;
+﻿using System;
+using Presentation.Patterns.Interfaces;
 
 namespace Presentation.Patterns.Attributes
 {
@@ -18,6 +19,7 @@ namespace Presentation.Patterns.Attributes
     /// changing. We can therefore chain these propetries 
     /// to achieve this.
     /// </example>
+    [AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertyChainAttribute : RuleAttribute
     {
         public PropertyChainAttribute(params string[] properties)

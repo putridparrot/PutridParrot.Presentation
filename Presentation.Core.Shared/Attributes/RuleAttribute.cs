@@ -1,4 +1,6 @@
-﻿namespace Presentation.Patterns.Attributes
+﻿using System;
+
+namespace Presentation.Patterns.Attributes
 {
     /// <summary>
     /// Special type of property attribute which adheres
@@ -7,6 +9,7 @@
     /// These "rule" occur every on changing and every on changed
     /// event.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
     public class RuleAttribute : PropertyAttribute
     {
         /// <summary>

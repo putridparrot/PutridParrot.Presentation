@@ -1,3 +1,5 @@
+using System;
+
 namespace Presentation.Patterns.Attributes
 {
     /// <summary>
@@ -6,6 +8,7 @@ namespace Presentation.Patterns.Attributes
     /// you only need to really use this to turn off change tracking, unless
     /// you want to be explicit in usage.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
     public sealed class ChangeTrackingAttribute : PropertyAttribute
     {
         public ChangeTrackingAttribute(bool isTracking = true)

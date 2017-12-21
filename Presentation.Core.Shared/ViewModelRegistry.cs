@@ -33,17 +33,50 @@ namespace Presentation.Patterns
         /// </summary>
         public sealed class PropertyDefinition
         {
+            /// <summary>
+            /// The default value to be assigned lazily (if a default vlaue is applied
+            /// to a property)
+            /// </summary>
             internal DefaultValueAttribute DefaultValue { get; set; }
+            /// <summary>
+            /// The comparer to be used on the type
+            /// </summary>
             internal Type ComparerType { get; set; }
+            /// <summary>
+            /// The property type
+            /// </summary>
             internal Type PropertyType { get; set; }
+            /// <summary>
+            /// The CreateInstance attribute if one is applied to a property
+            /// </summary>
             internal CreateInstanceAttribute CreateInstance { get; set; }
+            /// <summary>
+            /// The CreateInstanceUsing attribute if one is applied to a property
+            /// </summary>
             internal CreateInstanceUsingAttribute CreateInstanceUsing { get; set; }
 
+            /// <summary>
+            /// Gets/Sets a boolean return which states whether validation attributes have been
+            /// assigned to a property
+            /// </summary>
             public bool HasValidationAttributes { get; internal set; }
+            /// <summary>
+            /// Gets/Sets a boolean which states whether a property supports notifications
+            /// </summary>
             public bool SupportsNotifications { get; internal set; }
+            /// <summary>
+            /// Gets/Sets a boolean if change tracking is applied to a property
+            /// </summary>
             public bool ChangeTrackingDisabled { get; internal set; }
+            /// <summary>
+            /// Gets/sets the list of rules application to a property
+            /// </summary>
             public List<RuleAttribute> Rules { get; internal set; }
 
+            /// <summary>
+            /// Gets the a value as a default when a property is accessed. This will use
+            /// the CreateInstance, CreateInstanceUsing or Default attributes
+            /// </summary>
             public object Default
             {
                 get
@@ -79,6 +112,11 @@ namespace Presentation.Patterns
                 }
             }
 
+            /// <summary>
+            /// Gets the comparer object by creating is as needed and storing for use across all properties
+            /// that are assigned it's type. Ensures we do not create multiple instances of the same comparer
+            /// type.
+            /// </summary>
             public object Comparer
             {
                 get
@@ -104,6 +142,10 @@ namespace Presentation.Patterns
                 }
             }
 
+            /// <summary>
+            /// Gets/Sets the DisplayName which can be used to replace the property name in
+            /// a more human readable manner
+            /// </summary>
             public string DisplayName { get; internal set; }
         }
 
@@ -193,11 +235,22 @@ namespace Presentation.Patterns
             }
         }
 
+        /// <summary>
+        /// Clear the stored property definitions for the supplied type
+        /// </summary>
+        /// <param name="type"></param>
         public void Clear(Type type)
         {
             _typePropertyDefinitions.Remove(type);
         }
 
+        /// <summary>
+        /// Gets the property definitions for a given type. If the type does not exist 
+        /// the TypeNotRegisterdException is thrown
+        /// </summary>
+        /// <exception cref="TypeNotRegisteredException">Occurs if the type is not stored</exception>
+        /// <param name="type">The type to query for</param>
+        /// <returns>The PropertyDefinitions for the given type</returns>
         public PropertyDefinitions Get(Type type)
         {
             if (!_typePropertyDefinitions.TryGetValue(type, out var propertyDefinitions))

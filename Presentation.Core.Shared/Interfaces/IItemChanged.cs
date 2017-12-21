@@ -8,6 +8,9 @@ namespace Presentation.Patterns.Interfaces
     /// </summary>
     public interface IItemChanged
     {
+        /// <summary>
+        /// The ItemChanged event
+        /// </summary>
         event PropertyChangedEventHandler ItemChanged;
     }
 }

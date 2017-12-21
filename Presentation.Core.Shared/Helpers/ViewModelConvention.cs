@@ -22,6 +22,11 @@ namespace Presentation.Patterns.Helpers
                 : null;
         }
 
+        /// <summary>
+        /// Gets a view type based upon the supplied view model and the naming convention
+        /// </summary>
+        /// <param name="viewModelType">The view model type to be matched to a view</param>
+        /// <returns>The view associated (via naming convention) with the supplied view model type</returns>
         public static Type GetViewType(Type viewModelType)
         {
             var viewName = GetViewName(viewModelType.Name);

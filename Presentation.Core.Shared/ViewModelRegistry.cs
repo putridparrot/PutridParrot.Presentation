@@ -149,6 +149,11 @@ namespace Presentation.Patterns
             public string DisplayName { get; internal set; }
         }
 
+        /// <summary>
+        /// PropertyDefinitions allows caches property attributes/definitions
+        /// to allow us to use without having to use reflection multiple times
+        /// on the same type. 
+        /// </summary>
         public sealed class PropertyDefinitions
         {
             private readonly Dictionary<string, PropertyDefinition> _properties;
@@ -160,6 +165,11 @@ namespace Presentation.Patterns
                 _properties = new Dictionary<string, PropertyDefinition>();
             }
 
+            /// <summary>
+            /// Gets/Sets the property defintion for a given property name
+            /// </summary>
+            /// <param name="propertyName"></param>
+            /// <returns></returns>
             public PropertyDefinition this[string propertyName]
             {
                 get
@@ -170,11 +180,21 @@ namespace Presentation.Patterns
                 set => _properties[propertyName] = value;
             }
 
+            /// <summary>
+            /// Gets/Sets a collection of non-trackable properties to allow
+            /// faster lookups
+            /// </summary>
             public HashSet<string> NonTrackableProperties { get; internal set; }
 
 #if !NET4
+            /// <summary>
+            /// Gets the number of properties within this property definition
+            /// </summary>
             public int Count => _properties?.Count ?? 0;
 #else
+            /// <summary>
+            /// Gets the number of properties within this property definition
+            /// </summary>
             public int Count
             {
                 get
@@ -325,7 +345,8 @@ namespace Presentation.Patterns
         }
 
         /// <summary>
-        /// Associates the meta data class with the (if it supports one).
+        /// Associates the meta data class with the (if it supports one). 
+        /// Currently not supported by .NET Standard 2.0
         /// </summary>
         /// <param name="propertyDefinitions"></param>
         /// <param name="type"></param>

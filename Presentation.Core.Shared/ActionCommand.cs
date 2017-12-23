@@ -54,11 +54,7 @@ namespace Presentation.Core
         /// <returns></returns>
         public override bool CanExecute(object parameter)
         {
-#if !NET4
             return CanExecuteCommand?.Invoke() ?? true;
-#else
-            return CanExecuteCommand == null || CanExecuteCommand();
-#endif
         }
 
         /// <summary>
@@ -67,14 +63,7 @@ namespace Presentation.Core
         /// <param name="parameter"></param>
         public override void Execute(object parameter)
         {
-#if !NET4
             ExecuteCommand?.Invoke();
-#else
-            if (ExecuteCommand != null)
-            {
-                ExecuteCommand();
-            }
-#endif
         }
     }
 
@@ -129,11 +118,7 @@ namespace Presentation.Core
         /// <returns></returns>
         public override bool CanExecute(object parameter)
         {
-#if !NET4
             return CanExecuteCommand?.Invoke(SafeConvert.ChangeType<T>(parameter)) ?? true;
-#else
-            return CanExecuteCommand == null || CanExecuteCommand(SafeConvert.ChangeType<T>(parameter));
-#endif
         }
 
         /// <summary>
@@ -142,14 +127,7 @@ namespace Presentation.Core
         /// <param name="parameter"></param>
         public override void Execute(object parameter)
         {
-#if !NET4
             ExecuteCommand?.Invoke(SafeConvert.ChangeType<T>(parameter));
-#else
-            if (ExecuteCommand != null)
-            {
-                ExecuteCommand(SafeConvert.ChangeType<T>(parameter));
-            }
-#endif
         }
     }
 }

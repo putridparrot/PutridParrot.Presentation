@@ -22,14 +22,7 @@ namespace Presentation.Core.Helpers
         /// <param name="onDispose">The method called when this is disposed of</param>
         public DisposableAction(Action onCreate, Action onDispose)
         {
-#if !NET4
             onCreate?.Invoke();
-#else
-            if (onCreate != null)
-            {
-                onCreate();
-            }
-#endif
             _onDispose = onDispose;
         }
 
@@ -38,14 +31,7 @@ namespace Presentation.Core.Helpers
         /// </summary>
         public void Dispose()
         {
-#if !NET4
             _onDispose?.Invoke();
-#else
-            if (_onDispose != null)
-            {
-                _onDispose();
-            }
-#endif
         }
     }
 }

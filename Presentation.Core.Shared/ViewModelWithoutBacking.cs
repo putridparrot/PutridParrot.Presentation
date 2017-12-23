@@ -50,11 +50,7 @@ namespace Presentation.Core
 
                     backingField = value;
 
-#if !NET4
                     if (!_propertyDefinitions.NonTrackableProperties?.Contains(propertyName) ?? true)
-#else
-                    if (_propertyDefinitions.NonTrackableProperties == null || !_propertyDefinitions.NonTrackableProperties.Contains(propertyName))
-#endif
                     {
                         var tmp = backingField;
                         property.Attach(
@@ -86,14 +82,7 @@ namespace Presentation.Core
         protected T GetProperty<T>(ref T value, [CallerMemberName] string propertyName = null)
         {
             // if we're recording gets as part of dependent property
-#if !NET4
             _recordGets?.Record(propertyName);
-#else
-            if (_recordGets != null)
-            {
-                _recordGets.Record(propertyName);
-            }
-#endif
 
             GetOfCreateProperty(ref value, propertyName, () => new PropertyCommon<T>());
             return value;
@@ -150,12 +139,7 @@ namespace Presentation.Core
                 property = p;
                 ApplyAttributes(ref value, propertyName, p);
 
-#if !NET4
                 if (!_propertyDefinitions.NonTrackableProperties?.Contains(propertyName) ?? true)
-#else
-                    if (_propertyDefinitions.NonTrackableProperties == null || 
-                        !_propertyDefinitions.NonTrackableProperties.Contains(propertyName))
-#endif
                 {
                     var tmp = value;
                     property.Attach(
@@ -178,11 +162,7 @@ namespace Presentation.Core
         /// <param name="property"></param>
         private void ApplyAttributes<T>(ref T value, string propertyName, PropertyCommon<T> property)
         {
-#if !NET4
             var definition = _propertyDefinitions?[propertyName];
-#else
-            var definition = _propertyDefinitions != null ? _propertyDefinitions[propertyName] : null;
-#endif
             if (definition != null)
             {
                 value = SafeConvert.ChangeType<T>(definition.Default);

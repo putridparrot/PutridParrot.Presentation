@@ -50,12 +50,7 @@ namespace Presentation.Core
 
                     property.Value = value;
 
-#if !NET4
                     if (!_propertyDefinitions.NonTrackableProperties?.Contains(propertyName) ?? true)
-#else
-                    if (_propertyDefinitions.NonTrackableProperties == null || 
-                        !_propertyDefinitions.NonTrackableProperties.Contains(propertyName))
-#endif
                     {
                         property.Attach(
                             () => Attach(property.Value),
@@ -85,15 +80,7 @@ namespace Presentation.Core
         protected T GetProperty<T>([CallerMemberName] string propertyName = null)
         {
             // if we're recording gets as part of dependent property
-#if !NET4
             _recordGets?.Record(propertyName);
-#else
-            if (_recordGets != null)
-            {
-                _recordGets.Record(propertyName);
-            }
-#endif
-
             return GetOfCreateProperty<Property<T>, T>(propertyName, () => new Property<T>()).Value;
         }
 
@@ -119,11 +106,7 @@ namespace Presentation.Core
             {
                 if (_recordGets.InitialProperty == propertyName)
                 {
-#if !NET4
                     throw new PropertyCannotCallItselfException($"Property {propertyName} cannot get itself");
-#else
-                    throw new PropertyCannotCallItselfException(String.Format("Property {0} cannot get itself", propertyName));
-#endif
                 }
             }
 
@@ -160,12 +143,7 @@ namespace Presentation.Core
 
                 if (property is Property<T> tmp)
                 {
-#if !NET4
                     if (!_propertyDefinitions.NonTrackableProperties?.Contains(propertyName) ?? true)
-#else
-                    if (_propertyDefinitions.NonTrackableProperties == null || 
-                        !_propertyDefinitions.NonTrackableProperties.Contains(propertyName))
-#endif
                     {
                         p.Attach(
                             () => Attach(tmp.Value),
@@ -187,11 +165,7 @@ namespace Presentation.Core
         /// <param name="property"></param>
         private void ApplyAttributes<T>(string propertyName, PropertyCommon<T> property)
         {
-#if !NET4
             var definition = _propertyDefinitions?[propertyName];
-#else
-            var definition = _propertyDefinitions != null ? _propertyDefinitions[propertyName] : null;
-#endif
             if (definition != null)
             {
                 var p = property as Property<T>;

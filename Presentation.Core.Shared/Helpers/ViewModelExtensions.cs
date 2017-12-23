@@ -67,11 +67,7 @@ namespace Presentation.Core.Helpers
         {
             if (propertyExpression == null)
             {
-#if !NET4
                 throw new ArgumentNullException(nameof(propertyExpression));
-#else
-                throw new ArgumentNullException("propertyExpression");
-#endif
             }
 
             MemberExpression property = null;
@@ -138,11 +134,7 @@ namespace Presentation.Core.Helpers
         {
             if (propertyExpression == null)
             {
-#if !NET4
                 throw new ArgumentNullException(nameof(propertyExpression));
-#else
-                throw new ArgumentNullException("propertyExpression");
-#endif
             }
 
             return o.SetProperty(() => o.NameOf(propertyExpression), ref backingField, newValue, validation);
@@ -177,16 +169,7 @@ namespace Presentation.Core.Helpers
             }
 
             backingField = newValue;
-
-#if !NET4
             validation?.Invoke();
-#else
-            if (validation != null)
-            {
-                validation();
-            }
-#endif
-
             o.RaisePropertyChanged(propertyName);
 
             return true;

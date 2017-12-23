@@ -60,67 +60,23 @@ namespace Presentation.Core
             _dataErrorInfo = new Lazy<IExtendedDataErrorInfo>(() => new DataErrorInfo());
         }
 
-#if !NET4
         protected bool ChangeNotificationsSuspended => IsInitializing || IsUpdating;
         protected bool ChangeNotificationsDeferred => IsUpdating;
         protected bool IsInitializing => _initializeCounter > 0;
         protected bool IsInitialized => _initializeCounter <= 0;
         protected bool IsUpdating => _updateCounter > 0;
-#else
-        protected bool ChangeNotificationsSuspended
-        {
-            get { return IsInitializing || IsUpdating; }
-        }
-
-        protected bool ChangeNotificationsDeferred
-        {
-            get { return IsUpdating; }
-        }
-
-        protected bool IsInitializing
-        {
-            get { return _initializeCounter > 0; }
-        }
-
-        protected bool IsInitialized
-        {
-            get { return _initializeCounter <= 0; }
-        }
-
-        protected bool IsUpdating
-        {
-            get { return _updateCounter > 0; }
-        }
-#endif
-
         /// <summary>
         /// Gets whether the view model is in updating mode.
         /// To minimize what the end user see's this is an explicit
         /// implementation calling a private implementation
         /// </summary>
-#if !NET4
         bool ISupportUpdate.IsUpdating => IsUpdating;
-#else
-        bool ISupportUpdate.IsUpdating
-        {
-            get { return IsUpdating; }
-        }
-#endif
-
         /// <summary>
         /// Gets whether the view model is initialized.
         /// To minimize what the end user see's this is an explicit
         /// implementation calling a private implementation
         /// </summary>
-#if !NET4
         bool ISupportInitializeNotification.IsInitialized => IsInitialized;
-#else
-        bool ISupportInitializeNotification.IsInitialized
-        {
-            get { return IsInitialized; }
-        }
-#endif
-
         /// <summary>
         /// Turns on initialization mode, this will turn
         /// changing/change events etc. and  set the view 
@@ -143,14 +99,7 @@ namespace Presentation.Core
             if (_initializeCounter > 0 && --_initializeCounter <= 0)
             {
                 var initialized = _initialized;
-#if !NET4
                 initialized?.Invoke(this, EventArgs.Empty);
-#else
-                if (initialized != null)
-                {
-                    initialized.Invoke(this, EventArgs.Empty);
-                }
-#endif
             }
         }
 
@@ -174,7 +123,6 @@ namespace Presentation.Core
             if (_updateCounter > 0 && --_updateCounter <= 0)
             {
                 // replay deferred properties
-#if !NET4
                 var playback = _deferredPropertyChanges?.Playback();
                 if (playback != null)
                 {
@@ -184,16 +132,6 @@ namespace Presentation.Core
                         base.OnPropertyChanged(property);
                     }
                 }
-#else
-                if (_deferredPropertyChanges != null)
-                {
-                    var result = _deferredPropertyChanges.Playback();
-                    if (result != null)
-                    {
-                        result.ToList().ForEach(base.OnPropertyChanged);
-                    }
-                }
-#endif
                 _deferredPropertyChanges = null;
             }
         }
@@ -204,53 +142,11 @@ namespace Presentation.Core
             remove { _initialized -= value; }
         }
 
-#if !NET4
         string IDataErrorInfo.this[string columnName] => _dataErrorInfo.IsValueCreated ? _dataErrorInfo.Value?[columnName] : null;
         string IDataErrorInfo.Error => _dataErrorInfo.IsValueCreated ? _dataErrorInfo.Value?.Error : null;
 
         string[] IExtendedDataErrorInfo.Properties => _dataErrorInfo.IsValueCreated ? _dataErrorInfo.Value.Properties : null;
         string[] IExtendedDataErrorInfo.Errors => _dataErrorInfo.IsValueCreated ? _dataErrorInfo.Value.Errors : null;
-#else
-        string IDataErrorInfo.this[string columnName]
-        {
-            get
-            {
-                return _dataErrorInfo.IsValueCreated && _dataErrorInfo.Value != null ? 
-                    _dataErrorInfo.Value[columnName] : 
-                    null;
-            }
-        }
-
-        string IDataErrorInfo.Error
-        {
-            get
-            {
-                return _dataErrorInfo.IsValueCreated && _dataErrorInfo.Value != null ?
-                    _dataErrorInfo.Value.Error :
-                    null;
-            }
-        }
-
-        string[] IExtendedDataErrorInfo.Properties
-        {
-            get
-            {
-                return _dataErrorInfo.IsValueCreated && _dataErrorInfo.Value != null ?
-                        _dataErrorInfo.Value.Properties : 
-                        null;
-            }
-        }
-
-        string[] IExtendedDataErrorInfo.Errors
-        {
-            get
-            {
-                return _dataErrorInfo.IsValueCreated && _dataErrorInfo.Value != null ?
-                        _dataErrorInfo.Value.Errors: 
-                        null;
-            }
-        }
-#endif
 
         void IExtendedDataErrorInfo.SetError(string errorMessage)
         {
@@ -272,7 +168,6 @@ namespace Presentation.Core
             return !_dataErrorInfo.IsValueCreated || _dataErrorInfo.Value.Clear();
         }
 
-#if !NET4
         IEnumerable INotifyDataErrorInfo.GetErrors(string propertyName)
         {
             if (_dataErrorInfo.IsValueCreated)
@@ -289,7 +184,6 @@ namespace Presentation.Core
             add { _dataErrorInfo.Value.ErrorsChanged += value; }
             remove { _dataErrorInfo.Value.ErrorsChanged -= value; }
         }
-#endif
 
         /// <summary>
         /// Sets the supplied error against the property in the 
@@ -330,23 +224,13 @@ namespace Presentation.Core
         {
             SetError(propertyName, null);
 
-#if !NET4
             var validationResult = validationFunc?.Invoke(value);
-#else
-            var validationResult = validationFunc != null ? validationFunc(value) : null;
-#endif
             if (validationResult != null)
             {
                 SetError(propertyName, !String.IsNullOrEmpty(validationResult.ErrorMessage) ?
                     validationResult.ErrorMessage :
-#if !NET4
                     $"{propertyName} : {value} validation failure"
-#else
-                    String.Format("{0} : {1} validation failure", propertyName, value)
-#endif
                     );
-                // if we have an error don't bother with more validation, so return
-                return;
             }
         }
 

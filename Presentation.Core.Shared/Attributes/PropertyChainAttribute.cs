@@ -54,14 +54,7 @@ namespace Presentation.Core.Attributes
             if (Properties != null)
             {
                 var vm = o as INotifyViewModel;
-#if !NET4
                 vm?.RaiseMultiplePropertyChanged(Properties);
-#else
-                if (vm != null)
-                {
-                    vm.RaiseMultiplePropertyChanged(Properties);
-                }
-#endif
             }
             return true;
         }

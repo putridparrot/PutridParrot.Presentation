@@ -186,23 +186,10 @@ namespace Presentation.Core
             /// </summary>
             public HashSet<string> NonTrackableProperties { get; internal set; }
 
-#if !NET4
             /// <summary>
             /// Gets the number of properties within this property definition
             /// </summary>
             public int Count => _properties?.Count ?? 0;
-#else
-            /// <summary>
-            /// Gets the number of properties within this property definition
-            /// </summary>
-            public int Count
-            {
-                get
-                {
-                    return _properties != null ? _properties.Count : 0;
-                }
-            }
-#endif
         }
 
         /// <summary>

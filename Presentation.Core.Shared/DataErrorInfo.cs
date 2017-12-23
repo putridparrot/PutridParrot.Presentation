@@ -18,12 +18,10 @@ namespace Presentation.Core
         private Dictionary<string, string> _errors;
         private string _error;
 
-#if !NET4
         /// <summary>
         /// Event is raised when errors have been added/removed
         /// </summary>
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-#endif
 
         /// <summary>
         /// Gets an enumerable with items associated with
@@ -40,7 +38,6 @@ namespace Presentation.Core
             return null;
         }
 
-#if !NET4
         /// <summary>
         /// Gets whether any errors exist
         /// </summary>
@@ -58,15 +55,6 @@ namespace Presentation.Core
                 return false;
             }
         }
-#else
-        /// <summary>
-        /// Gets whether any errors exist
-        /// </summary>
-        public bool HasErrors
-        {
-            get { return _errors != null && _errors.Count > 0; }
-        }
-#endif
 
         /// <summary>
         /// Gets or creates a dictionary of errors
@@ -156,10 +144,8 @@ namespace Presentation.Core
 
         private void OnErrorsChanged(string propertyName)
         {
-#if !NET4
             var errorsChanged = ErrorsChanged;
             errorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-#endif
         }
 
         /// <summary>
@@ -175,14 +161,7 @@ namespace Presentation.Core
                 lock (_syncObject)
                 {
                     string value = null;
-#if !NET4
                     _errors?.TryGetValue(propertyName, out value);
-#else
-                    if (_errors != null)
-                    {
-                        _errors.TryGetValue(propertyName, out value);
-                    }
-#endif
                     return value;
                 }
             }
@@ -249,14 +228,7 @@ namespace Presentation.Core
                 lock (_syncObject)
                 {
                     properties = Properties;
-#if !NET4
                     _errors?.Clear();
-#else
-                    if (_errors != null)
-                    {
-                        _errors.Clear();
-                    }
-#endif
                 }
                 if (properties != null)
                 {

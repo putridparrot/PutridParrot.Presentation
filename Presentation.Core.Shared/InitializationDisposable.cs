@@ -21,29 +21,14 @@ namespace Presentation.Core
         public InitializationDisposable(ISupportInitialize supportsUpdating)
         {
             _supportsInitialize = supportsUpdating;
-#if !NET4
             _supportsInitialize?.BeginInit();
-#else
-            if (_supportsInitialize != null)
-            {
-                _supportsInitialize.BeginInit();
-            }
-#endif
         }
         /// <summary>
         /// Calls EndInit on a supplied ISupportInitialize implementation
         /// </summary>
         public void Dispose()
         {
-#if !NET4
             _supportsInitialize?.EndInit();
-#else
-            if (_supportsInitialize != null)
-            {
-                _supportsInitialize.EndInit();
-            }
-#endif
         }
     }
-
 }

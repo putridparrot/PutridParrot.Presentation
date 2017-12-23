@@ -35,14 +35,7 @@ namespace Presentation.Core
         public void RaiseCanExecuteChanged()
         {
             var canExecuteChanged = CanExecuteChanged;
-#if !NET4
             canExecuteChanged?.Invoke(this, EventArgs.Empty);
-#else
-            if (canExecuteChanged != null)
-            {
-                canExecuteChanged(this, EventArgs.Empty);
-            }
-#endif
         }
     }
 }

@@ -17,15 +17,7 @@ namespace Presentation.Core
             _valueFunc = valueFunc;
         }
 
-#if !NET4
         public T Value => _valueFunc();
-#else
-        public T Value
-        {
-            get { return _valueFunc(); }
-        }
-#endif
-
         public string[] DependentUpon { get; set; }
     }
 }

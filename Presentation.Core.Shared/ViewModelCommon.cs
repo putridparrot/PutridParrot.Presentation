@@ -119,26 +119,12 @@ namespace Presentation.Core
                     if (_properties.TryGetValue(propertyName, out var property))
                     {
                         var propertyRules = property.Rules;
-#if !NET4
                         propertyRules?.ForEach(r => r.PreInvoke(this));
-#else
-                        if (propertyRules != null)
-                        {
-                            propertyRules.ForEach(r => r.PreInvoke(this));
-                        }
-#endif
                     }
                 }
 
                 var rules = Rules;
-#if !NET4
                 rules?.PreInvoke(this, propertyName);
-#else
-                if (rules != null)
-                {
-                    rules.PreInvoke(this, propertyName);
-                }
-#endif
             }
             return result;
         }
@@ -191,11 +177,7 @@ namespace Presentation.Core
                 if (dependentProperty != null)
                 {
                     ((IExtendedDataErrorInfo)this).Remove(property.Key);
-#if !NET4
                     if (dependentProperty.DependentUpon?.Contains(propertyName) ?? false)
-#else
-                    if (dependentProperty.DependentUpon != null && dependentProperty.DependentUpon.Contains(propertyName))
-#endif
                     {
                         var propertiesInError = ((IExtendedDataErrorInfo)this).Properties;
                         if (propertiesInError != null)
@@ -227,14 +209,7 @@ namespace Presentation.Core
         void IChangeTracking.AcceptChanges()
         {
             IsChanged = false;
-#if !NET4
             _changeStack?.Clear();
-#else
-            if (_changeStack != null)
-            {
-                _changeStack.Clear();
-            }
-#endif
         }
 
         /// <summary>
@@ -342,14 +317,7 @@ namespace Presentation.Core
             try
             {
                 var propertyInfo = GetType().GetProperties().FirstOrDefault(p => p.Name == change.Item1);
-#if !NET4
                 propertyInfo?.SetMethod.Invoke(this, new[] { change.Item2 });
-#else
-                if (propertyInfo != null)
-                {
-                    propertyInfo.SetValue(this, change.Item2, null);
-                }
-#endif
             }
             catch (Exception e)
             {
@@ -372,11 +340,7 @@ namespace Presentation.Core
 
             var definition = _propertyDefinitions[propertyName];
             // if data annotation validation exists on a property
-#if !NET4
             if (definition?.HasValidationAttributes ?? false)
-#else
-            if(definition != null && definition.HasValidationAttributes)
-#endif
             {
                 var validationContext = new ValidationContext(this, null, null)
                 {
@@ -433,12 +397,7 @@ namespace Presentation.Core
                     foreach (var property in copyForEnumeration)
                     {
                         var dependentProperty = property.Value as IDependentProperty;
-#if !NET4
                         if (dependentProperty?.DependentUpon?.Contains(propertyName) ?? false)
-#else
-                        if (dependentProperty != null && dependentProperty.DependentUpon != null &&
-                            dependentProperty.DependentUpon.Contains(propertyName))
-#endif
                         {
                             // ReSharper disable once ExplicitCallerInfoArgument
                             base.OnPropertyChanged(property.Key);
@@ -448,28 +407,13 @@ namespace Presentation.Core
                         // to a property change on any property then look for rules
                         if (property.Key == propertyName)
                         {
-#if !NET4
                             var propertyRules = property.Value?.Rules;
                             propertyRules?.ForEach(r => r.PostInvoke(this));
-#else
-                            var propertyRules = property.Value != null ? property.Value.Rules : null;
-                            if (propertyRules != null)
-                            {
-                                propertyRules.ForEach(r => r.PostInvoke(this));
-                            }
-#endif
                         }
                     }
                 }
                 var rules = Rules;
-#if !NET4
                 rules?.PostInvoke(this, propertyName);
-#else
-                if (rules != null)
-                {
-                    rules.PostInvoke(this, propertyName);
-                }
-#endif
             }
             // if suspended due to updating, defer property changes
             if (ChangeNotificationsDeferred)

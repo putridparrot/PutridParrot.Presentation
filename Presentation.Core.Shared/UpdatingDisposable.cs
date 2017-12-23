@@ -29,14 +29,7 @@ namespace Presentation.Core
         public UpdatingDisposable(ISupportUpdate supportsUpdating)
         {
             _supportsUpdating = supportsUpdating;
-#if !NET4
             _supportsUpdating?.BeginUpdate();
-#else
-            if (_supportsUpdating != null)
-            {
-                _supportsUpdating.BeginUpdate();
-            }
-#endif
         }
 
         /// <summary>
@@ -44,14 +37,7 @@ namespace Presentation.Core
         /// </summary>
         public void Dispose()
         {
-#if !NET4
             _supportsUpdating?.EndUpdate();
-#else
-            if (_supportsUpdating != null)
-            {
-                _supportsUpdating.EndUpdate();
-            }
-#endif
         }
     }
 

@@ -23,13 +23,8 @@ namespace Presentation.Core.Helpers
         public static string NameOf<TObj, T>(this TObj o, Expression<Func<TObj, T>> propertyExpression) where
             TObj : INotifyViewModel
         {
-#if !NET4
             if (propertyExpression == null)
                 throw new ArgumentNullException(nameof(propertyExpression));
-#else
-            if (propertyExpression == null)
-                throw new ArgumentNullException("propertyExpression");
-#endif
 
             MemberExpression property = null;
 

@@ -55,11 +55,7 @@ namespace Presentation.Core
 
                     setter(value);
 
-#if !NET4
                     if (!_propertyDefinitions.NonTrackableProperties?.Contains(propertyName) ?? true)
-#else
-                    if (_propertyDefinitions.NonTrackableProperties == null || !_propertyDefinitions.NonTrackableProperties.Contains(propertyName))
-#endif
                     {
                         var tmp = value;
                         property.Attach(
@@ -92,14 +88,7 @@ namespace Presentation.Core
         protected T GetProperty<T>(Func<T> getter, Func<T, T> setter, [CallerMemberName] string propertyName = null)
         {
             // if we're recording gets as part of dependent property
-#if !NET4
             _recordGets?.Record(propertyName);
-#else
-            if (_recordGets != null)
-            {
-                _recordGets.Record(propertyName);
-            }
-#endif
 
             GetOfCreateProperty(getter, setter, propertyName, () => new PropertyCommon<T>());
             return getter();
@@ -158,11 +147,7 @@ namespace Presentation.Core
                 property = p;
                 ApplyAttributes(setter, propertyName, p);
 
-#if !NET4
                 if (!_propertyDefinitions.NonTrackableProperties?.Contains(propertyName) ?? true)
-#else
-                if (_propertyDefinitions.NonTrackableProperties == null || !_propertyDefinitions.NonTrackableProperties.Contains(propertyName))
-#endif
                 {
                     var tmp = getter();
                     property.Attach(
@@ -185,11 +170,7 @@ namespace Presentation.Core
         /// <param name="property"></param>
         private void ApplyAttributes<T>(Func<T, T> setter, string propertyName, PropertyCommon<T> property)
         {
-#if !NET4
             var definition = _propertyDefinitions?[propertyName];
-#else
-            var definition = _propertyDefinitions != null ? _propertyDefinitions[propertyName] : null;
-#endif
             if (definition != null)
             {
                 setter(SafeConvert.ChangeType<T>(definition.Default));

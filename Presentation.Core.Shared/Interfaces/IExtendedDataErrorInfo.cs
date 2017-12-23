@@ -7,10 +7,7 @@ namespace Presentation.Core.Interfaces
     /// interaction with data error info.
     /// </summary>
     public interface IExtendedDataErrorInfo : 
-        IDataErrorInfo
-#if !NET4
-        , INotifyDataErrorInfo
-#endif
+        IDataErrorInfo, INotifyDataErrorInfo
     {
         /// <summary>
         /// Gets the properties that error info. has been created for

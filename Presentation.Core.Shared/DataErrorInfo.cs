@@ -19,9 +19,18 @@ namespace Presentation.Core
         private string _error;
 
 #if !NET4
+        /// <summary>
+        /// Event is raised when errors have been added/removed
+        /// </summary>
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 #endif
 
+        /// <summary>
+        /// Gets an enumerable with items associated with
+        /// the property name or null of none exist
+        /// </summary>
+        /// <param name="propertyName">The property name to get associated errors for</param>
+        /// <returns>An enumerable of errors or null if none exist</returns>
         public IEnumerable GetErrors(string propertyName)
         {
             var error = this[propertyName];
@@ -32,14 +41,37 @@ namespace Presentation.Core
         }
 
 #if !NET4
-        public bool HasErrors => _errors?.Count > 0;
+        /// <summary>
+        /// Gets whether any errors exist
+        /// </summary>
+        public bool HasErrors
+        {
+            get
+            {
+                if (_errors != null)
+                {
+                    lock (_syncObject)
+                    {
+                        return _errors?.Count > 0;
+                    }
+                }
+                return false;
+            }
+        }
 #else
+        /// <summary>
+        /// Gets whether any errors exist
+        /// </summary>
         public bool HasErrors
         {
             get { return _errors != null && _errors.Count > 0; }
         }
 #endif
 
+        /// <summary>
+        /// Gets or creates a dictionary of errors
+        /// </summary>
+        /// <returns></returns>
         private Dictionary<string, string> GetOrCreateErrors()
         {
             return _errors ?? (_errors = new Dictionary<string, string>());
@@ -75,6 +107,10 @@ namespace Presentation.Core
             }
         }
 
+        /// <summary>
+        /// Set the error message for the object as a whole
+        /// </summary>
+        /// <param name="errorMessage"></param>
         public void SetError(string errorMessage)
         {
             _error = errorMessage;

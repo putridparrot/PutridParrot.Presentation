@@ -4,6 +4,9 @@ using System.Runtime.Serialization;
 
 namespace Presentation.Core.Exceptions
 {
+    /// <summary>
+    /// Exception used when a type as not been registered
+    /// </summary>
     [ExcludeFromCodeCoverage]
     [Serializable]
     public class TypeNotRegisteredException : Exception

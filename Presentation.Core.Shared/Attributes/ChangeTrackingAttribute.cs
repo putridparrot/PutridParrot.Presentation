@@ -1,5 +1,4 @@
 using System;
-using Presentation.Core.Attributes;
 
 namespace Presentation.Core.Attributes
 {
@@ -12,6 +11,11 @@ namespace Presentation.Core.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class ChangeTrackingAttribute : PropertyAttribute
     {
+        /// <summary>
+        /// Constructor takes a boolean to indicate whether the property
+        /// should be change tracked, defaults to true.
+        /// </summary>
+        /// <param name="isTracking">True if the property is change tracked, False for no change tracking</param>
         public ChangeTrackingAttribute(bool isTracking = true)
         {
             IsTracking = isTracking;

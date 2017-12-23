@@ -3,6 +3,10 @@ using System.Linq;
 
 namespace Presentation.Core.Helpers
 {
+    /// <summary>
+    /// The class includes methods for view model for convention based
+    /// view/view model methods
+    /// </summary>
     public static class ViewModelConvention
     {
         /// <summary>

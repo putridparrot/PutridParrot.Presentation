@@ -13,6 +13,13 @@ namespace Presentation.Core.Helpers
     {
         private readonly Action _onDispose;
 
+        /// <summary>
+        /// Constructor which takes the method run upon creation
+        /// of this instance and another for when the object
+        /// is disposed of.
+        /// </summary>
+        /// <param name="onCreate">The method called when this is created</param>
+        /// <param name="onDispose">The method called when this is disposed of</param>
         public DisposableAction(Action onCreate, Action onDispose)
         {
 #if !NET4
@@ -26,6 +33,9 @@ namespace Presentation.Core.Helpers
             _onDispose = onDispose;
         }
 
+        /// <summary>
+        /// Calls the supplied method when this object is disposed of
+        /// </summary>
         public void Dispose()
         {
 #if !NET4

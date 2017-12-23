@@ -12,6 +12,9 @@ namespace Presentation.Core
     {
         private readonly Dictionary<string, IList<Rule>> _rules;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Rules()
         {
             _rules = new Dictionary<string, IList<Rule>>();
@@ -63,11 +66,25 @@ namespace Presentation.Core
             return allSucceeded;
         }
 
+        /// <summary>
+        /// Called prior to invoking rules
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="viewModel"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         public override bool PreInvoke<T>(T viewModel, string propertyName)
         {
             return InvokeRules(viewModel, propertyName, (r, vm, pn) => r.PreInvoke(vm, pn));
         }
 
+        /// <summary>
+        /// Called after invoking rules
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="viewModel"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         public override bool PostInvoke<T>(T viewModel, string propertyName)
         {
             return InvokeRules(viewModel, propertyName, (r, vm, pn) => r.PostInvoke(vm, pn));

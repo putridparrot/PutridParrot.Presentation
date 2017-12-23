@@ -11,6 +11,12 @@ namespace Presentation.Core.Attributes
     /// </summary>
     public sealed class CreateInstanceUsingAttribute : PropertyAttribute
     {
+        /// <summary>
+        /// Constructor which takes a type which should have a default
+        /// constructor and returns an object which creates the instance
+        /// of the property
+        /// </summary>
+        /// <param name="factoryType"></param>
         public CreateInstanceUsingAttribute(Type factoryType)
         {
             FactoryType = factoryType;

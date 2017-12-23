@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Presentation.Core.Interfaces
+﻿namespace Presentation.Core.Interfaces
 {
     /// <summary>
     /// Should be implemented by a type supporting

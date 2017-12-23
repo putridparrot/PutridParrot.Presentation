@@ -24,6 +24,9 @@ namespace Presentation.Core
         private ICommand _deleteCommand;
         private ICommand _clearCommand;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ObservableViewCollection() :
             base()
         {

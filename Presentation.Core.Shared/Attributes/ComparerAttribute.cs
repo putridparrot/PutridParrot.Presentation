@@ -1,5 +1,4 @@
 ﻿using System;
-using Presentation.Core.Attributes;
 
 namespace Presentation.Core.Attributes
 {
@@ -12,6 +11,12 @@ namespace Presentation.Core.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class ComparerAttribute : PropertyAttribute
     {
+        /// <summary>
+        /// Constructor takes a type which should implement 
+        /// IEqualityComparer&lt;T&gt; that acts as the 
+        /// comparison method 
+        /// </summary>
+        /// <param name="comparerType"></param>
         public ComparerAttribute(Type comparerType)
         {
             ComparerType = comparerType;

@@ -22,6 +22,14 @@ namespace Presentation.Core.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertyChainAttribute : RuleAttribute
     {
+        /// <summary>
+        /// Constructor takes a string array of property names
+        /// which are "chained" to the property this is applied
+        /// to. Thus when the property changes the chained
+        /// properties are also raise in the OnPropertyChanged 
+        /// method.
+        /// </summary>
+        /// <param name="properties">The property names to be chained</param>
         public PropertyChainAttribute(params string[] properties)
         {
             Properties = properties;
@@ -34,6 +42,13 @@ namespace Presentation.Core.Attributes
         /// </summary>
         public string[] Properties { get; }
 
+        /// <summary>
+        /// Called after a property change event occurs and
+        /// by default, raises property change events for the
+        /// chained properties.
+        /// </summary>
+        /// <param name="o">A view model which should implement INotifyViewModel</param>
+        /// <returns>True upon success</returns>
         public override bool PostInvoke(object o)
         {
             if (Properties != null)

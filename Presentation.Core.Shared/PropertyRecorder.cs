@@ -13,6 +13,9 @@ namespace Presentation.Core
     {
         private readonly HashSet<string> _propertyChanges;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public PropertyRecorder()
         {
             _propertyChanges = new HashSet<string>();
@@ -25,6 +28,10 @@ namespace Presentation.Core
         /// </summary>
         public string InitialProperty { get; set; }
 
+        /// <summary>
+        /// Record the property change
+        /// </summary>
+        /// <param name="propertyName"></param>
         public void Record(string propertyName)
         {
             if (!String.IsNullOrEmpty(propertyName))
@@ -34,7 +41,9 @@ namespace Presentation.Core
         }
 
         /// <summary>
-        /// 
+        /// Returns the property changes that are recorded
+        /// for playback, this will also clear any such 
+        /// properties
         /// </summary>
         /// <returns></returns>
         public string[] Playback()

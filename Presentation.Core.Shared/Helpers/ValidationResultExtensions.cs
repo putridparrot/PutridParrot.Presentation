@@ -2,6 +2,9 @@
 
 namespace Presentation.Core.Helpers
 {
+    /// <summary>
+    /// Validation class for helper methods around Validation functionality
+    /// </summary>
     public static class Validation
     {
         /// <summary>

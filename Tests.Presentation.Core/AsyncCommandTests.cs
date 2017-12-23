@@ -53,6 +53,7 @@ namespace Tests.Presentation
             var cmd = new AsyncCommand(() => Task.FromResult<object>(null), () => Task.FromResult(true));
             var nl = new NotifyPropertyChangedListener(cmd);
             cmd.Execute(null);
+            cmd.ExecuteCommand = () => { return Task.CompletedTask; };
 
             // should change to true and then to false upon completion
             nl.Changed.Count

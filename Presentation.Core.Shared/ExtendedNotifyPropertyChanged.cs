@@ -49,6 +49,9 @@ namespace Presentation.Core
         /// </summary>
         private readonly Lazy<IExtendedDataErrorInfo> _dataErrorInfo;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         protected ExtendedNotifyPropertyChanged()
         {
             _initializeCounter = 0;

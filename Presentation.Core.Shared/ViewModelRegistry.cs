@@ -293,11 +293,7 @@ namespace Presentation.Core
                 // this needs a bit of love it's going to create a property def
                 // when any custom attributes are found, which is not much use
                 // if unknown attributes were found
-#if !NET4
                 var attributes = property.GetCustomAttributes().ToArray();
-#else
-                var attributes = property.GetCustomAttributes(true).Cast<Attribute>().ToArray();
-#endif
                 if (attributes.Length > 0)
                 {
                     if (propertyDefinition == null)

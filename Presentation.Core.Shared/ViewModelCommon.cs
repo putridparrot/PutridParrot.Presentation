@@ -136,7 +136,7 @@ namespace Presentation.Core
         /// </summary>
         public bool IsChanged
         {
-            get { return _isChanged; }
+            get => _isChanged;
             protected set
             {
                 if (!IsInitializing)
@@ -173,8 +173,7 @@ namespace Presentation.Core
             // do we need to trigger chained properties?
             foreach (var property in _properties)
             {
-                var dependentProperty = property.Value as IDependentProperty;
-                if (dependentProperty != null)
+                if (property.Value is IDependentProperty dependentProperty)
                 {
                     ((IExtendedDataErrorInfo)this).Remove(property.Key);
                     if (dependentProperty.DependentUpon?.Contains(propertyName) ?? false)
@@ -464,20 +463,17 @@ namespace Presentation.Core
         /// <param name="value"></param>
         protected void Attach<T>(T value)
         {
-            var notifyCollectionChanged = value as INotifyCollectionChanged;
-            if (notifyCollectionChanged != null)
+            if (value is INotifyCollectionChanged notifyCollectionChanged)
             {
                 notifyCollectionChanged.CollectionChanged += NotifyCollectionChangedOnCollectionChanged;
             }
 
-            var notifyPropertyChanged = value as INotifyPropertyChanged;
-            if (notifyPropertyChanged != null)
+            if (value is INotifyPropertyChanged notifyPropertyChanged)
             {
                 notifyPropertyChanged.PropertyChanged += NotifyPropertyChangedOnPropertyChanged;
             }
 
-            var itemChanged = value as IItemChanged;
-            if (itemChanged != null)
+            if (value is IItemChanged itemChanged)
             {
                 itemChanged.ItemChanged += ItemChangedOnItemChanged;
             }
@@ -491,20 +487,17 @@ namespace Presentation.Core
         /// <param name="value"></param>
         protected void Detach<T>(T value)
         {
-            var notifyCollectionChanged = value as INotifyCollectionChanged;
-            if (notifyCollectionChanged != null)
+            if (value is INotifyCollectionChanged notifyCollectionChanged)
             {
                 notifyCollectionChanged.CollectionChanged -= NotifyCollectionChangedOnCollectionChanged;
             }
 
-            var notifyPropertyChanged = value as INotifyPropertyChanged;
-            if (notifyPropertyChanged != null)
+            if (value is INotifyPropertyChanged notifyPropertyChanged)
             {
                 notifyPropertyChanged.PropertyChanged -= NotifyPropertyChangedOnPropertyChanged;
             }
 
-            var itemChanged = value as IItemChanged;
-            if (itemChanged != null)
+            if (value is IItemChanged itemChanged)
             {
                 itemChanged.ItemChanged -= ItemChangedOnItemChanged;
             }

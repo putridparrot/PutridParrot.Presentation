@@ -11,7 +11,7 @@
   <Import Project="..\Presentation.Core.Shared\Presentation.Core.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
   </ItemGroup>
 
 </Project>

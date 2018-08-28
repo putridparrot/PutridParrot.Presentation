@@ -17,6 +17,15 @@ namespace Presentation.Core
         /// Sets the property value against the property and raises
         /// OnPropertyChanging, OnPropertyChanged etc. as required
         /// </summary>
+        /// <example>
+        /// <code>
+        /// public string Name
+        /// {
+        ///    set => SetProperty(value);
+        ///    get => GetProperty();
+        /// }
+        /// </code>
+        /// </example>
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <param name="propertyName"></param>
@@ -74,6 +83,15 @@ namespace Presentation.Core
         /// <summary>
         /// Gets the current property value
         /// </summary>
+        /// <example>
+        /// <code>
+        /// public string Name
+        /// {
+        ///    set => SetProperty(value);
+        ///    get => GetProperty();
+        /// }
+        /// </code>
+        /// </example>
         /// <typeparam name="T"></typeparam>
         /// <param name="propertyName"></param>
         /// <returns></returns>
@@ -168,8 +186,7 @@ namespace Presentation.Core
             var definition = _propertyDefinitions?[propertyName];
             if (definition != null)
             {
-                var p = property as Property<T>;
-                if (p != null)
+                if (property is Property<T> p)
                 {
                     p.Value = SafeConvert.ChangeType<T>(definition.Default);
                 }

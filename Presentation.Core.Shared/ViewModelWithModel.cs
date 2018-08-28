@@ -15,7 +15,7 @@ namespace Presentation.Core
     {
         /// <summary>
         /// Sets the property value against the property and raises
-        /// OnPropertyChanging, OnPropertyChanged etc. as required
+        /// OnPropertyChanging, OnPropertyChanged etc. as required.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="getter"></param>
@@ -78,7 +78,7 @@ namespace Presentation.Core
         }
 
         /// <summary>
-        /// Gets the current property value
+        /// Gets the current property value as type <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="getter"></param>
@@ -95,13 +95,12 @@ namespace Presentation.Core
         }
 
         /// <summary>
-        /// Gets the current value via a Func, this will record 
-        /// changes
+        /// Gets the current value via a Func via the <paramref name="generateFunc"/>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="generateFunc"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">The property type</typeparam>
+        /// <param name="generateFunc">The function to create the return value</param>
+        /// <param name="propertyName">The name of the property</param>
+        /// <returns>The value of type T</returns>
         protected T ReadOnlyProperty<T>(Func<T> generateFunc, [CallerMemberName] string propertyName = null)
         {
             var defaultGetter = new Func<T>(() => default(T));

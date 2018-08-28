@@ -76,8 +76,7 @@ namespace Presentation.Core.Helpers
             // as the expressions are trying to convert to the same underlying type
             if (propertyExpression.Body.NodeType == ExpressionType.Convert)
             {
-                var convert = propertyExpression.Body as UnaryExpression;
-                if (convert != null)
+                if (propertyExpression.Body is UnaryExpression convert)
                 {
                     property = convert.Operand as MemberExpression;
                 }

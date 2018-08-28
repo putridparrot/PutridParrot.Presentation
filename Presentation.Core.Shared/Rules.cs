@@ -34,10 +34,7 @@ namespace Presentation.Core
             }
 
             var list = _rules[propertyName];
-            if (list != null)
-            {
-                list.Add(rule);
-            }
+            list?.Add(rule);
         }
 
         private bool InvokeRules<T>(T viewModel, string propertyName, Func<Rule, T, string, bool> invokeFunc)

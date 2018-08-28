@@ -364,8 +364,7 @@ namespace Presentation.Core
             if (property.CanWrite)
             {
                 // this is used by validation
-                var displayNameAttribute = attribute as DisplayNameAttribute;
-                if (displayNameAttribute != null)
+                if (attribute is DisplayNameAttribute displayNameAttribute)
                 {
                     propertyDefinition.DisplayName = displayNameAttribute.DisplayName;
                 }
@@ -378,22 +377,19 @@ namespace Presentation.Core
             }
 
             // need to think of a more dynamic way to assign these things maybe?
-            var defaultValueAttribute = attribute as DefaultValueAttribute;
-            if (defaultValueAttribute != null)
+            if (attribute is DefaultValueAttribute defaultValueAttribute)
             {
                 propertyDefinition.DefaultValue = defaultValueAttribute;
                 return;
             }
 
-            var createInstanceAttribute = attribute as CreateInstanceAttribute;
-            if (createInstanceAttribute != null)
+            if (attribute is CreateInstanceAttribute createInstanceAttribute)
             {
                 propertyDefinition.CreateInstance = createInstanceAttribute;
                 return;
             }
 
-            var createInstanceUsing = attribute as CreateInstanceUsingAttribute;
-            if (createInstanceUsing != null)
+            if (attribute is CreateInstanceUsingAttribute createInstanceUsing)
             {
                 try
                 {
@@ -410,15 +406,13 @@ namespace Presentation.Core
                 return;
             }
 
-            var trackingAttribute = attribute as ChangeTrackingAttribute;
-            if (trackingAttribute != null)
+            if (attribute is ChangeTrackingAttribute trackingAttribute)
             {
                 propertyDefinition.ChangeTrackingDisabled = !trackingAttribute.IsTracking;
                 return;
             }
 
-            var comparerAttribute = attribute as ComparerAttribute;
-            if (comparerAttribute != null && comparerAttribute.ComparerType != null)
+            if (attribute is ComparerAttribute comparerAttribute && comparerAttribute.ComparerType != null)
             {
                 if (!_comparerTypes.ContainsKey(comparerAttribute.ComparerType))
                 {
@@ -429,8 +423,7 @@ namespace Presentation.Core
                 return;
             }
 
-            var ruleAttribute = attribute as RuleAttribute;
-            if (ruleAttribute != null)
+            if (attribute is RuleAttribute ruleAttribute)
             {
                 if (propertyDefinition.Rules == null)
                 {

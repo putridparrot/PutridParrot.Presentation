@@ -6,18 +6,18 @@ namespace ProfilingApp
     {
         public string FirstName
         {
-            get { return GetProperty<string>(); }
-            set { SetProperty(value); }
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
         public string LastName
         {
-            get { return GetProperty<string>(); }
-            set { SetProperty(value); }
+            get => GetProperty<string>();
+            set => SetProperty(value); 
         }
         public int Age
         {
-            get { return GetProperty<int>(); }
-            set { SetProperty(value); }
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
     }
 }

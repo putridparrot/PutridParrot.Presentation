@@ -175,7 +175,8 @@ namespace Tests.Presentation
 
             Action action = () => ViewModelRegistry.Instance.Get(typeof(StubViewModel));
             action
-                .ShouldThrow<TypeNotRegisteredException>();
+                .Should()
+                .Throw<TypeNotRegisteredException>();
         }
     }
 }

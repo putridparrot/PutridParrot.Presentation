@@ -23,18 +23,31 @@ namespace Presentation.Core
     {
         public event PropertyChangedEventHandler ItemChanged;
 
-        private ReferenceCounter updating;
+        private ReferenceCounter _updating;
 
+        /// <summary>
+        /// Default constructor creates an empty collection
+        /// </summary>
         public ExtendedObservableCollection() :
             base()
         {            
         }
 
+        /// <summary>
+        /// Constructor adds items from the supplied
+        /// list to the collection
+        /// </summary>
+        /// <param name="list"></param>
         public ExtendedObservableCollection(List<T> list) :
             base(list)
         {
         }
 
+        /// <summary>
+        /// Constructore adds the supplied enumerable items
+        /// to the collection
+        /// </summary>
+        /// <param name="collection"></param>
         public ExtendedObservableCollection(IEnumerable<T> collection) :
             base(collection)
         {
@@ -49,7 +62,7 @@ namespace Presentation.Core
         {
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
 
             try
@@ -73,7 +86,7 @@ namespace Presentation.Core
         /// <returns></returns>
         private ReferenceCounter GetOrCreateUpdating()
         {
-            return updating != null ? updating : (updating = new ReferenceCounter());
+            return _updating != null ? _updating : (_updating = new ReferenceCounter());
         }
 
         /// <summary>
@@ -154,13 +167,13 @@ namespace Presentation.Core
                     }
 #endif
                 }
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsEmpty)));
             }
             if (e.NewItems != null)
             {
                 foreach (var item in e.NewItems)
                 {
-                    var propertyChanged = item as INotifyPropertyChanged;
-                    if (propertyChanged != null)
+                    if (item is INotifyPropertyChanged propertyChanged)
                     {
                         propertyChanged.PropertyChanged += ItemPropertyChanged;
                     }
@@ -170,8 +183,7 @@ namespace Presentation.Core
             {
                 foreach (var item in e.OldItems)
                 {
-                    var propertyChanged = item as INotifyPropertyChanged;
-                    if (propertyChanged != null)
+                    if (item is INotifyPropertyChanged propertyChanged)
                     {
                         propertyChanged.PropertyChanged -= ItemPropertyChanged;
                     }
@@ -186,5 +198,13 @@ namespace Presentation.Core
                 ItemChanged(sender, propertyChangedEventArgs);
             }
         }
+
+        /// <summary>
+        /// Get whether the collection is empty, this is useful
+        /// if you want to bind to a boolean which reports
+        /// when the collection goes from empty to not empty 
+        /// and vice versa.
+        /// </summary>
+        public bool IsEmpty => Count <= 0;
     }
 }

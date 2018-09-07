@@ -456,7 +456,9 @@ namespace Tests.Presentation
             IList<Person> tmp = list;
 
             Action action = () => tmp.BinarySearch(3, 1, "Jeff", (item, listItem) => item.CompareTo(listItem.Name));
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action
+                .Should()
+                .Throw<ArgumentOutOfRangeException>();
         }
 
         [Test]
@@ -475,7 +477,9 @@ namespace Tests.Presentation
             IList<Person> tmp = list;
 
             Action action = () => tmp.BinarySearch(0, 10, "Jeff", (item, listItem) => item.CompareTo(listItem.Name));
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action
+                .Should()
+                .Throw<ArgumentOutOfRangeException>();
         }
 
         [Test]

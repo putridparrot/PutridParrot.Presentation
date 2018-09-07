@@ -38,7 +38,8 @@ namespace Tests.Presentation
 
             Action action = () => viewModel.RaisePropertyChanged(x => x.ToString());
             action
-                .ShouldThrow<Exception>();
+                .Should()
+                .Throw<Exception>();
         }
 
         [Test]

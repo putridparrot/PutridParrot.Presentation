@@ -37,7 +37,8 @@ namespace Tests.Presentation
                 var r = vm.Result;
             };
             action
-                .ShouldThrow<PropertyCannotCallItselfException>();
+                .Should()
+                .Throw<PropertyCannotCallItselfException>();
         }
     }
 }

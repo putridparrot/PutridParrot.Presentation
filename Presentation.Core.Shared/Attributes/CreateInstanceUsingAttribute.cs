@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Presentation.Core.Attributes
+namespace PutridParrot.Presentation.Core.Attributes
 {
     /// <summary>
     /// Allows the view model to create an instance

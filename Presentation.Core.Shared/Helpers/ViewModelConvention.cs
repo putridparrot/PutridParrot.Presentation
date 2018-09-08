@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Presentation.Core.Helpers
+namespace PutridParrot.Presentation.Core.Helpers
 {
     /// <summary>
     /// The class includes methods for view model for convention based

@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Core;
-using Presentation.Core.Attributes;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core;
+using PutridParrot.Presentation.Core.Attributes;
+using PutridParrot.Presentation.Core.Interfaces;
 
 namespace Tests.Presentation
 {

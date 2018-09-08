@@ -1,4 +1,4 @@
-﻿namespace Presentation.Core.Helpers
+﻿namespace PutridParrot.Presentation.Core.Helpers
 {
     /// <summary>
     /// The enumeration indicates whether an item should be

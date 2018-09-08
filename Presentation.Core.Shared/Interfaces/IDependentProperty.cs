@@ -1,4 +1,4 @@
-﻿namespace Presentation.Core.Interfaces
+﻿namespace PutridParrot.Presentation.Core.Interfaces
 {
     /// <summary>
     /// Should be implemented by a property which

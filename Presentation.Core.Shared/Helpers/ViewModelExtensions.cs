@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core.Interfaces;
 
-namespace Presentation.Core.Helpers
+namespace PutridParrot.Presentation.Core.Helpers
 {
     /// <summary>
     /// INotifyViewModel extension methods

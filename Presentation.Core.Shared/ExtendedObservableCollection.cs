@@ -7,10 +7,10 @@ using System.Linq;
 #if !NETSTANDARD2_0
 using System.Windows.Threading;
 #endif
-using Presentation.Core.Helpers;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core.Helpers;
+using PutridParrot.Presentation.Core.Interfaces;
 
-namespace Presentation.Core
+namespace PutridParrot.Presentation.Core
 {
     /// <summary>
 	/// A dispatcher aware observable collection. As the default ObservableCollection does

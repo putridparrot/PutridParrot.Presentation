@@ -1,5 +1,5 @@
-﻿using Presentation.Core;
-using Presentation.Core.Helpers;
+﻿using PutridParrot.Presentation.Core;
+using PutridParrot.Presentation.Core.Helpers;
 
 namespace ProfilingApp
 {

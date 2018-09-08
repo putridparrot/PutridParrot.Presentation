@@ -1,6 +1,6 @@
-﻿using Presentation.Core.Interfaces;
+﻿using PutridParrot.Presentation.Core.Interfaces;
 
-namespace Presentation.Core
+namespace PutridParrot.Presentation.Core
 {
     /// <summary>
     /// A rule can be defined so that any pre and post property changes

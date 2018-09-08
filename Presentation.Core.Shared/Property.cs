@@ -1,4 +1,4 @@
-﻿namespace Presentation.Core
+﻿namespace PutridParrot.Presentation.Core
 {
     /// <summary>
     /// Creates a basic property

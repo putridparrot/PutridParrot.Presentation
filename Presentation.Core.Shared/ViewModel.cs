@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
-using Presentation.Core.Exceptions;
-using Presentation.Core.Helpers;
+using PutridParrot.Presentation.Core.Exceptions;
+using PutridParrot.Presentation.Core.Helpers;
 
-namespace Presentation.Core
+namespace PutridParrot.Presentation.Core
 {
     /// <summary>
     /// Acts as a base class for view models, includes

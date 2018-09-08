@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core.Interfaces;
 
-namespace Presentation.Core
+namespace PutridParrot.Presentation.Core
 {
     /// <summary>
     /// Implementation of an IExtendedDataErrorInfo for use with the IDataErrorInfo

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core.Interfaces;
 
-namespace Presentation.Core
+namespace PutridParrot.Presentation.Core
 {
     /// <summary>
     /// Implements a simple property change recorder.

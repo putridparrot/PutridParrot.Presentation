@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core.Interfaces;
 
-namespace Presentation.Core
+namespace PutridParrot.Presentation.Core
 {
     /// <summary>
     /// Implementation of an INotifyPropertyChanged interface. This is

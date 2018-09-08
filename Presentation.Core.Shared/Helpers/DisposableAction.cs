@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Presentation.Core.Helpers
+namespace PutridParrot.Presentation.Core.Helpers
 {
     /// <summary>
     /// The DisposableAction creates a instance

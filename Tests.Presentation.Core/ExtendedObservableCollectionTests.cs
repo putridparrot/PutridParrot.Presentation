@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Core;
+using PutridParrot.Presentation.Core;
 
 namespace Tests.Presentation
 {

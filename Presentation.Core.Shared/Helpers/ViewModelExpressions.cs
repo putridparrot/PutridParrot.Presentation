@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core.Interfaces;
 
-namespace Presentation.Core.Helpers
+namespace PutridParrot.Presentation.Core.Helpers
 {
     /// <summary>
     /// Utility class for working with expressions on INotifyViewModel objects

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Presentation.Core.Attributes;
+using PutridParrot.Presentation.Core.Attributes;
 
-namespace Presentation.Core.Interfaces
+namespace PutridParrot.Presentation.Core.Interfaces
 {
     public interface IProperty
     {

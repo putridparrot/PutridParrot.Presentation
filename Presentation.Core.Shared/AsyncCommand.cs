@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 #if !NETSTANDARD2_0
 using System.Windows.Threading;
 #endif
-using Presentation.Core.Helpers;
+using PutridParrot.Presentation.Core.Helpers;
 
-namespace Presentation.Core
+namespace PutridParrot.Presentation.Core
 {
     /// <summary>
     /// A Task/async aware command object. 

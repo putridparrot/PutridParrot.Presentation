@@ -7,8 +7,8 @@
     <ProjectGuid>{75908FB4-980A-4832-BEF1-841CD9EBF5AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Presentation.Core.Net45</RootNamespace>
-    <AssemblyName>Presentation.Core.Net45</AssemblyName>
+    <RootNamespace>PutridParrot.Presentation.Core.Net45</RootNamespace>
+    <AssemblyName>PutridParrot.Presentation.Core.Net45</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Presentation.Core.Net45.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\PutridParrot.Presentation.Core.Net45.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

@@ -1,7 +1,7 @@
 ﻿using System;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core.Interfaces;
 
-namespace Presentation.Core.Attributes
+namespace PutridParrot.Presentation.Core.Attributes
 {
     /// <summary>
     /// When a property, with this attribute, changes (i.e.

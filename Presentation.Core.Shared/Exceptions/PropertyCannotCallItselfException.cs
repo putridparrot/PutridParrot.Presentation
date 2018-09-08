@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-namespace Presentation.Core.Exceptions
+namespace PutridParrot.Presentation.Core.Exceptions
 {
     /// <summary>
     /// Exception to show a property may not call itself which would

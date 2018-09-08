@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Presentation.Core.Interfaces
+namespace PutridParrot.Presentation.Core.Interfaces
 {
     /// <summary>
     /// Defines the interface which collections

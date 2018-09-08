@@ -4,7 +4,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace Presentation.Core.Helpers
+//namespace PutridParrot.Presentation.Core.Helpers
 //{
 //    // taken from https://www.codeproject.com/articles/456591/simple-undo-redo-library-for-csharp-net
 //    public class StackFixedSize<T> : LinkedList<T>

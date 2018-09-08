@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core.Interfaces;
 
-namespace Presentation.Core
+namespace PutridParrot.Presentation.Core
 {
     /// <summary>
     /// Implemented common functionality that can be used

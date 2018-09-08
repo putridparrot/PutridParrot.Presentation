@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Presentation.Core;
-using Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Core;
+using PutridParrot.Presentation.Core.Interfaces;
 
 namespace Tests.Presentation.Helpers
 {

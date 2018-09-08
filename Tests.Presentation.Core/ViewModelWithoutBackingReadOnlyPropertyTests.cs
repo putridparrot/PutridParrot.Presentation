@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Core;
+using PutridParrot.Presentation.Core;
 
 namespace Tests.Presentation
 {

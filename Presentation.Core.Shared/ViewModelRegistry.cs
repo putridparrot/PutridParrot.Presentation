@@ -7,11 +7,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
-using PutridParrot.Presentation.Core.Attributes;
-using PutridParrot.Presentation.Core.Exceptions;
-using PutridParrot.Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Attributes;
+using PutridParrot.Presentation.Exceptions;
+using PutridParrot.Presentation.Interfaces;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     /// <summary>
     /// This acts as a singleton for view model based code. It's

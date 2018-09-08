@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
-using PutridParrot.Presentation.Core;
+using PutridParrot.Presentation;
 
 namespace Sample
 {

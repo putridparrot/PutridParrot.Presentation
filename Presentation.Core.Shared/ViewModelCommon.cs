@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using PutridParrot.Presentation.Core.Helpers;
-using PutridParrot.Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Helpers;
+using PutridParrot.Presentation.Interfaces;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     /// <summary>
     /// Includes common functionality for more specific implementations

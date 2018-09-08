@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.PutridParrot.Presentation.Core", "Tests.Presentation.Core\Tests.PutridParrot.Presentation.Core.csproj", "{BDF4C8EA-273E-4F30-AC9A-E9DE6CA567FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.PutridParrot.Presentation", "Tests.Presentation.Core\Tests.PutridParrot.Presentation.csproj", "{BDF4C8EA-273E-4F30-AC9A-E9DE6CA567FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfilingApp", "ProfilingApp\ProfilingApp.csproj", "{4DC280E3-D691-4FF5-B100-05194D73AE7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{E62FFE9C-5250-494B-8B2B-59D55D2A4250}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PutridParrot.Presentation.Core.Shared", "Presentation.Core.Shared\PutridParrot.Presentation.Core.Shared.shproj", "{E50E896D-0C4C-412A-B187-11A116C0EF44}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PutridParrot.Presentation.Shared", "Presentation.Core.Shared\PutridParrot.Presentation.Shared.shproj", "{E50E896D-0C4C-412A-B187-11A116C0EF44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PutridParrot.Presentation.Core.Net471", "Presentation.Core.Net471\PutridParrot.Presentation.Core.Net471.csproj", "{04A097A2-A847-4081-96F5-CA654A0EA1E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PutridParrot.Presentation.Net471", "Presentation.Core.Net471\PutridParrot.Presentation.Net471.csproj", "{04A097A2-A847-4081-96F5-CA654A0EA1E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PutridParrot.Presentation.Core.NetStandard2", "Presentation.Core.NetStandard2\PutridParrot.Presentation.Core.NetStandard2.csproj", "{83820800-E7C8-473F-A893-1CCCF07C9BFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PutridParrot.Presentation.NetStandard2", "Presentation.Core.NetStandard2\PutridParrot.Presentation.NetStandard2.csproj", "{83820800-E7C8-473F-A893-1CCCF07C9BFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PutridParrot.Presentation.Core.Net45", "Presentation.Core.Net45\PutridParrot.Presentation.Core.Net45.csproj", "{75908FB4-980A-4832-BEF1-841CD9EBF5AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PutridParrot.Presentation.Net45", "Presentation.Core.Net45\PutridParrot.Presentation.Net45.csproj", "{75908FB4-980A-4832-BEF1-841CD9EBF5AA}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

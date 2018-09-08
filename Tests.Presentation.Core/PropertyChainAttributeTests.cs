@@ -3,8 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Windows.Data;
 using FluentAssertions;
 using NUnit.Framework;
-using PutridParrot.Presentation.Core;
-using PutridParrot.Presentation.Core.Attributes;
+using PutridParrot.Presentation;
+using PutridParrot.Presentation.Attributes;
 using Tests.Presentation.Helpers;
 
 namespace Tests.Presentation

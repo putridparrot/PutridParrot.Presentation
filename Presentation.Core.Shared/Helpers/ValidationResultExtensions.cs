@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PutridParrot.Presentation.Core.Helpers
+namespace PutridParrot.Presentation.Helpers
 {
     /// <summary>
     /// Validation class for helper methods around Validation functionality

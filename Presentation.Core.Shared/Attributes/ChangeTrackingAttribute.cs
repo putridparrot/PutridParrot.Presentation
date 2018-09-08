@@ -1,6 +1,6 @@
 using System;
 
-namespace PutridParrot.Presentation.Core.Attributes
+namespace PutridParrot.Presentation.Attributes
 {
     /// <summary>
     /// The attribute is used on a property to set changes tracking on

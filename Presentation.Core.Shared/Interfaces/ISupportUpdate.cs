@@ -1,4 +1,4 @@
-namespace PutridParrot.Presentation.Core.Interfaces
+namespace PutridParrot.Presentation.Interfaces
 {
     /// <summary>
     /// Implement by types which support 

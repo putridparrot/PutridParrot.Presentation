@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
-using PutridParrot.Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Interfaces;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     /// <summary>
     /// The ExtendedNotifyPropertyChanged extends the bare bones

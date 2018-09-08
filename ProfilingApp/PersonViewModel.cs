@@ -1,4 +1,4 @@
-﻿using PutridParrot.Presentation.Core;
+﻿using PutridParrot.Presentation;
 
 namespace ProfilingApp
 {

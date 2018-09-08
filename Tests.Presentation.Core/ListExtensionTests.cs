@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using NUnit.Framework;
-using PutridParrot.Presentation.Core.Helpers;
+using PutridParrot.Presentation.Helpers;
 
 namespace Tests.Presentation
 {

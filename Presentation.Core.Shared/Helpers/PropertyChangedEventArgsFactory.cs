@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace PutridParrot.Presentation.Core.Helpers
+namespace PutridParrot.Presentation.Helpers
 {
     /// <summary>
     /// Helper class to further simplify creation of

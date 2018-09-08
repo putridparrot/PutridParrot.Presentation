@@ -1,7 +1,7 @@
 ﻿using System;
-using PutridParrot.Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Interfaces;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     /// <summary>
     /// Creates a property which is dependent upon other properties.

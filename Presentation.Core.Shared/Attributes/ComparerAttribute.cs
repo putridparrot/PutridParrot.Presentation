@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PutridParrot.Presentation.Core.Attributes
+namespace PutridParrot.Presentation.Attributes
 {
     /// <summary>
     /// Used on a property to define the IEqualityComparer&lt;T&gt;

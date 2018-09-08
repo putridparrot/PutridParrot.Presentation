@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
-using PutridParrot.Presentation.Core.Helpers;
+using PutridParrot.Presentation.Helpers;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     /// <summary>
     /// Acts as a base class for view models, can be used

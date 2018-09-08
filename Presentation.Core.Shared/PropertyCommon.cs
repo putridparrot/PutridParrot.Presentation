@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using PutridParrot.Presentation.Core.Attributes;
-using PutridParrot.Presentation.Core.Helpers;
-using PutridParrot.Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Attributes;
+using PutridParrot.Presentation.Helpers;
+using PutridParrot.Presentation.Interfaces;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     /// <summary>
     /// Implements common property functionality

@@ -1,7 +1,7 @@
 ﻿using System;
-using PutridParrot.Presentation.Core.Helpers;
+using PutridParrot.Presentation.Helpers;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     /// <summary>
     /// Implementation of an ICommand where the 

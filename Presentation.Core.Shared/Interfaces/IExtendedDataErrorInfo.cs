@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace PutridParrot.Presentation.Core.Interfaces
+namespace PutridParrot.Presentation.Interfaces
 {
     /// <summary>
     /// Extends the IDataErrorInfo with simple capabilities for 

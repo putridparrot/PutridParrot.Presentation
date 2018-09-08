@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using PutridParrot.Presentation.Core.Helpers;
-using PutridParrot.Presentation.Core.Interfaces;
+using PutridParrot.Presentation.Helpers;
+using PutridParrot.Presentation.Interfaces;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     /// <summary>
     /// Used to implement a collection with more

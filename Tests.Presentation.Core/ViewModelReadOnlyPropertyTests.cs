@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
-using PutridParrot.Presentation.Core;
+using PutridParrot.Presentation;
 
 namespace Tests.Presentation
 {

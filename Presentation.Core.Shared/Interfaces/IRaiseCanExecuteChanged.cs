@@ -1,4 +1,4 @@
-﻿namespace PutridParrot.Presentation.Core.Interfaces
+﻿namespace PutridParrot.Presentation.Interfaces
 {
     /// <summary>
     /// Defines an interface for commands to allow code

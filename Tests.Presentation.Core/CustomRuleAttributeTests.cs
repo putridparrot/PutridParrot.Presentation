@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using NUnit.Framework;
-using PutridParrot.Presentation.Core;
-using PutridParrot.Presentation.Core.Attributes;
+using PutridParrot.Presentation;
+using PutridParrot.Presentation.Attributes;
 
 namespace Tests.Presentation
 {

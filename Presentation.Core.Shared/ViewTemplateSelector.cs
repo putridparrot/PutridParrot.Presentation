@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using PutridParrot.Presentation.Core.Helpers;
+using PutridParrot.Presentation.Helpers;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     /// <summary>
     /// Create a template selector which will select a view automatically

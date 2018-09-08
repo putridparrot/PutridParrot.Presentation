@@ -1,6 +1,6 @@
 using System;
 
-namespace PutridParrot.Presentation.Core.Attributes
+namespace PutridParrot.Presentation.Attributes
 {
     /// <summary>
     /// Base class for view model property attributes

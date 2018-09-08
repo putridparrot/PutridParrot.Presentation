@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
-using PutridParrot.Presentation.Core;
-using PutridParrot.Presentation.Core.Helpers;
+using PutridParrot.Presentation;
+using PutridParrot.Presentation.Helpers;
 
 namespace Tests.Presentation
 {

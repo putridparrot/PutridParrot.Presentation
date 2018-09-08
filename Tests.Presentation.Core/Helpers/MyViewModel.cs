@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using PutridParrot.Presentation.Core;
-using PutridParrot.Presentation.Core.Attributes;
-using PutridParrot.Presentation.Core.Helpers;
+using PutridParrot.Presentation;
+using PutridParrot.Presentation.Attributes;
+using PutridParrot.Presentation.Helpers;
 
 namespace Tests.Presentation.Helpers
 {

@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using NUnit.Framework;
-using PutridParrot.Presentation.Core;
-using PutridParrot.Presentation.Core.Interfaces;
+using PutridParrot.Presentation;
+using PutridParrot.Presentation.Interfaces;
 
 namespace Tests.Presentation
 {

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Threading;
 
-namespace PutridParrot.Presentation.Core.Helpers
+namespace PutridParrot.Presentation.Helpers
 {
     /// <summary>
     /// Dispatcher extensions

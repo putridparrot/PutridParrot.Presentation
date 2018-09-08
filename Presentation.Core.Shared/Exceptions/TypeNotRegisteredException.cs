@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-namespace PutridParrot.Presentation.Core.Exceptions
+namespace PutridParrot.Presentation.Exceptions
 {
     /// <summary>
     /// Exception used when a type as not been registered

@@ -1,4 +1,4 @@
-﻿namespace PutridParrot.Presentation.Core.Helpers
+﻿namespace PutridParrot.Presentation.Helpers
 {
     /// <summary>
     /// Simple reference counter, it doesn't store

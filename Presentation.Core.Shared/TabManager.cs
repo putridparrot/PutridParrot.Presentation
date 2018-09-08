@@ -1,7 +1,7 @@
-﻿using PutridParrot.Presentation.Core.Helpers;
-using PutridParrot.Presentation.Core.Interfaces;
+﻿using PutridParrot.Presentation.Helpers;
+using PutridParrot.Presentation.Interfaces;
 
-namespace PutridParrot.Presentation.Core
+namespace PutridParrot.Presentation
 {
     public interface ITabManager<T> where T : INotifyViewModel
     {

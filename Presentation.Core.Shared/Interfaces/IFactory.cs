@@ -1,4 +1,4 @@
-﻿namespace PutridParrot.Presentation.Core.Interfaces
+﻿namespace PutridParrot.Presentation.Interfaces
 {
     /// <summary>
     /// Should be implemented by types which act as factory class.

@@ -6,7 +6,7 @@
     <SharedGUID>e50e896d-0c4c-412a-b187-11a116c0ef44</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Presentation.Core.Shared</Import_RootNamespace>
+    <Import_RootNamespace>PutridParrot.Presentation.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ActionCommand.cs" />

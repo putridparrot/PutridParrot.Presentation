@@ -47,6 +47,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <Import Project="..\Presentation.Core.Shared\Presentation.Core.Shared.projitems" Label="Shared" />
+  <Import Project="..\PutridParrot.Presentation.Shared\PutridParrot.Presentation.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

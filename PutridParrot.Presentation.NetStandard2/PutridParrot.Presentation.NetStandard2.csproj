@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Presentation.Core.NetStandard2.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\PutridParrot.Presentation.NetStandard2.xml</DocumentationFile>
   </PropertyGroup>
 
-  <Import Project="..\Presentation.Core.Shared\Presentation.Core.Shared.projitems" Label="Shared" />
+  <Import Project="..\PutridParrot.Presentation.Shared\PutridParrot.Presentation.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />

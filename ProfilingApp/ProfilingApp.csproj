@@ -56,9 +56,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Presentation.Core.Net471\Presentation.Core.Net471.csproj">
+    <ProjectReference Include="..\Presentation.Core.Net471\PutridParrot.Presentation.Core.Net471.csproj">
       <Project>{04a097a2-a847-4081-96f5-ca654a0ea1e7}</Project>
-      <Name>Presentation.Core.Net471</Name>
+      <Name>PutridParrot.Presentation.Core.Net471</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -202,6 +202,8 @@ namespace PutridParrot.Presentation
                     }
                 }
             }
+            IsChanged = true;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsEmpty)));
         }
 
         /// <summary>
@@ -215,6 +217,7 @@ namespace PutridParrot.Presentation
             if (ItemChanged != null)
             {
                 ItemChanged(sender, propertyChangedEventArgs);
+                IsChanged = true;
             }
         }
 

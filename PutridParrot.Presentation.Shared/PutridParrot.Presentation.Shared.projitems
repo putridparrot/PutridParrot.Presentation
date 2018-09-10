@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\PropertyAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\PropertyChainAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\RuleAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ChangeTrackingObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CommandCommon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataErrorInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DependentProperty.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rules.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TabManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TrackedState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UpdatingDisposable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewLocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel.cs" />

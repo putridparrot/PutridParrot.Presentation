@@ -39,10 +39,7 @@ namespace Sample
             set => SetProperty(value);
         }
 
-        public string FullName
-        {
-            get { return ReadOnlyProperty(() => $"{FirstName} {LastName}"); }
-        }
+        public string FullName => ReadOnlyProperty(() => $"{FirstName} {LastName}");
 
         public ICommand ValidateCommand { get; set; }
         public ICommand AcceptCommand { get; set; }

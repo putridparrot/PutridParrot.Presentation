@@ -55,6 +55,7 @@
     <Compile Include="ActionCommandTests.cs" />
     <Compile Include="AsyncCommandTests.cs" />
     <Compile Include="ChainReadPropertyTests.cs" />
+    <Compile Include="ChangeTrackingObservableCollectionTests.cs" />
     <Compile Include="CreateInstanceAttributeTests.cs" />
     <Compile Include="DataErrorInfoTests.cs" />
     <Compile Include="DefaultValueAttributeTests.cs" />

@@ -24,6 +24,9 @@ namespace PutridParrot.Presentation
         IItemChanged, ISupportInitializeNotification
 
     {
+        /// <summary>
+        /// Raised when an item within the collection has changed
+        /// </summary>
         public event PropertyChangedEventHandler ItemChanged;
 
         private ReferenceCounter _updating;
@@ -96,7 +99,7 @@ namespace PutridParrot.Presentation
         /// <returns></returns>
         private ReferenceCounter GetOrCreateUpdating()
         {
-            return _updating != null ? _updating : (_updating = new ReferenceCounter());
+            return _updating ?? (_updating = new ReferenceCounter());
         }
 
         /// <summary>
@@ -236,7 +239,7 @@ namespace PutridParrot.Presentation
         public bool IsChanged
         {
             get => _isChanged;
-            set
+            protected set
             {
                 if (!IsInitializing)
                 {
@@ -255,20 +258,14 @@ namespace PutridParrot.Presentation
         /// not yet called.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected bool IsInitializing
-        {
-            get { return _initializeCounter > 0; }
-        }
+        protected bool IsInitializing => _initializeCounter > 0;
 
         /// <summary>
         /// Gets wther the collection is not in 
         /// an initialization state.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected bool IsInitialized
-        {
-            get { return _initializeCounter <= 0; }
-        }
+        protected bool IsInitialized => _initializeCounter <= 0;
 
         /// <summary>
         /// Puts the collection into an initialization

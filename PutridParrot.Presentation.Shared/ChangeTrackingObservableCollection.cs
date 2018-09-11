@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Text;
+using System.Diagnostics;
 
 namespace PutridParrot.Presentation.Shared
 {
@@ -18,9 +18,16 @@ namespace PutridParrot.Presentation.Shared
     /// changes.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ChangeTrackingObservableCollection<T> : ExtendedObservableCollection<T>
+    public class ChangeTrackingObservableCollection<T> : ExtendedObservableCollection<T>,
+        ISupportInitializeNotification
     {
         private ConcurrentDictionary<T, TrackedState> _changes;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private int _initializeCounter;
+
+        // ReSharper disable once InconsistentNaming
+        private event EventHandler _initialized;
 
         protected override void ItemPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
@@ -65,6 +72,8 @@ namespace PutridParrot.Presentation.Shared
                 {
                     tracking.TryAdd(item, state);
                 }
+
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsChanged)));
             }
         }
 
@@ -113,8 +122,68 @@ namespace PutridParrot.Presentation.Shared
         public void ResetChanges()
         {
             _changes = null;
-            IsChanged = false;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsChanged)));
         }
-    }
 
+        /// <summary>
+        /// Gets whether the collection or items within it (which 
+        /// support INotifyPropertyChanged events) have changed
+        /// </summary>
+        public bool IsChanged => _changes != null && _changes.Count > 0;
+
+        /// <summary>
+        /// Gers whether the collection is initializing, 
+        /// Denoted be BeginInit being called and EndInit
+        /// not yet called.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected bool IsInitializing => _initializeCounter > 0;
+
+        /// <summary>
+        /// Gets wther the collection is not in 
+        /// an initialization state.
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected bool IsInitialized => _initializeCounter <= 0;
+
+        /// <summary>
+        /// Puts the collection into an initialization
+        /// state, EndInit must be called to stop
+        /// initialization
+        /// </summary>
+        public void BeginInit()
+        {
+            _initializeCounter++;
+        }
+
+        /// <summary>
+        /// End the initialization state, updates will
+        /// not be detected and events thrown
+        /// </summary>
+        public void EndInit()
+        {
+            if (_initializeCounter > 0 && --_initializeCounter <= 0)
+            {
+                var initialized = _initialized;
+#if !NET4
+                initialized?.Invoke(this, EventArgs.Empty);
+#else
+                if (initialized != null)
+                {
+                    initialized.Invoke(this, EventArgs.Empty);
+                }
+#endif
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+        }
+
+        event EventHandler ISupportInitializeNotification.Initialized
+        {
+            add { _initialized += value; }
+            remove { _initialized -= value; }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        bool ISupportInitializeNotification.IsInitialized => IsInitialized;
+    }
 }

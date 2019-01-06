@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\TypeNotRegisteredException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtendedNotifyPropertyChanged.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtendedObservableCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FixedSizeObservableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ComparerImpl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\DispatcherExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\DisposableAction.cs" />

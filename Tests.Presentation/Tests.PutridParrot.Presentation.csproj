@@ -61,6 +61,7 @@
     <Compile Include="DefaultValueAttributeTests.cs" />
     <Compile Include="DisposableActionTestscs.cs" />
     <Compile Include="ExtendedObservableCollectionTests.cs" />
+    <Compile Include="FixedSizeObservableCollectionTests.cs" />
     <Compile Include="Helpers\GenderFactory.cs" />
     <Compile Include="Helpers\MyViewModelWithOwnBacking.cs" />
     <Compile Include="Helpers\ViewBinding.cs" />

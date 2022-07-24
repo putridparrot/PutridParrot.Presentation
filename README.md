@@ -1,3 +1,5 @@
+# Note: This is a prototype based upon ideas around making MVVM simpler, now we have source generators a proper solution would be using source generators.
+
 I've implemented view models (for the MVVM pattern) in so many different ways over the years 
 and discovered each has its own merits. Basically, there isn't a great "one size fits all" approach,
 in my opinion. Hence this solution contains various base classes which you can derive your 
